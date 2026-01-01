@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Valley's Adventure - Join organized hiking trips, explore nature safely, and meet like-minded people. All levels welcome.">
+    <title>Valley's Adventure - Explore Nature Safely</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header: Sticky navigation with logo, nav links, theme toggle, and calendar -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <!-- Left side: Logo and Navigation -->
+            <div class="header-left">
+                <!-- Clickable logo (acts as home link) -->
+                <a href="index.html" class="logo-link" aria-label="Home - Valley's Adventure">
+                    <img src="assets/logo.jpg" alt="Valley's Adventure Logo" class="logo" id="logo">
+                </a>
+                
+                <!-- Desktop Navigation Links -->
+                <nav class="nav-desktop" id="navDesktop">
+                    <a href="#about" class="nav-link">About Us</a>
+                    <a href="#trips" class="nav-link">Our Next Trips</a>
+                </nav>
+            </div>
+
+            <!-- Right side: Theme Toggle and Calendar -->
+            <div class="header-right">
+                <!-- Day/Night Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+
+                <!-- Calendar Icon -->
+                <a href="#calendar" class="calendar-link" aria-label="View calendar">
+                    <svg class="calendar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </a>
+
+                <!-- Mobile Hamburger Menu Button -->
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <nav class="nav-mobile" id="navMobile">
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#trips" class="nav-link">Our Next Trips</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Background Logo Watermark -->
+        <div class="background-watermark">
+            <img src="assets/logo without background.png" alt="" class="watermark-logo" id="watermarkLogo" aria-hidden="true">
+        </div>
+
+        <!-- Hero Section with Background Video -->
+        <section class="hero" id="hero">
+            <!-- Background Video -->
+            <video class="hero-video" autoplay loop muted playsinline>
+                <source src="assets/video for hero section.mp4" type="video/mp4">
+                <!-- Fallback if video doesn't load -->
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Dark Overlay for Text Readability -->
+            <div class="hero-overlay"></div>
+
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="hero-line" data-animation="fade-up">Join organized hiking trips</span>
+                    <span class="hero-line" data-animation="fade-up">Explore nature safely</span>
+                    <span class="hero-line" data-animation="fade-up">Meet like-minded people</span>
+                    <span class="hero-line" data-animation="fade-up">All levels welcome</span>
+                    <span class="hero-line" data-animation="fade-up">Local guides & community</span>
+                </h1>
+            </div>
+        </section>
+
+        <!-- Call To Action Section -->
+        <section class="cta-section" id="ctaSection">
+            <!-- Primary CTA Button -->
+            <div class="cta-primary">
+                <a href="#trips" class="btn btn-primary" id="primaryCTA">
+                    View Upcoming Hikes
+                </a>
+            </div>
+
+            <!-- Secondary CTA Cards -->
+            <div class="cta-cards" id="trips">
+                <!-- Card 1 -->
+                <article class="cta-card">
+                    <div class="card-image">
+                        <img src="assets/mountain hiking.jpeg" alt="Mountain hiking adventure" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Join Next Event</h2>
+                        <p class="card-description">
+                            Discover breathtaking trails with experienced guides. Perfect for all skill levels.
+                        </p>
+                        <a href="#details" class="btn btn-secondary">View Details</a>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="cta-card">
+                    <div class="card-image">
+                        <img src="assets/image for forest trail adventure.jpg" alt="Forest trail adventure" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Weekend Adventure</h2>
+                        <p class="card-description">
+                            Escape the city and reconnect with nature. Join our weekend hiking community.
+                        </p>
+                        <a href="#details" class="btn btn-secondary">View Details</a>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="cta-card">
+                    <div class="card-image">
+                        <img src="assets/sunset.png" alt="Sunset hiking experience" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">Sunset Hikes</h2>
+                        <p class="card-description">
+                            Experience the magic of hiking during golden hour. Limited spots available.
+                        </p>
+                        <a href="#details" class="btn btn-secondary">View Details</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Copyright -->
+            <p class="footer-copyright">
+                Copyright © 2024 Valley's Adventure
+            </p>
+
+            <!-- Social Links and Contact -->
+            <div class="footer-social">
+                <!-- Instagram Icon -->
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Instagram">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+
+                <!-- WhatsApp Icon -->
+                <a href="https://wa.me/962787426310" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Contact us on WhatsApp">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </a>
+
+                <!-- Phone Number -->
+                <a href="tel:00962787426310" class="social-link phone-link" aria-label="Call us">
+                    <span class="phone-number">00962787426310</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+
