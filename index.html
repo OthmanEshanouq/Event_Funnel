@@ -21,8 +21,13 @@
                 <!-- Desktop Navigation Links -->
                 <nav class="nav-desktop" id="navDesktop">
                     <a href="#about" class="nav-link">About Us</a>
-                    <a href="#trips" class="nav-link">Our Next Trips</a>
+                    <a href="#ctaSection" class="nav-link">Our Next Trips</a>
                 </nav>
+            </div>
+
+            <!-- Center: Brand Name -->
+            <div class="header-center">
+                <h1 class="brand-name">Valleys Adventure</h1>
             </div>
 
             <!-- Right side: Theme Toggle and Calendar -->
@@ -38,7 +43,7 @@
                 </button>
 
                 <!-- Calendar Icon -->
-                <a href="#calendar" class="calendar-link" aria-label="View calendar">
+                <a href="#ctaSection" class="calendar-link" aria-label="View calendar">
                     <svg class="calendar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -59,7 +64,7 @@
         <!-- Mobile Navigation Menu -->
         <nav class="nav-mobile" id="navMobile">
             <a href="#about" class="nav-link">About Us</a>
-            <a href="#trips" class="nav-link">Our Next Trips</a>
+            <a href="#ctaSection" class="nav-link">Our Next Trips</a>
         </nav>
     </header>
 
@@ -67,17 +72,30 @@
     <main class="main-content">
         <!-- Background Logo Watermark -->
         <div class="background-watermark">
-            <img src="assets/logo without background.png" alt="" class="watermark-logo" id="watermarkLogo" aria-hidden="true">
+            <img src="assets/logo.jpg" alt="" class="watermark-logo" id="watermarkLogo" aria-hidden="true">
         </div>
 
-        <!-- Hero Section with Background Video -->
+        <!-- Hero Section with Auto-Sliding Images -->
         <section class="hero" id="hero">
-            <!-- Background Video -->
-            <video class="hero-video" autoplay loop muted playsinline>
-                <source src="assets/video for hero section.mp4" type="video/mp4">
-                <!-- Fallback if video doesn't load -->
-                Your browser does not support the video tag.
-            </video>
+            <!-- Auto-Sliding Background Images -->
+            <div class="hero-images">
+                <img src="assets/zoubia 21.jpg" alt="Hero Image 1" class="hero-bg-img active">
+                <img src="assets/zoubia 1.jpg" alt="Hero Image 2" class="hero-bg-img">
+                <img src="assets/zoubia 6.jpg" alt="Hero Image 3" class="hero-bg-img">
+                <img src="assets/zoubia 14.jpg" alt="Hero Image 4" class="hero-bg-img">
+                <img src="assets/zoubia 15.jpg" alt="Hero Image 5" class="hero-bg-img">
+                <img src="assets/zoubia 20.jpg" alt="Hero Image 6" class="hero-bg-img">
+                <img src="assets/al_kafrein 1.jpg" alt="Hero Image 7" class="hero-bg-img">
+                <img src="assets/al_kafrein 2.jpg" alt="Hero Image 8" class="hero-bg-img">
+                <img src="assets/al_kafrein 4.jpg" alt="Hero Image 9" class="hero-bg-img">
+                <img src="assets/al_kafrein 6.jpg" alt="Hero Image 10" class="hero-bg-img">
+                <img src="assets/al_kafrein 8.jpg" alt="Hero Image 11" class="hero-bg-img">
+                <img src="assets/al_kafrein 12.jpg" alt="Hero Image 12" class="hero-bg-img">
+                <img src="assets/al_kafrein 19.jpg" alt="Hero Image 13" class="hero-bg-img">
+                <img src="assets/sunset.png" alt="Hero Image 14" class="hero-bg-img">
+                <img src="assets/king talal dam.jpg" alt="Hero Image 15" class="hero-bg-img">
+                <img src="assets/king talal dam 3.jpg" alt="Hero Image 16" class="hero-bg-img">
+            </div>
             
             <!-- Dark Overlay for Text Readability -->
             <div class="hero-overlay"></div>
@@ -98,7 +116,7 @@
         <section class="cta-section" id="ctaSection">
             <!-- Primary CTA Button -->
             <div class="cta-primary">
-                <a href="#trips" class="btn btn-primary" id="primaryCTA">
+                <a href="#ctaSection" class="btn btn-primary" id="primaryCTA">
                     View Upcoming Hikes
                 </a>
             </div>
@@ -108,7 +126,23 @@
                 <!-- Card 1 -->
                 <article class="cta-card">
                     <div class="card-image">
-                        <img src="assets/mountain hiking.jpeg" alt="Mountain hiking adventure" class="card-img">
+                        <!-- Swipable Image Carousel for Join Next Event -->
+                        <div class="image-carousel" id="joinNextEventCarousel">
+                            <div class="carousel-container">
+                                <img src="assets/al_kafrein 1.jpg" alt="Al Kafrein - Image 1" class="carousel-img active">
+                                <img src="assets/al_kafrein 2.jpg" alt="Al Kafrein - Image 2" class="carousel-img">
+                                <img src="assets/al_kafrein 4.jpg" alt="Al Kafrein - Image 3" class="carousel-img">
+                                <img src="assets/al_kafrein 6.jpg" alt="Al Kafrein - Image 4" class="carousel-img">
+                                <img src="assets/al_kafrein 8.jpg" alt="Al Kafrein - Image 5" class="carousel-img">
+                                <img src="assets/al_kafrein 12.jpg" alt="Al Kafrein - Image 6" class="carousel-img">
+                                <img src="assets/al_kafrein 19.jpg" alt="Al Kafrein - Image 7" class="carousel-img">
+                            </div>
+                            <!-- Navigation Dots -->
+                            <div class="carousel-dots"></div>
+                            <!-- Navigation Arrows -->
+                            <button class="carousel-arrow carousel-prev" aria-label="Previous image">‹</button>
+                            <button class="carousel-arrow carousel-next" aria-label="Next image">›</button>
+                        </div>
                     </div>
                     <div class="card-content">
                         <h2 class="card-title">Join Next Event</h2>
@@ -122,7 +156,22 @@
                 <!-- Card 2 -->
                 <article class="cta-card">
                     <div class="card-image">
-                        <img src="assets/image for forest trail adventure.jpg" alt="Forest trail adventure" class="card-img">
+                        <!-- Swipable Image Carousel for Weekend Adventure -->
+                        <div class="image-carousel" id="weekendAdventureCarousel">
+                            <div class="carousel-container">
+                                <img src="assets/zoubia 21.jpg" alt="Weekend Adventure - Image 1" class="carousel-img active">
+                                <img src="assets/zoubia 1.jpg" alt="Weekend Adventure - Image 2" class="carousel-img">
+                                <img src="assets/zoubia 6.jpg" alt="Weekend Adventure - Image 3" class="carousel-img">
+                                <img src="assets/zoubia 14.jpg" alt="Weekend Adventure - Image 4" class="carousel-img">
+                                <img src="assets/zoubia 15.jpg" alt="Weekend Adventure - Image 5" class="carousel-img">
+                                <img src="assets/zoubia 20.jpg" alt="Weekend Adventure - Image 6" class="carousel-img">
+                            </div>
+                            <!-- Navigation Dots -->
+                            <div class="carousel-dots"></div>
+                            <!-- Navigation Arrows -->
+                            <button class="carousel-arrow carousel-prev" aria-label="Previous image">‹</button>
+                            <button class="carousel-arrow carousel-next" aria-label="Next image">›</button>
+                        </div>
                     </div>
                     <div class="card-content">
                         <h2 class="card-title">Weekend Adventure</h2>
@@ -136,7 +185,19 @@
                 <!-- Card 3 -->
                 <article class="cta-card">
                     <div class="card-image">
-                        <img src="assets/sunset.png" alt="Sunset hiking experience" class="card-img">
+                        <!-- Swipable Image Carousel for Sunset Hikes -->
+                        <div class="image-carousel" id="sunsetHikesCarousel">
+                            <div class="carousel-container">
+                                <img src="assets/sunset.png" alt="Sunset hiking experience" class="carousel-img active">
+                                <img src="assets/king talal dam.jpg" alt="King Talal Dam - Image 1" class="carousel-img">
+                                <img src="assets/king talal dam 3.jpg" alt="King Talal Dam - Image 2" class="carousel-img">
+                            </div>
+                            <!-- Navigation Dots -->
+                            <div class="carousel-dots"></div>
+                            <!-- Navigation Arrows -->
+                            <button class="carousel-arrow carousel-prev" aria-label="Previous image">‹</button>
+                            <button class="carousel-arrow carousel-next" aria-label="Next image">›</button>
+                        </div>
                     </div>
                     <div class="card-content">
                         <h2 class="card-title">Sunset Hikes</h2>
@@ -155,13 +216,13 @@
         <div class="footer-container">
             <!-- Copyright -->
             <p class="footer-copyright">
-                Copyright © 2024 Valley's Adventure
+                Copyright © 2026 Valleys Adventure
             </p>
 
             <!-- Social Links and Contact -->
             <div class="footer-social">
                 <!-- Instagram Icon -->
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Instagram">
+                <a href="https://www.instagram.com/valleysadventures/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow us on Instagram">
                     <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>

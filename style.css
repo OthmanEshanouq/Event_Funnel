@@ -124,9 +124,10 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-sm) var(--spacing-md);
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: var(--spacing-md);
 }
 
 /* Left Side: Logo and Navigation */
@@ -134,6 +135,24 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
+    justify-self: start;
+}
+
+/* Center: Brand Name */
+.header-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.brand-name {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.5px;
 }
 
 .logo-link {
@@ -195,6 +214,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    justify-self: end;
 }
 
 /* Theme Toggle Button */
@@ -342,11 +362,13 @@ body {
 .main-content {
     position: relative;
     min-height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: visible;
 }
 
 /* Background Watermark */
 .background-watermark {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -355,18 +377,25 @@ body {
     z-index: 0;
     opacity: 0.03;
     transition: opacity var(--transition-base);
+    overflow: hidden;
 }
 
 .watermark-logo {
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 80px);
+    height: calc(100% - 80px);
     object-fit: contain;
     object-position: center;
     transform: scale(2);
+    padding: 40px;
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    display: block;
 }
 
 [data-theme="dark"] .background-watermark {
-    opacity: 1;
+    opacity: 0.05;
 }
 
 /* ============================================
@@ -385,17 +414,29 @@ body {
     background-color: var(--bg-primary);
 }
 
-.hero-video {
+.hero-images {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 1;
+    overflow: hidden;
+}
+
+.hero-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.hero-bg-img.active {
+    opacity: 1;
 }
 
 .hero-overlay {
@@ -453,9 +494,14 @@ body {
     position: relative;
     z-index: 2;
     padding: var(--spacing-2xl) var(--spacing-md);
-    background-color: var(--bg-primary);
+    background-color: rgba(255, 255, 255, 0.3);
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Dark mode background for CTA section */
+[data-theme="dark"] .cta-section {
+    background-color: rgba(15, 23, 42, 0.3);
 }
 
 /* Primary CTA Button */
@@ -540,6 +586,128 @@ body {
 
 .cta-card:hover .card-img {
     transform: scale(1.1);
+}
+
+/* ============================================
+   Image Carousel (Swipable Album)
+   ============================================ */
+.image-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    user-select: none;
+    touch-action: pan-y;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.carousel-img.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+}
+
+/* Carousel Navigation Arrows */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast), opacity var(--transition-fast);
+    opacity: 0;
+}
+
+.image-carousel:hover .carousel-arrow {
+    opacity: 1;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+/* Carousel Navigation Dots */
+.carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.image-carousel:hover .carousel-dots {
+    opacity: 1;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    padding: 0;
+}
+
+.carousel-dot.active {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+}
+
+/* Mobile touch indicators */
+@media (max-width: 768px) {
+    .carousel-arrow {
+        opacity: 0.7;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+    
+    .carousel-dots {
+        opacity: 0.8;
+    }
 }
 
 .card-content {
@@ -638,6 +806,7 @@ body {
 
     .header-container {
         padding: var(--spacing-sm);
+        grid-template-columns: auto 1fr auto;
     }
 
     .logo {
@@ -646,6 +815,15 @@ body {
 
     .nav-desktop {
         display: none;
+    }
+
+    .header-center {
+        order: 0;
+        grid-column: auto;
+    }
+
+    .brand-name {
+        font-size: var(--font-size-lg);
     }
 
     .hamburger {

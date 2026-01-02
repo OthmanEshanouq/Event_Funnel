@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initHamburgerMenu();
     initSmoothScroll();
     initHeroAnimations();
-    initVideoFallback();
+    initHeroImageSlider();
+    initImageCarousel();
 });
 
 /* ============================================
@@ -191,49 +192,43 @@ function initHeroAnimations() {
 }
 
 /* ============================================
-   Video Fallback Handling
+   Hero Image Auto-Slider
    ============================================ */
 
 /**
- * Initialize video fallback and error handling
- * - Handles video loading errors gracefully
- * - Provides fallback background if video fails to load
+ * Initialize auto-sliding hero images
+ * - Randomly cycles through available hero images
+ * - Smooth fade transitions between images
+ * - Auto-advances every 4 seconds
  */
-function initVideoFallback() {
-    const heroVideo = document.querySelector('.hero-video');
+function initHeroImageSlider() {
+    const heroImages = document.querySelectorAll('.hero-bg-img');
     
-    if (!heroVideo) return;
+    if (heroImages.length === 0) return;
     
-    // Handle video load error
-    heroVideo.addEventListener('error', function() {
-        console.warn('Hero video failed to load, using fallback background');
+    let currentIndex = 0;
+    const totalImages = heroImages.length;
+    
+    // Function to show next image
+    function showNextImage() {
+        // Remove active class from current image
+        heroImages[currentIndex].classList.remove('active');
         
-        // Add fallback background image or gradient
-        const heroSection = document.getElementById('hero');
-        if (heroSection) {
-            heroSection.style.backgroundImage = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            heroSection.style.backgroundSize = 'cover';
-            heroSection.style.backgroundPosition = 'center';
-            heroVideo.style.display = 'none';
-        }
-    });
+        // Randomly select next image (can be same or different)
+        const randomIndex = Math.floor(Math.random() * totalImages);
+        currentIndex = randomIndex;
+        
+        // Add active class to new image
+        heroImages[currentIndex].classList.add('active');
+    }
     
-    // Ensure video plays (some browsers require user interaction)
-    heroVideo.addEventListener('loadeddata', function() {
-        // Set video playback rate to 0.25 (quarter speed - 400% slower)
-        heroVideo.playbackRate = 0.25;
-        heroVideo.play().catch(error => {
-            console.warn('Video autoplay prevented:', error);
-        });
-    });
+    // Start auto-sliding (change image every 4 seconds)
+    setInterval(showNextImage, 4000);
     
-    // Also set playback rate when video can play
-    heroVideo.addEventListener('canplay', function() {
-        heroVideo.playbackRate = 0.25;
-    });
-    
-    // Handle video loading
-    heroVideo.load();
+    // Initialize first image
+    if (heroImages.length > 0) {
+        heroImages[0].classList.add('active');
+    }
 }
 
 /* ============================================
@@ -320,4 +315,165 @@ window.addEventListener('error', function(event) {
 window.addEventListener('unhandledrejection', function(event) {
     console.error('Unhandled promise rejection:', event.reason);
 });
+
+/* ============================================
+   Image Carousel (Swipable Album)
+   ============================================ */
+
+/**
+ * Initialize swipable image carousel for all cards
+ * - Supports touch swipe (mobile) and mouse drag (desktop)
+ * - Auto-generates navigation dots
+ * - Includes arrow navigation
+ */
+function initImageCarousel() {
+    // Initialize all carousels
+    initSingleCarousel('weekendAdventureCarousel');
+    initSingleCarousel('joinNextEventCarousel');
+    initSingleCarousel('sunsetHikesCarousel');
+}
+
+/**
+ * Initialize a single carousel
+ */
+function initSingleCarousel(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+
+    const container = carousel.querySelector('.carousel-container');
+    const images = carousel.querySelectorAll('.carousel-img');
+    const dotsContainer = carousel.querySelector('.carousel-dots');
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+
+    let currentIndex = 0;
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+    let translateX = 0;
+
+    // Create navigation dots
+    images.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Go to image ${index + 1}`);
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    // Update active image and dots
+    function updateCarousel() {
+        images.forEach((img, index) => {
+            img.classList.toggle('active', index === currentIndex);
+        });
+
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    // Go to specific slide
+    function goToSlide(index) {
+        currentIndex = index;
+        if (currentIndex < 0) currentIndex = images.length - 1;
+        if (currentIndex >= images.length) currentIndex = 0;
+        updateCarousel();
+    }
+
+    // Next slide
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    // Previous slide
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    // Arrow button events
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+    // Touch events for mobile
+    carousel.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        carousel.style.cursor = 'grabbing';
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.touches[0].clientX;
+        translateX = currentX - startX;
+    });
+
+    carousel.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+
+        // Swipe threshold (50px)
+        if (Math.abs(translateX) > 50) {
+            if (translateX > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        }
+        translateX = 0;
+    });
+
+    // Mouse events for desktop
+    carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        carousel.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        currentX = e.clientX;
+        translateX = currentX - startX;
+    });
+
+    carousel.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+
+        // Swipe threshold (50px)
+        if (Math.abs(translateX) > 50) {
+            if (translateX > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        }
+        translateX = 0;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            carousel.style.cursor = 'grab';
+            translateX = 0;
+        }
+    });
+
+    // Keyboard navigation
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+    });
+
+    // Set initial cursor
+    carousel.style.cursor = 'grab';
+}
 
