@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+    
     <!-- Header: Sticky navigation with logo, nav links, theme toggle, and calendar -->
-    <header class="header" id="header">
+    <header class="header" id="header" role="banner">
         <div class="header-container">
             <!-- Left side: Logo and Navigation -->
             <div class="header-left">
@@ -19,7 +22,7 @@
                 </a>
                 
                 <!-- Desktop Navigation Links -->
-                <nav class="nav-desktop" id="navDesktop">
+                <nav class="nav-desktop" id="navDesktop" role="navigation" aria-label="Main navigation">
                     <a href="index.html#about" class="nav-link">About Us</a>
                     <a href="index.html#ctaSection" class="nav-link">Our Next Trips</a>
                 </nav>
@@ -62,25 +65,25 @@
         </div>
 
         <!-- Mobile Navigation Menu -->
-        <nav class="nav-mobile" id="navMobile">
+        <nav class="nav-mobile" id="navMobile" role="navigation" aria-label="Mobile navigation">
             <a href="index.html#about" class="nav-link">About Us</a>
             <a href="index.html#ctaSection" class="nav-link">Our Next Trips</a>
         </nav>
     </header>
 
     <!-- Main Content Area -->
-    <main class="main-content">
+    <main class="main-content" id="main-content" role="main">
         <!-- Hero Section with Auto-Sliding Images -->
-        <section class="event-hero" id="eventHero">
+        <section class="event-hero" id="eventHero" aria-labelledby="event-title">
             <!-- Auto-Sliding Background Images -->
             <div class="hero-images">
-                <img src="assets/al_kafrein 1.jpg" alt="Al Kafrein Hike - Image 1" class="hero-bg-img active">
-                <img src="assets/al_kafrein 2.jpg" alt="Al Kafrein Hike - Image 2" class="hero-bg-img">
-                <img src="assets/al_kafrein 4.jpg" alt="Al Kafrein Hike - Image 3" class="hero-bg-img">
-                <img src="assets/al_kafrein 6.jpg" alt="Al Kafrein Hike - Image 4" class="hero-bg-img">
-                <img src="assets/al_kafrein 8.jpg" alt="Al Kafrein Hike - Image 5" class="hero-bg-img">
-                <img src="assets/al_kafrein 12.jpg" alt="Al Kafrein Hike - Image 6" class="hero-bg-img">
-                <img src="assets/al_kafrein 19.jpg" alt="Al Kafrein Hike - Image 7" class="hero-bg-img">
+                <img src="assets/al_kafrein 1.jpg" alt="" class="hero-bg-img active" aria-hidden="true">
+                <img src="assets/al_kafrein 2.jpg" alt="" class="hero-bg-img" aria-hidden="true">
+                <img src="assets/al_kafrein 4.jpg" alt="" class="hero-bg-img" aria-hidden="true">
+                <img src="assets/al_kafrein 6.jpg" alt="" class="hero-bg-img" aria-hidden="true">
+                <img src="assets/al_kafrein 8.jpg" alt="" class="hero-bg-img" aria-hidden="true">
+                <img src="assets/al_kafrein 12.jpg" alt="" class="hero-bg-img" aria-hidden="true">
+                <img src="assets/al_kafrein 19.jpg" alt="" class="hero-bg-img" aria-hidden="true">
             </div>
             
             <!-- Dark Overlay for Text Readability -->
@@ -88,7 +91,7 @@
 
             <!-- Hero Content -->
             <div class="hero-content">
-                <h1 class="event-hero-title">A full day for hike & visit three historical sites</h1>
+                <h1 class="event-hero-title" id="event-title">A full day for hike & visit three historical sites</h1>
                 <div class="event-meta">
                     <div class="event-meta-item">
                         <span class="meta-label">Date:</span>
@@ -130,7 +133,7 @@
                     <div class="info-card">
                         <div class="info-icon">🕕</div>
                         <h3 class="info-title">End Time</h3>
-                        <p class="info-text">6:00 PM (Return to Amman)</p>
+                        <p class="info-text">6:00 PM (Return to Meeting point)</p>
                     </div>
                     <div class="info-card">
                         <div class="info-icon">📏</div>
@@ -141,12 +144,7 @@
                     <div class="info-card">
                         <div class="info-icon">🎒</div>
                         <h3 class="info-title">Required Gear</h3>
-                        <p class="info-text">Hiking shoes, backpack, water (2L+), snacks, power bank, cap, sunblock, light jacket</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-icon">👥</div>
-                        <h3 class="info-title">Group Size</h3>
-                        <p class="info-text">Limited spots available</p>
+                        <p class="info-text">Hiking shoes, backpack, water (2L+), snacks, powerBank, cap, sunblock, light jacket</p>
                     </div>
                     <div class="info-card">
                         <div class="info-icon">👨‍🏫</div>
@@ -170,12 +168,6 @@
                             <li class="included-item">✅ Lunch (Chicken Sajiyah with cream)</li>
                             <li class="included-item">✅ Tea with cardamom</li>
                             <li class="included-item">✅ Photographer</li>
-                        </ul>
-                    </div>
-                    <div class="included-column">
-                        <h2 class="section-title">Not Included</h2>
-                        <ul class="included-list">
-                            <li class="included-item">❌ Insurance</li>
                         </ul>
                     </div>
                 </div>
@@ -236,8 +228,8 @@
                     <div class="schedule-item">
                         <div class="schedule-time">10:30 AM</div>
                         <div class="schedule-content">
-                            <h3 class="schedule-title">Arrive at Iraq Al-Amir</h3>
-                            <p class="schedule-text">Tour around Iraq Al-Amir (Qaser Al-Abed, Tubya caves and Muallaqat Al-Dare)</p>
+                            <h3 class="schedule-title">Arrive to Iraq Al-Amir</h3>
+                            <p class="schedule-text">Tour around Iraq Al-Amir (Qaser Al-Abed, Tubya caves and Muallaqat Ad-Dare)</p>
                         </div>
                     </div>
                     <div class="schedule-item">
@@ -248,7 +240,7 @@
                         </div>
                     </div>
                     <div class="schedule-item">
-                        <div class="schedule-time">🥘🍽️ After Hike</div>
+                        <div class="schedule-time">🥘🍽️ Midway lunch</div>
                         <div class="schedule-content">
                             <h3 class="schedule-title">Lunch</h3>
                             <p class="schedule-text">We're going to prepare chicken Sajiyah with cream</p>
@@ -258,8 +250,8 @@
                     <div class="schedule-item">
                         <div class="schedule-time">🕕 6:00 PM</div>
                         <div class="schedule-content">
-                            <h3 class="schedule-title">Return to Amman</h3>
-                            <p class="schedule-text">We'll head back to Amman</p>
+                            <h3 class="schedule-title">Return to Meeting Point</h3>
+                            <p class="schedule-text">We'll head back to meeting point</p>
                         </div>
                     </div>
                 </div>
@@ -299,7 +291,9 @@
                             style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Map showing Al Ahli Sports Club meeting point"
+                            aria-label="Interactive map showing the meeting point location at Al Ahli Sports Club">
                         </iframe>
                     </div>
                     <p class="map-note">For exact location, please contact us or check the Google Maps link</p>
@@ -314,25 +308,25 @@
                 <p class="gallery-subtitle">Join Next Event - Event-related images</p>
                 <div class="gallery-grid" id="eventGallery">
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 1.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 1.jpg" alt="Al Kafrein hiking trail through water" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 2.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 2.jpg" alt="Scenic view of Wadi Al-Kafrein" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 4.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 4.jpg" alt="Hikers exploring Al Kafrein area" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 6.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 6.jpg" alt="Natural landscape at Al Kafrein" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 8.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 8.jpg" alt="Water trail at Wadi Al-Kafrein" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 12.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 12.jpg" alt="Adventure hiking experience" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                     <div class="gallery-item">
-                        <img src="assets/al_kafrein 19.jpg" alt="Al Kafrein Hike" class="gallery-img" data-lightbox="event-gallery">
+                        <img src="assets/al_kafrein 19.jpg" alt="Group hiking at Al Kafrein" class="gallery-img" data-lightbox="event-gallery">
                     </div>
                 </div>
             </div>
@@ -359,7 +353,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="footer-container">
             <!-- Copyright -->
             <p class="footer-copyright">

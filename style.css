@@ -11,8 +11,8 @@
     --bg-secondary: #f8f9fa;
     --bg-overlay: rgba(0, 0, 0, 0.15);
     --text-primary: #1a1a1a;
-    --text-secondary: #4a5568;
-    --text-light: #718096;
+    --text-secondary: #2d3748;
+    --text-light: #4a5568;
     --accent-primary: #2d5016;
     --accent-secondary: #4a7c2a;
     --accent-hover: #1e3a0f;
@@ -68,8 +68,8 @@
     --bg-secondary: #1e293b;
     --bg-overlay: rgba(0, 0, 0, 0.25);
     --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-light: #94a3b8;
+    --text-secondary: #e2e8f0;
+    --text-light: #cbd5e1;
     --accent-primary: #65a30d;
     --accent-secondary: #84cc16;
     --accent-hover: #a3e635;
@@ -103,6 +103,10 @@ body {
     background-color: var(--bg-primary);
     transition: background-color var(--transition-base), color var(--transition-base);
     overflow-x: hidden;
+    /* Improve text readability */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================
@@ -922,6 +926,78 @@ body {
 /* ============================================
    Accessibility & Performance
    ============================================ */
+/* Moved to accessibility section above */
+
+/* ============================================
+   Accessibility Enhancements
+   ============================================ */
+
+/* Skip to main content link */
+.skip-to-main {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: var(--font-weight-bold);
+    border-radius: 0 0 var(--radius-md) 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: top var(--transition-base), opacity var(--transition-base);
+}
+
+.skip-to-main:focus {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+    outline: 3px solid var(--accent-secondary);
+    outline-offset: 2px;
+}
+
+/* Enhanced focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 3px;
+    outline-style: solid;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.3);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #000000;
+        --text-secondary: #000000;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f0f0f0;
+        --border-color: #000000;
+    }
+    
+    [data-theme="dark"] {
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --bg-primary: #000000;
+        --bg-secondary: #1a1a1a;
+        --border-color: #ffffff;
+    }
+}
+
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -929,20 +1005,32 @@ body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-    }
-
-    .hero-line {
-        animation: none;
-        opacity: 1;
-        transform: none;
+        scroll-behavior: auto !important;
     }
 }
 
-/* Focus styles for keyboard navigation */
-a:focus,
-button:focus {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
+/* Screen reader only class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
 }
 
 /* ============================================
@@ -1040,7 +1128,7 @@ button:focus {
 
 .event-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
 }
 
@@ -1085,8 +1173,10 @@ button:focus {
 
 .included-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .included-column {
@@ -1545,6 +1635,326 @@ button:focus {
         font-size: 30px;
         top: 10px;
         right: 20px;
+    }
+}
+
+/* ============================================
+   Registration Form Page Styles (middleSecond.html)
+   ============================================ */
+
+/* Registration Section */
+.registration-section {
+    padding: var(--spacing-2xl) 0;
+    background-color: var(--bg-primary);
+    min-height: calc(100vh - 200px);
+    margin-top: 80px;
+}
+
+/* Registration Header */
+.registration-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.event-name {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-date {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Registration Form */
+.registration-form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Form Section */
+.form-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-note {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+}
+
+.form-question {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.required {
+    color: #e53e3e;
+    font-weight: var(--font-weight-bold);
+}
+
+.whatsapp-icon {
+    width: 18px;
+    height: 18px;
+    color: #25D366;
+}
+
+/* Form Input */
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Error Message */
+.error-message {
+    display: block;
+    color: #e53e3e;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+    min-height: 20px;
+}
+
+.form-input.error,
+.form-textarea.error {
+    border-color: #e53e3e;
+}
+
+/* Radio Group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.radio-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+}
+
+.radio-label {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.checkbox-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+}
+
+.checkbox-label {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Medical Note Group */
+.medical-note-group {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Privacy Note */
+.privacy-note {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.privacy-note p {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    font-style: italic;
+}
+
+/* Form Actions */
+.form-actions {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+/* Success Message */
+.success-message {
+    max-width: 700px;
+    margin: var(--spacing-2xl) auto;
+    background-color: var(--card-bg);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.success-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    color: #48bb78;
+    margin-bottom: var(--spacing-sm);
+}
+
+.success-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.success-text {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Responsive Design for Registration Form */
+@media (max-width: 768px) {
+    .registration-section {
+        margin-top: 70px;
+        padding: var(--spacing-xl) 0;
+    }
+
+    .registration-form {
+        padding: var(--spacing-lg);
+        margin: 0 var(--spacing-md);
+    }
+
+    .event-name {
+        font-size: var(--font-size-2xl);
+    }
+
+    .event-date {
+        font-size: var(--font-size-base);
+    }
+
+    .form-section-title {
+        font-size: var(--font-size-lg);
+    }
+
+    .checkbox-group {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .success-message {
+        margin: var(--spacing-xl) var(--spacing-md);
+        padding: var(--spacing-lg);
+    }
+
+    .success-title {
+        font-size: var(--font-size-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .registration-form {
+        padding: var(--spacing-md);
+    }
+
+    .event-name {
+        font-size: var(--font-size-xl);
+    }
+
+    .form-section-title {
+        font-size: var(--font-size-base);
+    }
+
+    .success-icon {
+        width: 48px;
+        height: 48px;
     }
 }
 

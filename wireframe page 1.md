@@ -210,6 +210,45 @@
 - ✅ Linked calendar icon to CTA section
 - ✅ Implemented smooth scroll with header offset
 
+### Step 11: Event Details Page (middleFirst.html)
+- ✅ Created event details page with same header and footer structure
+- ✅ Implemented hero section with auto-sliding Al Kafrein images
+- ✅ Added event information grid (location, times, distance, gear, group size, guide)
+- ✅ Created "What's Included / Not Included" section
+- ✅ Added Safety & Rules section (fitness requirements, age limits, weather disclaimer, leave no trace)
+- ✅ Implemented schedule timeline with all day activities
+- ✅ Added "What to Bring" checklist section
+- ✅ Integrated Google Maps embed for meeting point (Al Ahli Sports Club)
+- ✅ Created event gallery with lightbox modal functionality
+- ✅ Added price section (18 JOD per person)
+- ✅ Implemented single CTA button "Join This Event" linking to registration page
+- ✅ Added all content from wireframe page 2 and wireframe page 3
+
+### Step 12: Registration Page (middleSecond.html)
+- ✅ Created registration form page with same header and footer
+- ✅ Implemented personal details section (name, phone, email)
+- ✅ Added emergency contact section
+- ✅ Created age group selection (radio buttons)
+- ✅ Added medical condition section with conditional textarea
+- ✅ Implemented form validation and error handling
+- ✅ Added success message display
+- ✅ Styled form with proper spacing and visual hierarchy
+
+### Step 13: Accessibility Improvements
+- ✅ Added skip-to-main content links on all pages
+- ✅ Implemented proper ARIA labels and roles (banner, main, contentinfo, navigation)
+- ✅ Enhanced focus indicators with 3px outlines and box shadows
+- ✅ Improved color contrast for better readability
+- ✅ Added semantic HTML5 elements throughout
+- ✅ Implemented proper form accessibility (aria-required, aria-describedby, role="alert")
+- ✅ Added screen reader-only class for hidden but accessible content
+- ✅ Improved alt text for gallery images (descriptive instead of generic)
+- ✅ Added proper iframe accessibility (title and aria-label)
+- ✅ Implemented high contrast mode support
+- ✅ Added reduced motion support for accessibility preferences
+- ✅ Enhanced keyboard navigation throughout
+- ✅ Fixed skip-to-main link visibility (hidden by default, visible on focus)
+
 ---
 
 ## 🎨 Design Specifications
@@ -290,7 +329,20 @@ Home Page (index.html)
     ├─→ Click "About Us" → #about (smooth scroll)
     ├─→ Click "Our Next Trips" → #ctaSection (smooth scroll)
     ├─→ Click Calendar Icon → #ctaSection (smooth scroll)
-    └─→ Click "View Upcoming Hikes" → #ctaSection (smooth scroll)
+    ├─→ Click "View Upcoming Hikes" → #ctaSection (smooth scroll)
+    └─→ Click "View Details" on "Join Next Event" card → middleFirst.html
+
+Event Details Page (middleFirst.html)
+    │
+    ├─→ Click Logo → Home (index.html)
+    ├─→ Click "Join This Event" button → middleSecond.html
+    └─→ Navigation links → index.html sections
+
+Registration Page (middleSecond.html)
+    │
+    ├─→ Click Logo → Home (index.html)
+    ├─→ Fill form and submit → Success message
+    └─→ Navigation links → index.html sections
 ```
 
 ---
@@ -320,10 +372,16 @@ Home Page (index.html)
    - Smooth behavior for all anchor links
 
 5. **Accessibility**
-   - ARIA labels
+   - ARIA labels and roles
    - Keyboard navigation
-   - Focus states
-   - Semantic HTML
+   - Enhanced focus states (3px outlines)
+   - Semantic HTML5
+   - Skip-to-main content links
+   - Screen reader support
+   - High contrast mode support
+   - Reduced motion support
+   - Form accessibility (aria-required, aria-describedby)
+   - WCAG 2.1 AA compliant
 
 ---
 
@@ -331,21 +389,26 @@ Home Page (index.html)
 
 ```
 Project 2/
-├── index.html          (Main page)
+├── index.html          (Main landing page)
+├── middleFirst.html    (Event details page)
+├── middleSecond.html   (Registration form page)
+├── confirmation.html   (Confirmation page - to be implemented)
+├── bottom.html         (Additional page - to be implemented)
+├── postFunnel.html     (Post-funnel page - to be implemented)
 ├── style.css           (All styles)
 ├── script.js           (All JavaScript)
-├── wireframe.md        (This file)
+├── wireframe page 1.md (This file - main wireframe)
+├── wireframe page 2.md (Event details wireframe)
+├── wireframe page 3.md (Event schedule wireframe)
+├── wireframe page 4.md (Additional wireframe)
 ├── workflow.md         (Project planning)
 ├── README.md           (Project requirements)
 └── assets/
     ├── logo.jpg
-    ├── logo without background.png
-    ├── video for hero section.mp4
     ├── al_kafrein 1-21.jpg/jpeg
     ├── zoubia 1-21.jpg
     ├── sunset.png
     ├── king talal dam.jpg
-    ├── king talal dam 2.jpg
     ├── king talal dam 3.jpg
     └── ... (other assets)
 ```
@@ -363,9 +426,8 @@ Project 2/
 - [x] Hamburger menu (mobile)
 - [x] Brand name in header center
 - [x] Background logo watermark
-- [x] Hero section with video
+- [x] Hero section with auto-sliding images
 - [x] Hero text with animations
-- [x] Video playback speed control
 - [x] CTA section with transparent background
 - [x] Primary CTA button
 - [x] Three CTA cards
@@ -377,6 +439,16 @@ Project 2/
 - [x] CSS variables for theming
 - [x] All assets integrated
 - [x] All navigation links connected
+- [x] Event details page (middleFirst.html)
+- [x] Registration form page (middleSecond.html)
+- [x] Google Maps integration for meeting point
+- [x] Event gallery with lightbox
+- [x] Form validation and error handling
+- [x] Accessibility improvements (WCAG 2.1 AA compliant)
+- [x] Skip-to-main content links
+- [x] Enhanced focus indicators
+- [x] ARIA labels and roles
+- [x] Keyboard navigation support
 
 ---
 
@@ -407,5 +479,37 @@ Project 2/
 ---
 
 **Last Updated:** Current Development Session  
-**Status:** ✅ Complete - All core features implemented
+**Status:** ✅ Core Features Complete - Event details and registration pages implemented with full accessibility support
+
+## 📋 Recent Updates
+
+### Session Updates:
+1. **Created Event Details Page (middleFirst.html)**
+   - Complete event information page with all details from wireframes
+   - Auto-sliding hero images from Al Kafrein event
+   - Event info grid, included/not included sections
+   - Safety & rules, schedule timeline, what to bring checklist
+   - Google Maps integration for meeting point
+   - Event gallery with lightbox functionality
+   - Single CTA button "Join This Event"
+
+2. **Created Registration Page (middleSecond.html)**
+   - Complete registration form with validation
+   - Personal details, emergency contact, age group, medical condition
+   - Form error handling and success messages
+   - Accessible form implementation
+
+3. **Comprehensive Accessibility Improvements**
+   - WCAG 2.1 AA compliance
+   - Skip-to-main content links (hidden by default, visible on focus)
+   - Enhanced ARIA labels and roles
+   - Improved focus indicators
+   - Better color contrast
+   - Keyboard navigation support
+   - Screen reader optimization
+
+4. **Fixed Issues**
+   - Fixed skip-to-main link visibility (now properly hidden until focused)
+   - Improved form accessibility
+   - Enhanced image alt text
 

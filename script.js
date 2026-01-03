@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroImageSlider();
     initImageCarousel();
     initEventPageFeatures();
+    initRegistrationForm();
 });
 
 /* ============================================
@@ -713,6 +714,253 @@ function initAddToCartFavorites() {
                 }, 2000);
             }
         });
+    }
+}
+
+/* ============================================
+   Registration Form (middleSecond.html)
+   ============================================ */
+
+/**
+ * Initialize registration form functionality
+ * - Form validation
+ * - Medical condition note field toggle
+ * - Form submission handling
+ */
+function initRegistrationForm() {
+    const registrationForm = document.getElementById('registrationForm');
+    if (!registrationForm) return;
+
+    const medicalYes = document.getElementById('medicalYes');
+    const medicalNo = document.getElementById('medicalNo');
+    const medicalNoteGroup = document.getElementById('medicalNoteGroup');
+    const medicalNote = document.getElementById('medicalNote');
+
+    // Toggle medical note field based on medical condition selection
+    if (medicalYes && medicalNo && medicalNoteGroup) {
+        function toggleMedicalNote() {
+            if (medicalYes.checked) {
+                medicalNoteGroup.style.display = 'block';
+                medicalNote.setAttribute('required', 'required');
+            } else {
+                medicalNoteGroup.style.display = 'none';
+                medicalNote.removeAttribute('required');
+                medicalNote.value = '';
+            }
+        }
+
+        medicalYes.addEventListener('change', toggleMedicalNote);
+        medicalNo.addEventListener('change', toggleMedicalNote);
+    }
+
+    // Form validation and submission
+    registrationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        clearErrors();
+
+        // Validate form
+        if (validateForm()) {
+            // Show success message
+            showSuccessMessage();
+            
+            // Hide form
+            registrationForm.style.display = 'none';
+            
+            // Scroll to success message
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // Optional: Store form data in localStorage (for demo purposes)
+            const formData = new FormData(registrationForm);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+            localStorage.setItem('registrationData', JSON.stringify(formObject));
+        }
+    });
+
+    // Real-time validation on input
+    const inputs = registrationForm.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateField(input);
+        });
+
+        input.addEventListener('input', function() {
+            // Clear error on input
+            if (input.classList.contains('error')) {
+                const errorId = input.id + 'Error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    errorElement.textContent = '';
+                }
+                input.classList.remove('error');
+            }
+        });
+    });
+}
+
+/**
+ * Validate the entire form
+ * @returns {boolean} True if form is valid, false otherwise
+ */
+function validateForm() {
+    const form = document.getElementById('registrationForm');
+    let isValid = true;
+
+    // Required fields
+    const requiredFields = [
+        { id: 'fullName', name: 'Full Name' },
+        { id: 'phoneNumber', name: 'Phone Number' },
+        { id: 'emailAddress', name: 'Email Address' },
+        { id: 'emergencyContactName', name: 'Emergency Contact Name' },
+        { id: 'emergencyContactNumber', name: 'Emergency Contact Number' }
+    ];
+
+    // Validate required fields
+    requiredFields.forEach(field => {
+        const input = document.getElementById(field.id);
+        if (!validateField(input, field.name)) {
+            isValid = false;
+        }
+    });
+
+    // Validate email format
+    const emailInput = document.getElementById('emailAddress');
+    if (emailInput && emailInput.value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+            showError('emailAddress', 'Please enter a valid email address');
+            isValid = false;
+        }
+    }
+
+    // Validate phone number format (basic validation)
+    const phoneInput = document.getElementById('phoneNumber');
+    if (phoneInput && phoneInput.value) {
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(phoneInput.value) || phoneInput.value.length < 8) {
+            showError('phoneNumber', 'Please enter a valid phone number');
+            isValid = false;
+        }
+    }
+
+    // Validate emergency contact number
+    const emergencyPhoneInput = document.getElementById('emergencyContactNumber');
+    if (emergencyPhoneInput && emergencyPhoneInput.value) {
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(emergencyPhoneInput.value) || emergencyPhoneInput.value.length < 8) {
+            showError('emergencyContactNumber', 'Please enter a valid phone number');
+            isValid = false;
+        }
+    }
+
+    // Validate age group
+    const ageGroupInputs = document.querySelectorAll('input[name="ageGroup"]');
+    let ageGroupSelected = false;
+    ageGroupInputs.forEach(input => {
+        if (input.checked) {
+            ageGroupSelected = true;
+        }
+    });
+    if (!ageGroupSelected) {
+        showError('ageGroup', 'Please select an age group');
+        isValid = false;
+    }
+
+    // Validate medical condition
+    const medicalConditionInputs = document.querySelectorAll('input[name="medicalCondition"]');
+    let medicalConditionSelected = false;
+    medicalConditionInputs.forEach(input => {
+        if (input.checked) {
+            medicalConditionSelected = true;
+        }
+    });
+    if (!medicalConditionSelected) {
+        showError('medicalCondition', 'Please select an option');
+        isValid = false;
+    }
+
+    // Validate medical note if "Yes" is selected
+    const medicalYes = document.getElementById('medicalYes');
+    const medicalNote = document.getElementById('medicalNote');
+    if (medicalYes && medicalYes.checked && medicalNote) {
+        if (!medicalNote.value.trim()) {
+            showError('medicalNote', 'Please provide details about your medical condition');
+            isValid = false;
+        }
+    }
+
+    return isValid;
+}
+
+/**
+ * Validate a single field
+ * @param {HTMLElement} input - The input element to validate
+ * @param {string} fieldName - The name of the field for error messages
+ * @returns {boolean} True if field is valid, false otherwise
+ */
+function validateField(input, fieldName) {
+    if (!input) return false;
+
+    const value = input.value.trim();
+    const isRequired = input.hasAttribute('required');
+
+    // Check if required field is empty
+    if (isRequired && !value) {
+        const name = fieldName || input.previousElementSibling?.textContent || 'This field';
+        showError(input.id, `${name} is required`);
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Show error message for a field
+ * @param {string} fieldId - The ID of the field
+ * @param {string} message - The error message
+ */
+function showError(fieldId, message) {
+    const input = document.getElementById(fieldId);
+    if (input) {
+        input.classList.add('error');
+    }
+
+    const errorId = fieldId + 'Error';
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+/**
+ * Clear all error messages
+ */
+function clearErrors() {
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach(element => {
+        element.textContent = '';
+    });
+
+    const errorInputs = document.querySelectorAll('.error');
+    errorInputs.forEach(input => {
+        input.classList.remove('error');
+    });
+}
+
+/**
+ * Show success message after form submission
+ */
+function showSuccessMessage() {
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        successMessage.style.display = 'block';
     }
 }
 
