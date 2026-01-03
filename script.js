@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroAnimations();
     initHeroImageSlider();
     initImageCarousel();
+    initEventPageFeatures();
 });
 
 /* ============================================
@@ -475,5 +476,243 @@ function initSingleCarousel(carouselId) {
 
     // Set initial cursor
     carousel.style.cursor = 'grab';
+}
+
+/* ============================================
+   Event Page Features (middleFirst.html)
+   ============================================ */
+
+/**
+ * Initialize event page specific features
+ * - Gallery lightbox
+ * - Add to cart/favorites buttons
+ */
+function initEventPageFeatures() {
+    initGalleryLightbox();
+    initAddToCartFavorites();
+}
+
+/**
+ * Initialize gallery lightbox functionality
+ * - Opens images in modal view
+ * - Supports navigation between images
+ * - Keyboard navigation support
+ */
+function initGalleryLightbox() {
+    const galleryImages = document.querySelectorAll('.gallery-img[data-lightbox]');
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+
+    if (!lightboxModal || galleryImages.length === 0) return;
+
+    let currentImageIndex = 0;
+    const images = Array.from(galleryImages);
+
+    // Open lightbox with specific image
+    function openLightbox(index) {
+        currentImageIndex = index;
+        lightboxImage.src = images[currentImageIndex].src;
+        lightboxImage.alt = images[currentImageIndex].alt;
+        lightboxModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        updateNavigationButtons();
+    }
+
+    // Close lightbox
+    function closeLightbox() {
+        lightboxModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Show previous image
+    function showPreviousImage() {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        lightboxImage.src = images[currentImageIndex].src;
+        lightboxImage.alt = images[currentImageIndex].alt;
+        updateNavigationButtons();
+    }
+
+    // Show next image
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        lightboxImage.src = images[currentImageIndex].src;
+        lightboxImage.alt = images[currentImageIndex].alt;
+        updateNavigationButtons();
+    }
+
+    // Update navigation button visibility
+    function updateNavigationButtons() {
+        if (images.length <= 1) {
+            if (lightboxPrev) lightboxPrev.style.display = 'none';
+            if (lightboxNext) lightboxNext.style.display = 'none';
+        } else {
+            if (lightboxPrev) lightboxPrev.style.display = 'block';
+            if (lightboxNext) lightboxNext.style.display = 'block';
+        }
+    }
+
+    // Add click event to each gallery image
+    galleryImages.forEach((img, index) => {
+        img.addEventListener('click', () => openLightbox(index));
+        // Make images keyboard accessible
+        img.setAttribute('tabindex', '0');
+        img.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(index);
+            }
+        });
+    });
+
+    // Close button
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+
+    // Previous button
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPreviousImage();
+        });
+    }
+
+    // Next button
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNextImage();
+        });
+    }
+
+    // Close on background click
+    lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!lightboxModal.classList.contains('active')) return;
+
+        switch(e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                showPreviousImage();
+                break;
+            case 'ArrowRight':
+                showNextImage();
+                break;
+        }
+    });
+}
+
+/**
+ * Initialize add to cart and favorites functionality
+ * - Handles button clicks
+ * - Shows user feedback
+ * - Stores preferences in localStorage
+ */
+function initAddToCartFavorites() {
+    const addToCartBtn = document.getElementById('addToCart');
+    const addToFavoritesBtn = document.getElementById('addToFavorites');
+
+    // Add to cart functionality
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function() {
+            // Get event details
+            const eventTitle = document.querySelector('.event-hero-title')?.textContent || 'Wadi Al-Kafrein Hike';
+            const eventPrice = '18 JOD';
+            
+            // Store in localStorage (in a real app, this would be sent to a server)
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const eventItem = {
+                id: 'al-kafrein-hike',
+                title: eventTitle,
+                price: eventPrice,
+                date: 'FRIDAY, April 18',
+                addedAt: new Date().toISOString()
+            };
+
+            // Check if already in cart
+            const existingItem = cart.find(item => item.id === eventItem.id);
+            if (!existingItem) {
+                cart.push(eventItem);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Visual feedback
+                const originalText = addToCartBtn.textContent;
+                addToCartBtn.textContent = '✓ Added to Cart!';
+                addToCartBtn.style.backgroundColor = 'var(--accent-primary)';
+                addToCartBtn.style.color = 'var(--bg-primary)';
+                
+                setTimeout(() => {
+                    addToCartBtn.textContent = originalText;
+                    addToCartBtn.style.backgroundColor = '';
+                    addToCartBtn.style.color = '';
+                }, 2000);
+            } else {
+                // Already in cart
+                const originalText = addToCartBtn.textContent;
+                addToCartBtn.textContent = 'Already in Cart';
+                setTimeout(() => {
+                    addToCartBtn.textContent = originalText;
+                }, 2000);
+            }
+        });
+    }
+
+    // Add to favorites functionality
+    if (addToFavoritesBtn) {
+        addToFavoritesBtn.addEventListener('click', function() {
+            // Get event details
+            const eventTitle = document.querySelector('.event-hero-title')?.textContent || 'Wadi Al-Kafrein Hike';
+            
+            // Store in localStorage
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const eventItem = {
+                id: 'al-kafrein-hike',
+                title: eventTitle,
+                date: 'FRIDAY, April 18',
+                addedAt: new Date().toISOString()
+            };
+
+            // Check if already in favorites
+            const existingIndex = favorites.findIndex(item => item.id === eventItem.id);
+            if (existingIndex === -1) {
+                favorites.push(eventItem);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // Visual feedback
+                const originalText = addToFavoritesBtn.textContent;
+                addToFavoritesBtn.textContent = '✓ Added to Favorites!';
+                addToFavoritesBtn.style.backgroundColor = 'var(--accent-primary)';
+                addToFavoritesBtn.style.color = 'var(--bg-primary)';
+                
+                setTimeout(() => {
+                    addToFavoritesBtn.textContent = originalText;
+                    addToFavoritesBtn.style.backgroundColor = '';
+                    addToFavoritesBtn.style.color = '';
+                }, 2000);
+            } else {
+                // Remove from favorites
+                favorites.splice(existingIndex, 1);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // Visual feedback
+                const originalText = addToFavoritesBtn.textContent;
+                addToFavoritesBtn.textContent = 'Removed from Favorites';
+                setTimeout(() => {
+                    addToFavoritesBtn.textContent = originalText;
+                }, 2000);
+            }
+        });
+    }
 }
 
