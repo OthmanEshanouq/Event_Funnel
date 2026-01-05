@@ -213,13 +213,191 @@ body {
     width: 100%;
 }
 
-/* Right Side: Theme Toggle, Calendar, Hamburger */
+/* Right Side: Language, Theme Toggle, Calendar, Hamburger */
 .header-right {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
     justify-self: end;
 }
+
+/* Language Toggle Button */
+/* Language Dropdown Container */
+.language-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Language Toggle Button */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    min-width: 80px;
+}
+
+.language-toggle:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.language-toggle:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+.language-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.current-lang {
+    font-weight: var(--font-weight-bold);
+    min-width: 24px;
+    text-align: center;
+}
+
+.dropdown-arrow {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+}
+
+.language-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Language Dropdown Menu */
+.language-dropdown-menu {
+    position: absolute;
+    top: calc(100% + var(--spacing-xs));
+    right: 0;
+    min-width: 160px;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    list-style: none;
+    margin: 0;
+    padding: var(--spacing-xs);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-base);
+    z-index: 1000;
+}
+
+.language-dropdown.active .language-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-dropdown-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Language Option Button */
+.language-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    text-align: left;
+}
+
+.language-option:hover {
+    background-color: var(--bg-primary);
+    color: var(--accent-primary);
+}
+
+.language-option.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.language-option:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: -2px;
+}
+
+.lang-name {
+    flex: 1;
+}
+
+.lang-code {
+    font-size: var(--font-size-sm);
+    opacity: 0.7;
+    margin-left: var(--spacing-sm);
+}
+
+.language-option.active .lang-code {
+    opacity: 1;
+}
+
+/* RTL Support for Language Dropdown */
+[dir="rtl"] .language-dropdown-menu {
+    right: auto;
+    left: 0;
+}
+
+/* Responsive Styles for Language Dropdown */
+@media (max-width: 768px) {
+    .language-toggle {
+        min-width: 70px;
+        padding: var(--spacing-xs) var(--spacing-xs);
+        font-size: var(--font-size-xs);
+    }
+    
+    .language-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .current-lang {
+        min-width: 20px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .dropdown-arrow {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .language-dropdown-menu {
+        min-width: 140px;
+        right: 0;
+    }
+    
+    [dir="rtl"] .language-dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+}
+
 
 /* Theme Toggle Button */
 .theme-toggle {

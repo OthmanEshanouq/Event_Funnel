@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Skip to main content link for accessibility -->
-    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+    <a href="#main-content" class="skip-to-main" data-translate="skip-to-main">Skip to main content</a>
     
     <!-- Header: Sticky navigation with logo, nav links, theme toggle, and calendar -->
     <header class="header" id="header" role="banner">
@@ -23,8 +23,8 @@
                 
                 <!-- Desktop Navigation Links -->
                 <nav class="nav-desktop" id="navDesktop" role="navigation" aria-label="Main navigation">
-                    <a href="index.html#about" class="nav-link">About Us</a>
-                    <a href="index.html#ctaSection" class="nav-link">Our Next Trips</a>
+                    <a href="index.html#about" class="nav-link" data-translate="about-us">About Us</a>
+                    <a href="index.html#ctaSection" class="nav-link" data-translate="our-next-trips">Our Next Trips</a>
                 </nav>
             </div>
 
@@ -33,8 +33,37 @@
                 <h1 class="brand-name">Valleys Adventure</h1>
             </div>
 
-            <!-- Right side: Theme Toggle and Calendar -->
+            <!-- Right side: Language, Theme Toggle and Calendar -->
             <div class="header-right">
+                <!-- Language Dropdown Selector -->
+                <div class="language-dropdown" id="languageDropdown">
+                    <button class="language-toggle" id="languageToggle" aria-label="Select language" aria-expanded="false" aria-haspopup="true">
+                        <svg class="language-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span class="current-lang" id="currentLang">EN</span>
+                        <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <ul class="language-dropdown-menu" id="languageDropdownMenu" role="menu" aria-labelledby="languageToggle">
+                        <li role="none">
+                            <button class="language-option" data-lang="en" role="menuitem" aria-label="English">
+                                <span class="lang-name" data-translate="english">English</span>
+                                <span class="lang-code">EN</span>
+                            </button>
+                        </li>
+                        <li role="none">
+                            <button class="language-option" data-lang="ar" role="menuitem" aria-label="Arabic">
+                                <span class="lang-name" data-translate="arabic">العربية</span>
+                                <span class="lang-code">AR</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
                 <!-- Day/Night Mode Toggle -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -66,8 +95,8 @@
 
         <!-- Mobile Navigation Menu -->
         <nav class="nav-mobile" id="navMobile" role="navigation" aria-label="Mobile navigation">
-            <a href="index.html#about" class="nav-link">About Us</a>
-            <a href="index.html#ctaSection" class="nav-link">Our Next Trips</a>
+            <a href="index.html#about" class="nav-link" data-translate="about-us">About Us</a>
+            <a href="index.html#ctaSection" class="nav-link" data-translate="our-next-trips">Our Next Trips</a>
         </nav>
     </header>
 
@@ -86,66 +115,66 @@
                 <form class="registration-form" id="registrationForm" aria-label="Event registration form" novalidate>
                     <!-- Personal Details Section -->
                     <div class="form-section">
-                        <h2 class="form-section-title">Personal Details</h2>
+                        <h2 class="form-section-title" data-translate="registration-personal-details">Personal Details</h2>
                         
                         <div class="form-group">
-                            <label for="fullName" class="form-label">Full Name <span class="required">*</span></label>
-                            <input type="text" id="fullName" name="fullName" class="form-input" required placeholder="Enter your full name" aria-required="true" aria-describedby="fullNameError">
+                            <label for="fullName" class="form-label"><span data-translate="registration-full-name">Full Name</span> <span class="required" data-translate="required-field">*</span></label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" required data-translate="registration-full-name-placeholder" placeholder="Enter your full name" aria-required="true" aria-describedby="fullNameError">
                             <span class="error-message" id="fullNameError" role="alert" aria-live="polite"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="phoneNumber" class="form-label">
-                                Phone Number <span class="required">*</span>
+                                <span data-translate="registration-phone">Phone Number</span> <span class="required" data-translate="required-field">*</span>
                                 <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="WhatsApp">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                                 </svg>
                             </label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" required placeholder="Enter your phone number" aria-required="true" aria-describedby="phoneNumberError">
+                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" required data-translate="registration-phone-placeholder" placeholder="Enter your phone number" aria-required="true" aria-describedby="phoneNumberError">
                             <span class="error-message" id="phoneNumberError" role="alert" aria-live="polite"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="emailAddress" class="form-label">Email Address <span class="required">*</span></label>
-                            <input type="email" id="emailAddress" name="emailAddress" class="form-input" required placeholder="Enter your email address" aria-required="true" aria-describedby="emailAddressError">
+                            <label for="emailAddress" class="form-label"><span data-translate="registration-email">Email Address</span> <span class="required" data-translate="required-field">*</span></label>
+                            <input type="email" id="emailAddress" name="emailAddress" class="form-input" required data-translate="registration-email-placeholder" placeholder="Enter your email address" aria-required="true" aria-describedby="emailAddressError">
                             <span class="error-message" id="emailAddressError" role="alert" aria-live="polite"></span>
                         </div>
                     </div>
 
                     <!-- Emergency Contact Section -->
                     <div class="form-section">
-                        <h2 class="form-section-title">Emergency Contact</h2>
-                        <p class="form-note">In case of emergency</p>
+                        <h2 class="form-section-title" data-translate="registration-emergency-contact">Emergency Contact</h2>
+                        <p class="form-note" data-translate="registration-emergency-note">In case of emergency</p>
                         
                         <div class="form-group">
-                            <label for="emergencyContactName" class="form-label">Contact Name <span class="required">*</span></label>
-                            <input type="text" id="emergencyContactName" name="emergencyContactName" class="form-input" required placeholder="Enter emergency contact name" aria-required="true" aria-describedby="emergencyContactNameError">
+                            <label for="emergencyContactName" class="form-label"><span data-translate="registration-contact-name">Contact Name</span> <span class="required" data-translate="required-field">*</span></label>
+                            <input type="text" id="emergencyContactName" name="emergencyContactName" class="form-input" required data-translate="registration-contact-name-placeholder" placeholder="Enter emergency contact name" aria-required="true" aria-describedby="emergencyContactNameError">
                             <span class="error-message" id="emergencyContactNameError" role="alert" aria-live="polite"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="emergencyContactNumber" class="form-label">Contact Number <span class="required">*</span></label>
-                            <input type="tel" id="emergencyContactNumber" name="emergencyContactNumber" class="form-input" required placeholder="Enter emergency contact number" aria-required="true" aria-describedby="emergencyContactNumberError">
+                            <label for="emergencyContactNumber" class="form-label"><span data-translate="registration-contact-number">Contact Number</span> <span class="required" data-translate="required-field">*</span></label>
+                            <input type="tel" id="emergencyContactNumber" name="emergencyContactNumber" class="form-input" required data-translate="registration-contact-number-placeholder" placeholder="Enter emergency contact number" aria-required="true" aria-describedby="emergencyContactNumberError">
                             <span class="error-message" id="emergencyContactNumberError" role="alert" aria-live="polite"></span>
                         </div>
                     </div>
 
                     <!-- Age Group Section -->
                     <div class="form-section">
-                        <h2 class="form-section-title">Age Group <span class="required">*</span></h2>
+                        <h2 class="form-section-title"><span data-translate="registration-age-group">Age Group</span> <span class="required" data-translate="required-field">*</span></h2>
                         <div class="radio-group" role="radiogroup" aria-labelledby="ageGroupLabel" aria-required="true">
                             <span id="ageGroupLabel" class="sr-only">Select your age group</span>
                             <div class="radio-option">
                                 <input type="radio" id="age18-30" name="ageGroup" value="18-30" required aria-describedby="ageGroupError">
-                                <label for="age18-30" class="radio-label">18-30</label>
+                                <label for="age18-30" class="radio-label" data-translate="registration-age-18-30">18-30</label>
                             </div>
                             <div class="radio-option">
                                 <input type="radio" id="age30-45" name="ageGroup" value="30-45" required aria-describedby="ageGroupError">
-                                <label for="age30-45" class="radio-label">30-45</label>
+                                <label for="age30-45" class="radio-label" data-translate="registration-age-30-45">30-45</label>
                             </div>
                             <div class="radio-option">
                                 <input type="radio" id="age45plus" name="ageGroup" value="45+" required aria-describedby="ageGroupError">
-                                <label for="age45plus" class="radio-label">45+</label>
+                                <label for="age45plus" class="radio-label" data-translate="registration-age-45-plus">45+</label>
                             </div>
                         </div>
                         <span class="error-message" id="ageGroupError" role="alert" aria-live="polite"></span>
@@ -153,36 +182,36 @@
 
                     <!-- Medical Condition Section -->
                     <div class="form-section">
-                        <h2 class="form-section-title">Medical Condition</h2>
-                        <p class="form-question">Do you have any medical condition we should be aware of?</p>
+                        <h2 class="form-section-title" data-translate="registration-medical-condition">Medical Condition</h2>
+                        <p class="form-question" data-translate="registration-medical-question">Do you have any medical condition we should be aware of?</p>
                         
                         <div class="checkbox-group" role="radiogroup" aria-labelledby="medicalConditionLabel" aria-required="true">
                             <span id="medicalConditionLabel" class="sr-only">Do you have any medical condition we should be aware of?</span>
                             <div class="checkbox-option">
                                 <input type="radio" id="medicalNo" name="medicalCondition" value="no" required aria-describedby="medicalConditionError">
-                                <label for="medicalNo" class="checkbox-label">No</label>
+                                <label for="medicalNo" class="checkbox-label" data-translate="registration-medical-no">No</label>
                             </div>
                             <div class="checkbox-option">
                                 <input type="radio" id="medicalYes" name="medicalCondition" value="yes" required aria-describedby="medicalConditionError">
-                                <label for="medicalYes" class="checkbox-label">Yes</label>
+                                <label for="medicalYes" class="checkbox-label" data-translate="registration-medical-yes">Yes</label>
                             </div>
                         </div>
                         <span class="error-message" id="medicalConditionError" role="alert" aria-live="polite"></span>
 
                         <div class="form-group medical-note-group" id="medicalNoteGroup" style="display: none;">
-                            <label for="medicalNote" class="form-label">Please provide details:</label>
-                            <textarea id="medicalNote" name="medicalNote" class="form-textarea" rows="4" placeholder="Please describe your medical condition" aria-label="Medical condition details"></textarea>
+                            <label for="medicalNote" class="form-label" data-translate="registration-medical-details">Please provide details:</label>
+                            <textarea id="medicalNote" name="medicalNote" class="form-textarea" rows="4" data-translate="registration-medical-placeholder" placeholder="Please describe your medical condition" aria-label="Medical condition details"></textarea>
                         </div>
                     </div>
 
                     <!-- Privacy Note -->
                     <div class="privacy-note">
-                        <p>Your information is used only for event coordination and will not be shared.</p>
+                        <p data-translate="registration-privacy">Your information is used only for event coordination and will not be shared.</p>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-large" id="submitBtn">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-large" id="submitBtn" data-translate="registration-submit">Submit</button>
                     </div>
                 </form>
 
@@ -193,8 +222,8 @@
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                             <polyline points="22 4 12 14.01 9 11.01"></path>
                         </svg>
-                        <h2 class="success-title">Registration Submitted Successfully!</h2>
-                        <p class="success-text">Thank you for registering. We've received your information and will contact you soon.</p>
+                        <h2 class="success-title" data-translate="registration-success-title">Registration Submitted Successfully!</h2>
+                        <p class="success-text" data-translate="registration-success-text">Thank you for registering. We've received your information and will contact you soon.</p>
                     </div>
                 </div>
             </div>
@@ -205,7 +234,7 @@
     <footer class="footer" role="contentinfo">
         <div class="footer-container">
             <!-- Copyright -->
-            <p class="footer-copyright">
+            <p class="footer-copyright" data-translate="copyright">
                 Copyright © 2026 Valleys Adventure
             </p>
 

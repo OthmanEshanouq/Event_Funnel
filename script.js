@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroAnimations();
     initHeroImageSlider();
     initImageCarousel();
+    initLanguageToggle();
+    initTranslation();
     initEventPageFeatures();
     initRegistrationForm();
 });
@@ -330,9 +332,8 @@ window.addEventListener('unhandledrejection', function(event) {
  */
 function initImageCarousel() {
     // Initialize all carousels
-    initSingleCarousel('weekendAdventureCarousel');
     initSingleCarousel('joinNextEventCarousel');
-    initSingleCarousel('sunsetHikesCarousel');
+    initSingleCarousel('ourPreviousHikesCarousel');
 }
 
 /**
@@ -477,6 +478,464 @@ function initSingleCarousel(carouselId) {
 
     // Set initial cursor
     carousel.style.cursor = 'grab';
+}
+
+/* ============================================
+   Language Toggle & Translation System
+   ============================================ */
+
+/**
+ * Translation dictionary for English and Arabic
+ */
+const translations = {
+    en: {
+        // Header & Navigation
+        'about-us': 'About Us',
+        'our-next-trips': 'Our Next Trips',
+        'view-upcoming-hikes': 'View Upcoming Hikes',
+        'view-details': 'View Details',
+        'select-language': 'Select Language',
+        
+        // Hero Section (index.html)
+        'join-organized-hiking-trips': 'Join organized hiking trips',
+        'explore-nature-safely': 'Explore nature safely',
+        'meet-like-minded-people': 'Meet like-minded people',
+        'all-levels-welcome': 'All levels welcome',
+        'local-guides-community': 'Local guides & community',
+        'upcoming-hiking-events': 'Upcoming Hiking Events',
+        
+        // CTA Cards (index.html)
+        'our-next-hike': 'Our Next Hike',
+        'our-previous-hikes': 'Our Previous Hikes',
+        'discover-breathtaking-trails': 'Discover breathtaking trails with experienced guides. Perfect for all skill levels.',
+        'explore-past-adventures': 'Explore our past adventures including weekend adventures and sunset hikes. See what amazing experiences await you.',
+        
+        // Event Page (middleFirst.html) - Hero
+        'event-hero-title': 'A full day for hike & visit three historical sites',
+        'event-meta-date': 'Date:',
+        'event-meta-location': 'Location:',
+        'event-meta-level': 'Level:',
+        'event-location-value': 'Wadi Al-Kafrein',
+        'event-level-value': 'Intermediate',
+        'event-description-1': 'Join us for a special day filled with nature and unforgettable moments! 🌿',
+        'event-what-makes-special': 'What makes it special:',
+        'event-what-makes-special-text': 'Experience hiking through water, visit historical sites, and enjoy a delicious traditional lunch prepared on-site.',
+        'event-who-for': 'Who it is for:',
+        'event-who-for-text': 'Perfect for adventure enthusiasts who love nature, history, and outdoor activities. Suitable for intermediate hikers.',
+        
+        // Event Info Section (middleFirst.html)
+        'event-information': 'Event Information',
+        'info-location': 'Location',
+        'info-location-value': 'Wadi Al-Kafrein, Iraq Al-Amir',
+        'info-start-time': 'Start Time',
+        'info-start-time-1': '9:30 AM (Assembly)',
+        'info-start-time-2': '10:00 AM (Departure)',
+        'info-end-time': 'End Time',
+        'info-end-time-value': '6:00 PM (Return to Meeting point)',
+        'info-distance': 'Distance',
+        'info-distance-1': '8km total',
+        'info-distance-2': '~600m in water',
+        'info-required-gear': 'Required Gear',
+        'info-required-gear-value': 'Hiking shoes, backpack, water (2L+), snacks, powerBank, cap, sunblock, light jacket',
+        'info-guide': 'Guide',
+        'info-guide-value': 'Experienced local guide',
+        
+        // What's Included (middleFirst.html)
+        'whats-included': 'What\'s Included',
+        'included-transport': '✅ Transport',
+        'included-local-guide': '✅ Local guide',
+        'included-breakfast': '✅ Breakfast',
+        'included-lunch': '✅ Lunch (Chicken Sajiyah with cream)',
+        'included-tea': '✅ Tea with cardamom',
+        'included-photographer': '✅ Photographer',
+        
+        // Safety & Rules (middleFirst.html)
+        'safety-rules': 'Safety & Rules',
+        'safety-fitness-requirements': 'Fitness Requirements',
+        'safety-fitness-text': 'Intermediate level fitness required. You\'ll be walking 8km with approximately 600m in water (depth up to 0.5m).',
+        'safety-age-limits': 'Age Limits',
+        'safety-age-text': 'Suitable for adults and older teens. Please contact us for children under 16.',
+        'safety-weather': 'Weather Disclaimer',
+        'safety-weather-text': 'Event is weather-dependent. We\'ll notify participants 24 hours in advance if cancellation is needed.',
+        'safety-clean': 'Leave the Place Clean',
+        'safety-clean-text': 'Please respect nature and leave no trace. Take all your belongings and trash with you.',
+        
+        // Schedule (middleFirst.html)
+        'plan-of-day': 'Plan of the Day',
+        'schedule-assembly': 'Assembly Time',
+        'schedule-assembly-location': '📍 Meeting point: In front of Al Ahli club',
+        'schedule-departure': 'Departure',
+        'schedule-departure-text': 'We\'ll start our journey to the destination',
+        'schedule-breakfast': 'Breakfast on the Way',
+        'schedule-breakfast-text': 'Start your morning with a delicious breakfast',
+        'schedule-arrive': 'Arrive to Iraq Al-Amir',
+        'schedule-arrive-text': 'Tour around Iraq Al-Amir (Qaser Al-Abed, Tubya caves and Muallaqat Ad-Dare)',
+        'schedule-hiking': 'Start Hiking',
+        'schedule-hiking-text': 'Begin hiking at Wadi Al-Kafrein. We\'ll walk around 600m in water (depth may reach up to 0.5m)',
+        'schedule-lunch': 'Lunch',
+        'schedule-lunch-text': 'We\'re going to prepare chicken Sajiyah with cream',
+        'schedule-tea': '🍵 Tea with cardamom after lunch',
+        'schedule-return': 'Return to Meeting Point',
+        'schedule-return-text': 'We\'ll head back to meeting point',
+        
+        // What to Bring (middleFirst.html)
+        'what-to-bring': 'What Should I Bring With Me?',
+        'bring-smile': '😊 First of all, your beautiful smile',
+        'bring-id': '🆔 Your ID or passport',
+        'bring-backpack': '🎒 A comfortable backpack to carry your stuff',
+        'bring-water': '💧 Water (preferably not less than 2 liters) / snacks / juice',
+        'bring-powerbank': '🔋 Power bank',
+        'bring-cap': '🧢 Cap',
+        'bring-sunblock': '☀️ Sunblock',
+        'bring-shoes': '👟 Hiking shoes with a strong sole',
+        'bring-clothing': '👕 Comfortable clothing for hiking',
+        'bring-jacket': '🧥 Light jacket',
+        
+        // Map Section (middleFirst.html)
+        'meeting-point': 'Meeting Point',
+        'meeting-point-text': '📍 Meeting point: In front of Al Ahli club',
+        'meeting-point-note': 'For exact location, please contact us or check the Google Maps link',
+        
+        // Gallery (middleFirst.html)
+        'event-gallery': 'Event Gallery',
+        'gallery-subtitle': 'Join Next Event - Event-related images',
+        
+        // Price (middleFirst.html)
+        'event-fee': 'Event Fee',
+        'price-per-person': 'per person',
+        
+        // CTA Button (middleFirst.html)
+        'join-this-event': 'Join This Event',
+        
+        // Registration Form (middleSecond.html)
+        'registration-personal-details': 'Personal Details',
+        'registration-full-name': 'Full Name',
+        'registration-full-name-placeholder': 'Enter your full name',
+        'registration-phone': 'Phone Number',
+        'registration-phone-placeholder': 'Enter your phone number',
+        'registration-email': 'Email Address',
+        'registration-email-placeholder': 'Enter your email address',
+        'registration-emergency-contact': 'Emergency Contact',
+        'registration-emergency-note': 'In case of emergency',
+        'registration-contact-name': 'Contact Name',
+        'registration-contact-name-placeholder': 'Enter emergency contact name',
+        'registration-contact-number': 'Contact Number',
+        'registration-contact-number-placeholder': 'Enter emergency contact number',
+        'registration-age-group': 'Age Group',
+        'registration-age-18-30': '18-30',
+        'registration-age-30-45': '30-45',
+        'registration-age-45-plus': '45+',
+        'registration-medical-condition': 'Medical Condition',
+        'registration-medical-question': 'Do you have any medical condition we should be aware of?',
+        'registration-medical-no': 'No',
+        'registration-medical-yes': 'Yes',
+        'registration-medical-details': 'Please provide details:',
+        'registration-medical-placeholder': 'Please describe your medical condition',
+        'registration-privacy': 'Your information is used only for event coordination and will not be shared.',
+        'registration-submit': 'Submit',
+        'registration-success-title': 'Registration Submitted Successfully!',
+        'registration-success-text': 'Thank you for registering. We\'ve received your information and will contact you soon.',
+        'required-field': '*',
+        
+        // Common Elements
+        'skip-to-main': 'Skip to main content',
+        'english': 'English',
+        'arabic': 'العربية',
+        'copyright': 'Copyright © 2026 Valleys Adventure'
+    },
+    ar: {
+        // Header & Navigation
+        'about-us': 'من نحن',
+        'our-next-trips': 'رحلاتنا القادمة',
+        'view-upcoming-hikes': 'عرض الرحلات القادمة',
+        'view-details': 'عرض التفاصيل',
+        'select-language': 'اختر اللغة',
+        
+        // Hero Section (index.html)
+        'join-organized-hiking-trips': 'انضم إلى رحلات المشي المنظمة',
+        'explore-nature-safely': 'استكشف الطبيعة بأمان',
+        'meet-like-minded-people': 'تعرف على أشخاص متشابهين',
+        'all-levels-welcome': 'جميع المستويات مرحب بها',
+        'local-guides-community': 'مرشدون محليون ومجتمع',
+        'upcoming-hiking-events': 'رحلات المشي القادمة',
+        
+        // CTA Cards (index.html)
+        'our-next-hike': 'رحلتنا القادمة',
+        'our-previous-hikes': 'رحلاتنا السابقة',
+        'discover-breathtaking-trails': 'اكتشف مسارات خلابة مع مرشدين ذوي خبرة. مثالي لجميع مستويات المهارة.',
+        'explore-past-adventures': 'استكشف مغامراتنا السابقة بما في ذلك مغامرات نهاية الأسبوع ومسيرات الغروب. شاهد التجارب الرائعة التي تنتظرك.',
+        
+        // Event Page (middleFirst.html) - Hero
+        'event-hero-title': 'يوم كامل للمشي في البطبيعة وزيارة ثلاثة مواقع تاريخية',
+        'event-meta-date': 'التاريخ:',
+        'event-meta-location': 'الموقع:',
+        'event-meta-level': 'المستوى:',
+        'event-location-value': 'وادي الكفرين',
+        'event-level-value': 'متوسط',
+        'event-description-1': 'انضم إلينا ليوم خاص مليء بالطبيعة واللحظات التي لا تُنسى! 🌿',
+        'event-what-makes-special': 'ما الذي يجعله مميزًا:',
+        'event-what-makes-special-text': 'جرّب المشي عبر الماء، وزيارة المواقع التاريخية، والاستمتاع بغداء تقليدي لذيذ يتم تحضيره في الموقع.',
+        'event-who-for': 'لمن هو مناسب:',
+        'event-who-for-text': 'مثالي لعشاق المغامرة الذين يحبون الطبيعة والتاريخ والأنشطة الخارجية. مناسب للمتنزهين ذوي المستوى المتوسط.',
+        
+        // Event Info Section (middleFirst.html)
+        'event-information': 'معلومات الحدث',
+        'info-location': 'الموقع',
+        'info-location-value': 'وادي الكفرين، عراق الأمير',
+        'info-start-time': 'وقت البدء',
+        'info-start-time-1': '9:30 صباحًا (التجمع)',
+        'info-start-time-2': '10:00 صباحًا (الانطلاق)',
+        'info-end-time': 'وقت الانتهاء',
+        'info-end-time-value': '6:00 مساءً (العودة إلى نقطة الالتقاء)',
+        'info-distance': 'المسافة',
+        'info-distance-1': '8 كم إجمالي',
+        'info-distance-2': '~600 م في الماء',
+        'info-required-gear': 'المعدات المطلوبة',
+        'info-required-gear-value': 'حذاء مشي، حقيبة ظهر، ماء (2 لتر+)، وجبات خفيفة، بنك طاقة، قبعة، واقي شمس، سترة خفيفة',
+        'info-guide': 'المرشد',
+        'info-guide-value': 'مرشد محلي ذو خبرة',
+        
+        // What's Included (middleFirst.html)
+        'whats-included': 'ما هو متضمن',
+        'included-transport': '✅ النقل',
+        'included-local-guide': '✅ مرشد محلي',
+        'included-breakfast': '✅ وجبة الإفطار',
+        'included-lunch': '✅ الغداء (صاجية الدجاج مع الكريمة)',
+        'included-tea': '✅ الشاي بالهيل',
+        'included-photographer': '✅ مصور',
+        
+        // Safety & Rules (middleFirst.html)
+        'safety-rules': 'السلامة والقواعد',
+        'safety-fitness-requirements': 'متطلبات اللياقة البدنية',
+        'safety-fitness-text': 'مطلوب مستوى لياقة متوسط. ستسير 8 كم مع حوالي 600 م في الماء (العمق يصل إلى 0.5 م).',
+        'safety-age-limits': 'حدود العمر',
+        'safety-age-text': 'مناسب للبالغين والمراهقين الأكبر سنًا. يرجى الاتصال بنا للأطفال تحت سن 16.',
+        'safety-weather': 'تنبيه الطقس',
+        'safety-weather-text': 'الحدث يعتمد على الطقس. سنخطر المشاركين قبل 24 ساعة إذا كان الإلغاء ضروريًا.',
+        'safety-clean': 'اترك المكان نظيفًا',
+        'safety-clean-text': 'يرجى احترام الطبيعة وعدم ترك أي أثر. خذ جميع متعلقاتك والقمامة معك.',
+        
+        // Schedule (middleFirst.html)
+        'plan-of-day': 'خطة اليوم',
+        'schedule-assembly': 'وقت التجمع',
+        'schedule-assembly-location': '📍 نقطة الالتقاء: أمام نادي الأهلي',
+        'schedule-departure': 'الانطلاق',
+        'schedule-departure-text': 'سنبدأ رحلتنا إلى الوجهة',
+        'schedule-breakfast': 'وجبة الإفطار في الطريق',
+        'schedule-breakfast-text': 'ابدأ صباحك بوجبة إفطار لذيذة',
+        'schedule-arrive': 'الوصول إلى عراق الأمير',
+        'schedule-arrive-text': 'جولة حول عراق الأمير (قصر العبد، كهوف طوبيا ومعلقة الدير)',
+        'schedule-hiking': 'بدء المشي',
+        'schedule-hiking-text': 'ابدأ المشي في وادي الكفرين. سنسير حوالي 600 م في الماء (قد يصل العمق إلى 0.5 م)',
+        'schedule-lunch': 'الغداء',
+        'schedule-lunch-text': 'سنقوم بتحضير صاجية الدجاج مع الكريمة',
+        'schedule-tea': '🍵 الشاي بالهيل بعد الغداء',
+        'schedule-return': 'العودة إلى نقطة الالتقاء',
+        'schedule-return-text': 'سنعود إلى نقطة الالتقاء',
+        
+        // What to Bring (middleFirst.html)
+        'what-to-bring': 'ماذا يجب أن أحضر معي؟',
+        'bring-smile': '😊 أولاً وقبل كل شيء، ابتسامتك الجميلة',
+        'bring-id': '🆔 بطاقة الهوية أو جواز السفر',
+        'bring-backpack': '🎒 حقيبة ظهر مريحة لحمل أغراضك',
+        'bring-water': '💧 الماء (يفضل ألا يقل عن 2 لتر) / وجبات خفيفة / عصير',
+        'bring-powerbank': '🔋 بنك طاقة',
+        'bring-cap': '🧢 قبعة',
+        'bring-sunblock': '☀️ واقي شمس',
+        'bring-shoes': '👟 أحذية للمشي ذات نعل قوي',
+        'bring-clothing': '👕 ملابس مريحة للمشي',
+        'bring-jacket': '🧥 سترة خفيفة',
+        
+        // Map Section (middleFirst.html)
+        'meeting-point': 'نقطة الالتقاء',
+        'meeting-point-text': '📍 نقطة الالتقاء: أمام نادي الأهلي',
+        'meeting-point-note': 'للحصول على الموقع الدقيق، يرجى الاتصال بنا أو التحقق من رابط خرائط جوجل',
+        
+        // Gallery (middleFirst.html)
+        'event-gallery': 'معرض الحدث',
+        'gallery-subtitle': 'انضم إلى الحدث القادم - صور متعلقة بالحدث',
+        
+        // Price (middleFirst.html)
+        'event-fee': 'رسوم الحدث',
+        'price-per-person': 'للشخص الواحد',
+        
+        // CTA Button (middleFirst.html)
+        'join-this-event': 'انضم إلى هذا الحدث',
+        
+        // Registration Form (middleSecond.html)
+        'registration-personal-details': 'البيانات الشخصية',
+        'registration-full-name': 'الاسم الكامل',
+        'registration-full-name-placeholder': 'أدخل اسمك الكامل',
+        'registration-phone': 'رقم الهاتف',
+        'registration-phone-placeholder': 'أدخل رقم هاتفك',
+        'registration-email': 'عنوان البريد الإلكتروني',
+        'registration-email-placeholder': 'أدخل عنوان بريدك الإلكتروني',
+        'registration-emergency-contact': 'جهة اتصال الطوارئ',
+        'registration-emergency-note': 'في حالات الطوارئ',
+        'registration-contact-name': 'اسم جهة الاتصال',
+        'registration-contact-name-placeholder': 'أدخل اسم جهة اتصال الطوارئ',
+        'registration-contact-number': 'رقم جهة الاتصال',
+        'registration-contact-number-placeholder': 'أدخل رقم جهة اتصال الطوارئ',
+        'registration-age-group': 'الفئة العمرية',
+        'registration-age-18-30': '18-30',
+        'registration-age-30-45': '30-45',
+        'registration-age-45-plus': '45+',
+        'registration-medical-condition': 'الحالة الطبية',
+        'registration-medical-question': 'هل لديك أي حالة طبية يجب أن نكون على علم بها؟',
+        'registration-medical-no': 'لا',
+        'registration-medical-yes': 'نعم',
+        'registration-medical-details': 'يرجى تقديم التفاصيل:',
+        'registration-medical-placeholder': 'يرجى وصف حالتك الطبية',
+        'registration-privacy': 'تُستخدم معلوماتك فقط لتنسيق الحدث ولن يتم مشاركتها.',
+        'registration-submit': 'إرسال',
+        'registration-success-title': 'تم إرسال التسجيل بنجاح!',
+        'registration-success-text': 'شكرًا لتسجيلك. لقد تلقينا معلوماتك وسنتواصل معك قريبًا.',
+        'required-field': '*',
+        
+        // Common Elements
+        'skip-to-main': 'تخطي إلى المحتوى الرئيسي',
+        'english': 'English',
+        'arabic': 'العربية',
+        'copyright': 'حقوق النشر © 2026 مغامرات الوادي'
+    }
+};
+
+/**
+ * Initialize language dropdown selector
+ */
+function initLanguageToggle() {
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageToggle = document.getElementById('languageToggle');
+    const languageDropdownMenu = document.getElementById('languageDropdownMenu');
+    const languageOptions = languageDropdownMenu?.querySelectorAll('.language-option');
+    
+    if (!languageDropdown || !languageToggle || !languageDropdownMenu || !languageOptions) return;
+    
+    // Toggle dropdown menu visibility
+    languageToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isExpanded = languageToggle.getAttribute('aria-expanded') === 'true';
+        languageDropdown.classList.toggle('active', !isExpanded);
+        languageToggle.setAttribute('aria-expanded', !isExpanded);
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!languageDropdown.contains(e.target)) {
+            languageDropdown.classList.remove('active');
+            languageToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+    
+    // Handle language selection
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const selectedLang = this.getAttribute('data-lang');
+            
+            // Update active state
+            languageOptions.forEach(opt => {
+                opt.classList.remove('active');
+                opt.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+            
+            // Update current language indicator
+            const currentLang = document.getElementById('currentLang');
+            if (currentLang) {
+                currentLang.textContent = selectedLang.toUpperCase();
+            }
+            
+            // Close dropdown
+            languageDropdown.classList.remove('active');
+            languageToggle.setAttribute('aria-expanded', 'false');
+            
+            // Save language preference
+            localStorage.setItem('language', selectedLang);
+            
+            // Apply translation
+            applyTranslation(selectedLang);
+            
+            // Update HTML lang attribute
+            document.documentElement.setAttribute('lang', selectedLang);
+        });
+    });
+    
+    // Close dropdown on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && languageDropdown.classList.contains('active')) {
+            languageDropdown.classList.remove('active');
+            languageToggle.setAttribute('aria-expanded', 'false');
+            languageToggle.focus();
+        }
+    });
+}
+
+/**
+ * Initialize translation system
+ */
+function initTranslation() {
+    // Load saved language or default to English
+    const savedLang = localStorage.getItem('language') || 'en';
+    
+    // Update current language indicator
+    const currentLang = document.getElementById('currentLang');
+    if (currentLang) {
+        currentLang.textContent = savedLang.toUpperCase();
+    }
+    
+    // Update active language option in dropdown
+    const languageOptions = document.querySelectorAll('.language-option[data-lang]');
+    languageOptions.forEach(option => {
+        if (option.getAttribute('data-lang') === savedLang) {
+            option.classList.add('active');
+            option.setAttribute('aria-selected', 'true');
+        } else {
+            option.classList.remove('active');
+            option.setAttribute('aria-selected', 'false');
+        }
+    });
+    
+    // Apply translation
+    applyTranslation(savedLang);
+    
+    // Update HTML lang attribute
+    document.documentElement.setAttribute('lang', savedLang);
+}
+
+/**
+ * Apply translations to all elements with data-translate attribute
+ */
+function applyTranslation(lang) {
+    const elements = document.querySelectorAll('[data-translate]');
+    
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+            const translation = translations[lang][key];
+            
+            // Check if element is an input or textarea (has placeholder attribute)
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                if (element.hasAttribute('placeholder')) {
+                    element.setAttribute('placeholder', translation);
+                } else {
+                    element.value = translation;
+                }
+            } else {
+                element.textContent = translation;
+            }
+        }
+    });
+    
+    // Update direction for Arabic
+    if (lang === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.body.classList.add('rtl');
+    } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.body.classList.remove('rtl');
+    }
 }
 
 /* ============================================

@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Skip to main content link for accessibility -->
-    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+    <a href="#main-content" class="skip-to-main" data-translate="skip-to-main">Skip to main content</a>
     
     <!-- Header: Sticky navigation with logo, nav links, theme toggle, and calendar -->
     <header class="header" id="header" role="banner">
@@ -23,8 +23,8 @@
                 
                 <!-- Desktop Navigation Links -->
                 <nav class="nav-desktop" id="navDesktop" role="navigation" aria-label="Main navigation">
-                    <a href="#about" class="nav-link">About Us</a>
-                    <a href="#ctaSection" class="nav-link">Our Next Trips</a>
+                    <a href="#about" class="nav-link" data-translate="about-us">About Us</a>
+                    <a href="#ctaSection" class="nav-link" data-translate="our-next-trips">Our Next Trips</a>
                 </nav>
             </div>
 
@@ -33,8 +33,37 @@
                 <h1 class="brand-name">Valleys Adventure</h1>
             </div>
 
-            <!-- Right side: Theme Toggle and Calendar -->
+            <!-- Right side: Language, Theme Toggle and Calendar -->
             <div class="header-right">
+                <!-- Language Dropdown Selector -->
+                <div class="language-dropdown" id="languageDropdown">
+                    <button class="language-toggle" id="languageToggle" aria-label="Select language" aria-expanded="false" aria-haspopup="true">
+                        <svg class="language-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span class="current-lang" id="currentLang">EN</span>
+                        <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <ul class="language-dropdown-menu" id="languageDropdownMenu" role="menu" aria-labelledby="languageToggle">
+                        <li role="none">
+                            <button class="language-option" data-lang="en" role="menuitem" aria-label="English">
+                                <span class="lang-name" data-translate="english">English</span>
+                                <span class="lang-code">EN</span>
+                            </button>
+                        </li>
+                        <li role="none">
+                            <button class="language-option" data-lang="ar" role="menuitem" aria-label="Arabic">
+                                <span class="lang-name" data-translate="arabic">العربية</span>
+                                <span class="lang-code">AR</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
                 <!-- Day/Night Mode Toggle -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -66,8 +95,8 @@
 
         <!-- Mobile Navigation Menu -->
         <nav class="nav-mobile" id="navMobile" role="navigation" aria-label="Mobile navigation">
-            <a href="#about" class="nav-link">About Us</a>
-            <a href="#ctaSection" class="nav-link">Our Next Trips</a>
+            <a href="#about" class="nav-link" data-translate="about-us">About Us</a>
+            <a href="#ctaSection" class="nav-link" data-translate="our-next-trips">Our Next Trips</a>
         </nav>
     </header>
 
@@ -101,23 +130,21 @@
             <!-- Hero Content -->
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="hero-line" data-animation="fade-up">Join organized hiking trips</span>
-                    <span class="hero-line" data-animation="fade-up">Explore nature safely</span>
-                    <span class="hero-line" data-animation="fade-up">Meet like-minded people</span>
-                    <span class="hero-line" data-animation="fade-up">All levels welcome</span>
-                    <span class="hero-line" data-animation="fade-up">Local guides & community</span>
+                    <span class="hero-line" data-animation="fade-up" data-translate="join-organized-hiking-trips">Join organized hiking trips</span>
+                    <span class="hero-line" data-animation="fade-up" data-translate="explore-nature-safely">Explore nature safely</span>
+                    <span class="hero-line" data-animation="fade-up" data-translate="meet-like-minded-people">Meet like-minded people</span>
+                    <span class="hero-line" data-animation="fade-up" data-translate="all-levels-welcome">All levels welcome</span>
+                    <span class="hero-line" data-animation="fade-up" data-translate="local-guides-community">Local guides & community</span>
                 </h1>
             </div>
         </section>
 
         <!-- Call To Action Section -->
         <section class="cta-section" id="ctaSection" aria-labelledby="cta-heading">
-            <h2 id="cta-heading" class="sr-only">Upcoming Hiking Events</h2>
+            <h2 id="cta-heading" class="sr-only" data-translate="upcoming-hiking-events">Upcoming Hiking Events</h2>
             <!-- Primary CTA Button -->
             <div class="cta-primary">
-                <a href="#ctaSection" class="btn btn-primary" id="primaryCTA">
-                    View Upcoming Hikes
-                </a>
+                <a href="#ctaSection" class="btn btn-primary" id="primaryCTA" data-translate="view-upcoming-hikes">View Upcoming Hikes</a>
             </div>
 
             <!-- Secondary CTA Cards -->
@@ -144,26 +171,29 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <h2 class="card-title">Join Next Event</h2>
-                        <p class="card-description">
+                        <h2 class="card-title" data-translate="our-next-hike">Our Next Hike</h2>
+                        <p class="card-description" data-translate="discover-breathtaking-trails">
                             Discover breathtaking trails with experienced guides. Perfect for all skill levels.
                         </p>
-                        <a href="middleFirst.html" class="btn btn-secondary">View Details</a>
+                        <a href="middleFirst.html" class="btn btn-secondary" data-translate="view-details">View Details</a>
                     </div>
                 </article>
 
                 <!-- Card 2 -->
                 <article class="cta-card">
                     <div class="card-image">
-                        <!-- Swipable Image Carousel for Weekend Adventure -->
-                        <div class="image-carousel" id="weekendAdventureCarousel">
+                        <!-- Swipable Image Carousel for Our Previous Hikes -->
+                        <div class="image-carousel" id="ourPreviousHikesCarousel">
                             <div class="carousel-container">
-                                <img src="assets/zoubia 21.jpg" alt="Weekend Adventure - Image 1" class="carousel-img active">
-                                <img src="assets/zoubia 1.jpg" alt="Weekend Adventure - Image 2" class="carousel-img">
-                                <img src="assets/zoubia 6.jpg" alt="Weekend Adventure - Image 3" class="carousel-img">
-                                <img src="assets/zoubia 14.jpg" alt="Weekend Adventure - Image 4" class="carousel-img">
-                                <img src="assets/zoubia 15.jpg" alt="Weekend Adventure - Image 5" class="carousel-img">
-                                <img src="assets/zoubia 20.jpg" alt="Weekend Adventure - Image 6" class="carousel-img">
+                                <img src="assets/zoubia 21.jpg" alt="Previous Hike - Image 1" class="carousel-img active">
+                                <img src="assets/zoubia 1.jpg" alt="Previous Hike - Image 2" class="carousel-img">
+                                <img src="assets/zoubia 6.jpg" alt="Previous Hike - Image 3" class="carousel-img">
+                                <img src="assets/zoubia 14.jpg" alt="Previous Hike - Image 4" class="carousel-img">
+                                <img src="assets/zoubia 15.jpg" alt="Previous Hike - Image 5" class="carousel-img">
+                                <img src="assets/zoubia 20.jpg" alt="Previous Hike - Image 6" class="carousel-img">
+                                <img src="assets/sunset.png" alt="Previous Hike - Image 7" class="carousel-img">
+                                <img src="assets/king talal dam.jpg" alt="Previous Hike - Image 8" class="carousel-img">
+                                <img src="assets/king talal dam 3.jpg" alt="Previous Hike - Image 9" class="carousel-img">
                             </div>
                             <!-- Navigation Dots -->
                             <div class="carousel-dots"></div>
@@ -173,37 +203,11 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <h2 class="card-title">Weekend Adventure</h2>
-                        <p class="card-description">
-                            Escape the city and reconnect with nature. Join our weekend hiking community.
+                        <h2 class="card-title" data-translate="our-previous-hikes">Our Previous Hikes</h2>
+                        <p class="card-description" data-translate="explore-past-adventures">
+                            Explore our past adventures including weekend adventures and sunset hikes. See what amazing experiences await you.
                         </p>
-                        <a href="#details" class="btn btn-secondary">View Details</a>
-                    </div>
-                </article>
-
-                <!-- Card 3 -->
-                <article class="cta-card">
-                    <div class="card-image">
-                        <!-- Swipable Image Carousel for Sunset Hikes -->
-                        <div class="image-carousel" id="sunsetHikesCarousel">
-                            <div class="carousel-container">
-                                <img src="assets/sunset.png" alt="Sunset hiking experience" class="carousel-img active">
-                                <img src="assets/king talal dam.jpg" alt="King Talal Dam - Image 1" class="carousel-img">
-                                <img src="assets/king talal dam 3.jpg" alt="King Talal Dam - Image 2" class="carousel-img">
-                            </div>
-                            <!-- Navigation Dots -->
-                            <div class="carousel-dots"></div>
-                            <!-- Navigation Arrows -->
-                            <button class="carousel-arrow carousel-prev" aria-label="Previous image">‹</button>
-                            <button class="carousel-arrow carousel-next" aria-label="Next image">›</button>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">Sunset Hikes</h2>
-                        <p class="card-description">
-                            Experience the magic of hiking during golden hour. Limited spots available.
-                        </p>
-                        <a href="#details" class="btn btn-secondary">View Details</a>
+                        <a href="#details" class="btn btn-secondary" data-translate="view-details">View Details</a>
                     </div>
                 </article>
             </div>
@@ -214,7 +218,7 @@
     <footer class="footer" role="contentinfo">
         <div class="footer-container">
             <!-- Copyright -->
-            <p class="footer-copyright">
+            <p class="footer-copyright" data-translate="copyright">
                 Copyright © 2026 Valleys Adventure
             </p>
 
