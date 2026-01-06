@@ -43,7 +43,7 @@
                         <img src="assets/logo(cycling everywhere).png" alt="Cycling Every Where Logo" class="h-10 w-auto object-contain">
                         <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cycling Every Where</span>
                     </a>
-                    <a href="#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" aria-label="About Us">About Us</a>
+                    <a href="#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" aria-label="About Us" data-i18n="nav.about">About Us</a>
                 </div>
                 
                 <!-- Right: Language Dropdown and Theme Toggle -->
@@ -77,8 +77,8 @@
                     </button>
                 </div>
             </div>
-        </nav>
-    </header>
+        </header>
+    </nav>
 
     <!-- Hero Section with Image Slider -->
     <section id="home" class="hero-slider">
@@ -97,11 +97,31 @@
                     Cycling Every Where
                 </h1>
                 <div class="space-y-4 text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-                    <p class="fade-in" style="animation-delay: 0.1s;">✓ Join organized cycling trips</p>
-                    <p class="fade-in" style="animation-delay: 0.2s;">✓ Explore nature, city & every where safely</p>
-                    <p class="fade-in" style="animation-delay: 0.3s;">✓ Meet Like-minded People</p>
-                    <p class="fade-in" style="animation-delay: 0.4s;">✓ All Levels Welcome</p>
-                    <p class="fade-in" style="animation-delay: 0.5s;">✓ Local Guides & Community</p>
+                    <p class="fade-in" style="animation-delay: 0.1s;" data-i18n="hero.b1">✓ Join organized cycling trips</p>
+                    <p class="fade-in" style="animation-delay: 0.2s;" data-i18n="hero.b2">✓ ride in nature, city, mountains & every where safely</p>
+                    <p class="fade-in" style="animation-delay: 0.3s;" data-i18n="hero.b3">✓ Meet Like-minded People</p>
+                    <p class="fade-in" style="animation-delay: 0.4s;" data-i18n="hero.b4">✓ All Levels Welcome</p>
+                    <p class="fade-in" style="animation-delay: 0.5s;" data-i18n="hero.b5">✓ Local Guides & Community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="bg-emerald-600 dark:bg-emerald-700 py-4 border-b-4 border-emerald-700 dark:border-emerald-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.verified">Verified Guides</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.vehicle">Support Vehicle</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.rentals">Rental Bikes Available</span>
                 </div>
             </div>
         </div>
@@ -110,10 +130,10 @@
     <!-- About Us Section -->
     <section id="about" class="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white">About Us</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="about.title">About Us</h2>
             
             <!-- Main Text -->
-            <p class="text-xl text-center text-slate-700 dark:text-slate-300 max-w-4xl mx-auto mb-16 leading-relaxed">
+            <p class="text-xl text-center text-slate-700 dark:text-slate-300 max-w-4xl mx-auto mb-16 leading-relaxed" data-i18n="about.text">
                 We are a cycling organization that our goals is to meet new people, enjoying moments, explore the world, sport, and health.
             </p>
             
@@ -155,10 +175,68 @@
         </div>
     </section>
 
+    <!-- The Experience Gallery -->
+    <section id="gallery" class="py-20 bg-white dark:bg-slate-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="gallery.title">The Experience</h2>
+            
+            <!-- Photo Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                <!-- 1. Group Laughing -->
+                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                    <img 
+                        src="assets/friendship&fun.png" 
+                        alt="Group of cyclists laughing and having fun"
+                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.friendship">Friendship & Fun</p>
+                    </div>
+                </div>
+                
+                <!-- 2. Jordanian Sunset -->
+                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                    <img 
+                        src="assets/Stunning Views.png" 
+                        alt="Beautiful Jordanian sunset during cycling trip"
+                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.views">Stunning Views</p>
+                    </div>
+                </div>
+                
+                <!-- 3. Close-up of Bike -->
+                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                    <img 
+                        src="assets/qualityBike.jpg" 
+                        alt="Close-up of a bicycle"
+                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.quality">Quality Bikes</p>
+                    </div>
+                </div>
+                
+                <!-- 4. Healthy Snack Break -->
+                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                    <img 
+                        src="assets/refresh&recharge.png" 
+                        alt="Healthy snack break during cycling trip"
+                        class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.refresh">Refresh & Recharge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Preparation Section (The Funnel) -->
     <section id="preparation" class="py-20 bg-white dark:bg-slate-800 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16 text-slate-900 dark:text-white">What to Bring</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16 text-slate-900 dark:text-white" data-i18n="prep.title">What to Bring</h2>
             
             <!-- Icons Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-4xl mx-auto mb-12">
@@ -167,7 +245,7 @@
                     <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
                         <i data-lucide="droplet" class="w-10 h-10 text-blue-600 dark:text-blue-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Water</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.water">Water</h3>
                 </div>
                 
                 <!-- Helmet -->
@@ -175,7 +253,7 @@
                     <div class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
                         <i data-lucide="shield" class="w-10 h-10 text-red-600 dark:text-red-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Helmet (Safety)</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.helmet">Helmet (Safety)</h3>
                 </div>
                 
                 <!-- Spare Tube -->
@@ -183,7 +261,7 @@
                     <div class="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-4">
                         <i data-lucide="circle-dot" class="w-10 h-10 text-orange-600 dark:text-orange-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Spare Tube</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.tube">Spare Tube</h3>
                 </div>
                 
                 <!-- Comfortable Clothes -->
@@ -191,7 +269,7 @@
                     <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
                         <i data-lucide="shirt" class="w-10 h-10 text-green-600 dark:text-green-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Comfortable Clothes</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.clothes">Comfortable Clothes</h3>
                 </div>
             </div>
             
@@ -199,19 +277,18 @@
             <div class="max-w-2xl mx-auto bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-8 text-center shadow-xl">
                 <div class="flex items-center justify-center mb-4">
                     <i data-lucide="bike" class="w-12 h-12 text-white mr-4"></i>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-white">No bike? No problem!</h3>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white" data-i18n="cta.title">No bike? No problem!</h3>
                 </div>
-                <p class="text-xl text-white/90 mb-4">WhatsApp us to rent one.</p>
+                <p class="text-xl text-white/90 mb-6" data-i18n="cta.text">You can request a bike rental while filling the registration form.</p>
                 <a 
-                    href="https://wa.me/962787426310" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center space-x-2 bg-white text-emerald-600 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
-                    aria-label="Contact us on WhatsApp"
+                    href="register.html" 
+                    class="inline-flex items-center space-x-2 bg-white text-emerald-600 px-8 py-4 rounded-lg font-semibold hover:bg-emerald-50 transition-all transform hover:scale-105 shadow-lg"
+                    aria-label="Continue to Registration"
                 >
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    <span>Contact Us</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    <span data-i18n="cta.button">Register & Request a Bike</span>
                 </a>
+                <p class="mt-4 text-sm text-white/80" data-i18n="note.privacy">All your info is secret.</p>
             </div>
         </div>
     </section>
@@ -222,7 +299,7 @@
             <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
                 <!-- Copyright -->
                 <div class="text-center md:text-left">
-                    <p class="text-slate-400">&copy; 2024 Cycling Every Where. All rights reserved.</p>
+                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 Cycling Every Where. All rights reserved.</p>
                 </div>
                 
                 <!-- Phone Number -->
@@ -235,15 +312,14 @@
                 
                 <!-- Social Icons -->
                 <div class="flex items-center space-x-4">
-                    <a 
-                        href="https://www.instagram.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors"
-                        aria-label="Follow us on Instagram"
+                    <!-- Instagram Icon (Visual Only - Non-clickable) -->
+                    <div 
+                        class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center opacity-75"
+                        aria-label="Instagram"
+                        title="Instagram"
                     >
                         <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
+                    </div>
                     <a 
                         href="https://wa.me/962787426310" 
                         target="_blank" 

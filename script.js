@@ -60,12 +60,14 @@ function initLanguageSwitcher() {
     const langButton = document.getElementById('langButton');
     const langText = document.getElementById('langText');
     const langItems = document.querySelectorAll('.lang-dropdown-item');
+    const html = document.documentElement;
     
     if (!langDropdown || !langButton || !langText) return;
     
     // Get saved language preference or default to English
     const savedLang = localStorage.getItem('language') || 'en';
     updateLanguageUI(savedLang);
+    applyTranslations(savedLang);
     
     // Toggle dropdown on button click
     langButton.addEventListener('click', (e) => {
@@ -82,6 +84,7 @@ function initLanguageSwitcher() {
             if (selectedLang) {
                 updateLanguageUI(selectedLang);
                 localStorage.setItem('language', selectedLang);
+                applyTranslations(selectedLang);
                 langDropdown.classList.remove('open');
                 langButton.setAttribute('aria-expanded', 'false');
             }
@@ -101,14 +104,167 @@ function initLanguageSwitcher() {
         if (langText) {
             langText.textContent = lang === 'ar' ? 'العربية' : 'English';
         }
-        
-        // Keep dir="ltr" as per requirements
-        // This can be expanded later for full Arabic translation with RTL support
-        const html = document.documentElement;
         if (html) {
-            html.setAttribute('dir', 'ltr');
+            // Switch page direction based on language
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            html.setAttribute('lang', lang === 'ar' ? 'ar' : 'en');
         }
     }
+}
+
+// ============================================
+// Translations (EN/AR) and Application
+// ============================================
+function getTranslations() {
+    return {
+        en: {
+            'nav.about': 'About Us',
+            'hero.b1': '✓ Join organized cycling trips',
+            'hero.b2': '✓ ride in nature, city, mountains & every where safely',
+            'hero.b3': '✓ Meet Like-minded People',
+            'hero.b4': '✓ All Levels Welcome',
+            'hero.b5': '✓ Local Guides & Community',
+            'trust.verified': 'Verified Guides',
+            'trust.vehicle': 'Support Vehicle',
+            'trust.rentals': 'Rental Bikes Available',
+            'about.title': 'About Us',
+            'about.text': 'We are a cycling organization that our goals is to meet new people, enjoying moments, explore the world, sport, and health.',
+            'gallery.title': 'The Experience',
+            'gallery.friendship': 'Friendship & Fun',
+            'gallery.views': 'Stunning Views',
+            'gallery.quality': 'Quality Bikes',
+            'gallery.refresh': 'Refresh & Recharge',
+            'prep.title': 'What to Bring',
+            'prep.water': 'Water',
+            'prep.helmet': 'Helmet (Safety)',
+            'prep.tube': 'Spare Tube',
+            'prep.clothes': 'Comfortable Clothes',
+            'cta.title': 'No bike? No problem!',
+            'cta.text': 'You can request a bike rental while filling the registration form.',
+            'cta.button': 'Register & Request a Bike',
+            'footer.copy': '© 2026 Cycling Every Where. All rights reserved.',
+            'note.privacy': 'Your details are private and will not be shared. They are collected only for this event.',
+
+            // Registration page
+            'reg.title': 'Join Our Cycling Adventure',
+            'reg.subtitle': 'Fill out the form below to register for our next cycling trip',
+            'reg.personal': 'Personal Information',
+            'reg.fullname': 'Full Name',
+            'reg.email': 'Email Address',
+            'reg.phone': 'Phone Number',
+            'reg.rental': 'Bike Rental',
+            'reg.needBike': 'Do you need to rent a bike?',
+            'reg.yes': 'Yes',
+            'reg.no': 'No',
+            'reg.bikeType': 'Preferred Bike Type',
+            'reg.selectBikeType': 'Select bike type',
+            'reg.bikeType.mountain': 'Mountain Bike',
+            'reg.bikeType.road': 'Road Bike',
+            'reg.bikeType.hybrid': 'Hybrid Bike',
+            'reg.bikeType.electric': 'Electric Bike',
+            'reg.riderHeight': 'Rider Height (for sizing)',
+            'reg.selectHeight': 'Select height',
+            'reg.additional': 'Additional Information',
+            'reg.experienceLevel': 'Experience Level',
+            'reg.selectExperience': 'Select experience level',
+            'reg.level.beginner': 'Beginner',
+            'reg.level.intermediate': 'Intermediate',
+            'reg.level.advanced': 'Advanced',
+            'reg.submit': 'Complete Registration',
+            'reg.help': 'Need help? Contact us at',
+
+            // Confirmation page
+            'confirm.title': 'Registration Confirmed!',
+            'confirm.subtitle': 'Thank you for registering with Cycling Every Where. We\'re excited to have you join our next cycling adventure!',
+            'confirm.next': 'What\'s Next?',
+            'confirm.step1': 'You\'ll receive a confirmation email with all the details within 24 hours.',
+            'confirm.step2': 'We\'ll contact you to confirm the trip date and meeting location.',
+            'confirm.step3': 'If you requested a bike rental, we\'ll confirm availability and sizing.',
+            'confirm.backHome': 'Back to Home',
+            'confirm.contact': 'Contact Us',
+            'confirm.home': 'Home',
+            'confirm.viewPage': 'View confirmation page'
+        },
+        ar: {
+            'nav.about': 'من نحن',
+            'hero.b1': '✓ انضم إلى رحلات دراجات منظمة',
+            'hero.b2': '✓ قد في الطبيعة والمدينة والجبال وفي كل مكان بأمان',
+            'hero.b3': '✓ تعرّف على أشخاص يشاركونك الشغف',
+            'hero.b4': '✓ جميع المستويات مرحب بها',
+            'hero.b5': '✓ مرشدون محليون ومجتمع داعم',
+            'trust.verified': 'مرشدون معتمدون',
+            'trust.vehicle': 'مركبة دعم مرافقة',
+            'trust.rentals': 'دراجات للإيجار متاحة',
+            'about.title': 'من نحن',
+            'about.text': 'نحن منظمة ركوب دراجات هدفنا التعارف والاستمتاع واكتشاف العالم والرياضة والصحة.',
+            'gallery.title': 'التجربة',
+            'gallery.friendship': 'المرح والصداقة',
+            'gallery.views': 'مناظر خلابة',
+            'gallery.quality': 'دراجات عالية الجودة',
+            'gallery.refresh': 'استراحة وانتعاش',
+            'prep.title': 'ماذا تحضر معك',
+            'prep.water': 'ماء',
+            'prep.helmet': 'خوذة (سلامة)',
+            'prep.tube': 'أنبوب احتياطي',
+            'prep.clothes': 'ملابس مريحة',
+            'cta.title': 'ما عندك دراجة؟ ولا يهمك!',
+            'cta.text': 'يمكنك طلب استئجار دراجة أثناء تعبئة نموذج التسجيل.',
+            'cta.button': 'سجّل واطلب دراجة',
+            'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
+            'note.privacy': 'بياناتك خاصة ولن تتم مشاركتها. يتم جمعها لهذا الحدث فقط.',
+
+            // Registration page
+            'reg.title': 'انضم إلى مغامرة ركوب الدراجات',
+            'reg.subtitle': 'املأ النموذج أدناه للتسجيل في رحلتنا القادمة',
+            'reg.personal': 'المعلومات الشخصية',
+            'reg.fullname': 'الاسم الكامل',
+            'reg.email': 'البريد الإلكتروني',
+            'reg.phone': 'رقم الهاتف',
+            'reg.rental': 'استئجار دراجة',
+            'reg.needBike': 'هل تحتاج إلى استئجار دراجة؟',
+            'reg.yes': 'نعم',
+            'reg.no': 'لا',
+            'reg.bikeType': 'نوع الدراجة المفضل',
+            'reg.selectBikeType': 'اختر نوع الدراجة',
+            'reg.bikeType.mountain': 'دراجة جبلية',
+            'reg.bikeType.road': 'دراجة طريق',
+            'reg.bikeType.hybrid': 'دراجة هجينة',
+            'reg.bikeType.electric': 'دراجة كهربائية',
+            'reg.riderHeight': 'طول الراكب (للمقاس)',
+            'reg.selectHeight': 'اختر الطول',
+            'reg.additional': 'معلومات إضافية',
+            'reg.experienceLevel': 'مستوى الخبرة',
+            'reg.selectExperience': 'اختر مستوى الخبرة',
+            'reg.level.beginner': 'مبتدئ',
+            'reg.level.intermediate': 'متوسط',
+            'reg.level.advanced': 'متقدم',
+            'reg.submit': 'إتمام التسجيل',
+            'reg.help': 'تحتاج مساعدة؟ اتصل بنا على',
+
+            // Confirmation page
+            'confirm.title': 'تم تأكيد التسجيل!',
+            'confirm.subtitle': 'شكراً لتسجيلك مع Cycling Every Where. يسعدنا انضمامك إلى مغامرتنا القادمة!',
+            'confirm.next': 'ما الخطوة التالية؟',
+            'confirm.step1': 'ستصلك رسالة تأكيد بجميع التفاصيل خلال 24 ساعة.',
+            'confirm.step2': 'سنتواصل لتأكيد موعد الرحلة ومكان التجمع.',
+            'confirm.step3': 'إن طلبت دراجة للإيجار، سنؤكد التوفر والمقاس.',
+            'confirm.backHome': 'العودة إلى الرئيسية',
+            'confirm.contact': 'تواصل معنا',
+            'confirm.home': 'الرئيسية',
+            'confirm.viewPage': 'عرض صفحة التأكيد'
+        }
+    };
+}
+
+function applyTranslations(lang) {
+    const translations = getTranslations();
+    const dict = translations[lang] || translations.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+            el.textContent = dict[key];
+        }
+    });
 }
 
 // ============================================

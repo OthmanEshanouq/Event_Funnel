@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Cycling Every Where</title>
+    <meta name="description" content="Register for cycling trips with Cycling Every Where. Request bike rental during registration.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header (Sticky) -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm transition-colors duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Left: Logo -->
+                <div class="flex items-center space-x-2">
+                    <a href="index.html" class="flex items-center space-x-2 group" aria-label="Home">
+                        <img src="assets/logo(cycling everywhere).png" alt="Cycling Every Where Logo" class="h-10 w-auto object-contain">
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cycling Every Where</span>
+                    </a>
+                </div>
+                
+                <!-- Right: Back to Home -->
+                <a href="index.html" class="text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors flex items-center space-x-2" aria-label="Back to Home">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline">Back to Home</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Registration Form Section -->
+    <section class="pt-32 pb-20 min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="reg.title">Join Our Cycling Adventure</h1>
+                <p class="text-lg text-slate-600 dark:text-slate-400" data-i18n="reg.subtitle">Fill out the form below to register for our next cycling trip</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2" data-i18n="note.privacy">All your info is secret.</p>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registrationForm" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 space-y-6" novalidate>
+                <!-- Personal Information -->
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-3" data-i18n="reg.personal">Personal Information</h2>
+                    
+                    <!-- Full Name -->
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            <span data-i18n="reg.fullname">Full Name</span> <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName" 
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                            placeholder="Enter your full name"
+                        >
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            <span data-i18n="reg.email">Email Address</span> <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                            placeholder="your.email@example.com"
+                        >
+                    </div>
+
+                    <!-- Phone -->
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            <span data-i18n="reg.phone">Phone Number</span> <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                            placeholder="00962781234567"
+                        >
+                    </div>
+                </div>
+
+                <!-- Bike Rental Section -->
+                <div class="space-y-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-3" data-i18n="reg.rental">Bike Rental</h2>
+                    
+                    <!-- Do you need to rent a bike? -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+                            <span data-i18n="reg.needBike">Do you need to rent a bike?</span> <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    name="needBike" 
+                                    value="yes" 
+                                    required
+                                    class="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
+                                    id="needBikeYes"
+                                >
+                                <span class="text-slate-700 dark:text-slate-300" data-i18n="reg.yes">Yes</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    name="needBike" 
+                                    value="no" 
+                                    required
+                                    class="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
+                                    id="needBikeNo"
+                                >
+                                <span class="text-slate-700 dark:text-slate-300" data-i18n="reg.no">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Conditional Fields (shown when Yes is selected) -->
+                    <div id="bikeRentalFields" class="hidden space-y-4 transition-all duration-300">
+                        <!-- Preferred Bike Type -->
+                        <div>
+                            <label for="bikeType" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                <span data-i18n="reg.bikeType">Preferred Bike Type</span> <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="bikeType" 
+                                name="bikeType"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                            >
+                                <option value="" data-i18n="reg.selectBikeType">Select bike type</option>
+                                <option value="mountain" data-i18n="reg.bikeType.mountain">Mountain Bike</option>
+                                <option value="road" data-i18n="reg.bikeType.road">Road Bike</option>
+                                <option value="hybrid" data-i18n="reg.bikeType.hybrid">Hybrid Bike</option>
+                                <option value="electric" data-i18n="reg.bikeType.electric">Electric Bike</option>
+                            </select>
+                        </div>
+
+                        <!-- Rider Height -->
+                        <div>
+                            <label for="riderHeight" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                <span data-i18n="reg.riderHeight">Rider Height (for sizing)</span> <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex gap-4">
+                                <select 
+                                    id="riderHeight" 
+                                    name="riderHeight"
+                                    class="flex-1 px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                                >
+                                    <option value="" data-i18n="reg.selectHeight">Select height</option>
+                                    <option value="140-150">140-150 cm</option>
+                                    <option value="150-160">150-160 cm</option>
+                                    <option value="160-170">160-170 cm</option>
+                                    <option value="170-180">170-180 cm</option>
+                                    <option value="180-190">180-190 cm</option>
+                                    <option value="190+">190+ cm</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Ride Experience Level removed from rental; added globally below -->
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="space-y-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-3" data-i18n="reg.additional">Additional Information</h2>
+
+                    <!-- Overall Experience Level -->
+                    <div>
+                        <label for="overallExperience" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            <span data-i18n="reg.experienceLevel">Experience Level</span>
+                        </label>
+                        <select 
+                            id="overallExperience" 
+                            name="overallExperience"
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                        >
+                            <option value="" data-i18n="reg.selectExperience">Select experience level</option>
+                            <option value="beginner" data-i18n="reg.level.beginner">Beginner</option>
+                            <option value="intermediate" data-i18n="reg.level.intermediate">Intermediate</option>
+                            <option value="advanced" data-i18n="reg.level.advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Emergency Contact -->
+                    <div>
+                        <label for="emergencyContact" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            Emergency Contact Name & Phone
+                        </label>
+                        <input 
+                            type="text" 
+                            id="emergencyContact" 
+                            name="emergencyContact"
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                            placeholder="Name and phone number"
+                        >
+                    </div>
+
+                    <!-- Special Requests or Notes -->
+                    <div>
+                        <label for="notes" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                            Special Requests or Notes
+                        </label>
+                        <textarea 
+                            id="notes" 
+                            name="notes" 
+                            rows="4"
+                            class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors resize-none"
+                            placeholder="Any special requirements or questions..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6">
+                    <button 
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-emerald-600 hover:to-teal-700 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
+                    >
+                        <span data-i18n="reg.submit">Complete Registration</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Help Text -->
+            <p class="text-center text-slate-500 dark:text-slate-400 mt-6 text-sm">
+                <span data-i18n="reg.help">Need help? Contact us at</span> <a href="tel:00962787426310" class="text-emerald-600 dark:text-emerald-400 hover:underline">00962787426310</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 dark:bg-slate-950 text-white py-8 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-slate-400">&copy; 2026 Cycling Every Where. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Registration form specific JavaScript
+        (function initRegistrationForm() {
+            const form = document.getElementById('registrationForm');
+            const needBikeYes = document.getElementById('needBikeYes');
+            const needBikeNo = document.getElementById('needBikeNo');
+            const bikeRentalFields = document.getElementById('bikeRentalFields');
+            const bikeType = document.getElementById('bikeType');
+            const riderHeight = document.getElementById('riderHeight');
+            const experienceLevel = document.getElementById('experienceLevel');
+
+            // Toggle bike rental fields based on selection
+            function toggleBikeRentalFields() {
+                if (needBikeYes.checked) {
+                    bikeRentalFields.classList.remove('hidden');
+                    bikeRentalFields.classList.add('block');
+                    // Make fields required
+                    bikeType.setAttribute('required', 'required');
+                    riderHeight.setAttribute('required', 'required');
+                    experienceLevel.setAttribute('required', 'required');
+                } else {
+                    bikeRentalFields.classList.add('hidden');
+                    bikeRentalFields.classList.remove('block');
+                    // Remove required attribute
+                    bikeType.removeAttribute('required');
+                    riderHeight.removeAttribute('required');
+                    experienceLevel.removeAttribute('required');
+                    // Clear values
+                    bikeType.value = '';
+                    riderHeight.value = '';
+                    experienceLevel.value = '';
+                }
+            }
+
+            // Add event listeners
+            if (needBikeYes) {
+                needBikeYes.addEventListener('change', toggleBikeRentalFields);
+            }
+            if (needBikeNo) {
+                needBikeNo.addEventListener('change', toggleBikeRentalFields);
+            }
+
+            // Form submission handler
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+
+                    // Collect form data
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData);
+
+                    // Log data (in production, send to server)
+                    console.log('Registration Data:', data);
+
+                    // Redirect to confirmation page
+                    window.location.href = 'middleSecond.html';
+                });
+            }
+
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        })();
+    </script>
+</body>
+</html>
+
