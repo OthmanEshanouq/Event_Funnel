@@ -22,6 +22,7 @@
         initHeaderScrollEffect();
         initLazyLoading();
         initFAQAccordion();
+        initRegistrationForm();
     }
 })();
 
@@ -141,7 +142,7 @@ function getTranslations() {
             'prep.tube': 'Spare Tube',
             'prep.clothes': 'Comfortable Clothes',
             'footer.copy': '© 2026 Cycling Every Where. All rights reserved.',
-            'note.privacy': 'Your details are private and will not be shared. They are collected only for this event.',
+            'note.privacy': 'Your information is kept confidential and will only be used for organizing and managing this event.',
 
             // Index secondary CTA
             'cta2.title': 'Ready to join the ride?',
@@ -210,6 +211,8 @@ function getTranslations() {
             'reg.notes': 'Special Requests or Notes',
             'reg.submit': 'Complete Registration',
             'reg.help': 'Need help? Contact us at',
+            'reg.thankYouTitle': 'Thank you for registering! We\'re excited to have you join our cycling adventure.',
+            'reg.thankYouFollowUp': 'Our team will contact you shortly to confirm your spot.',
 
             // Confirmation page
             'confirm.title': 'Registration Confirmed!',
@@ -246,7 +249,7 @@ function getTranslations() {
             'prep.tube': 'أنبوب احتياطي',
             'prep.clothes': 'ملابس مريحة',
             'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
-            'note.privacy': 'بياناتك خاصة ولن تتم مشاركتها. يتم جمعها لهذا الحدث فقط.',
+            'note.privacy': 'معلوماتك محفوظة بسرية ولن تُستخدم إلا لتنظيم وإدارة هذا الحدث.',
 
             // Index secondary CTA
             'cta2.title': 'جاهز للانضمام للرحلة؟',
@@ -315,6 +318,8 @@ function getTranslations() {
             'reg.notes': 'ملاحظات أو طلبات خاصة',
             'reg.submit': 'إتمام التسجيل',
             'reg.help': 'تحتاج مساعدة؟ اتصل بنا على',
+            'reg.thankYouTitle': 'شكراً لتسجيلك! يسعدنا انضمامك إلى مغامرة ركوب الدراجات.',
+            'reg.thankYouFollowUp': 'سيتواصل معك فريقنا قريباً لتأكيد مكانك.',
 
             // Confirmation page
             'confirm.title': 'تم تأكيد التسجيل!',
@@ -597,5 +602,126 @@ function initFAQAccordion() {
                 toggle();
             }
         });
+    });
+}
+
+// ============================================
+// Registration Form Handler
+// ============================================
+function initRegistrationForm() {
+    const form = document.getElementById('registrationForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+    
+    if (!form) return;
+    
+    let isSubmitting = false;
+    
+    // Handle bike rental conditional fields
+    const needBikeRadios = form.querySelectorAll('input[name="needBike"]');
+    const bikeRentalFields = form.querySelector('.space-y-4.bg-slate-50');
+    const bikeTypeSelect = document.getElementById('bikeType');
+    const riderHeightSelect = document.getElementById('riderHeight');
+    
+    function toggleBikeRentalFields() {
+        const selectedValue = Array.from(needBikeRadios).find(r => r.checked)?.value;
+        
+        if (selectedValue === 'yes' && bikeRentalFields) {
+            bikeRentalFields.classList.remove('hidden');
+            if (bikeTypeSelect) bikeTypeSelect.setAttribute('required', 'required');
+            if (riderHeightSelect) riderHeightSelect.setAttribute('required', 'required');
+        } else if (selectedValue === 'no' && bikeRentalFields) {
+            bikeRentalFields.classList.add('hidden');
+            if (bikeTypeSelect) {
+                bikeTypeSelect.removeAttribute('required');
+                bikeTypeSelect.value = '';
+            }
+            if (riderHeightSelect) {
+                riderHeightSelect.removeAttribute('required');
+                riderHeightSelect.value = '';
+            }
+        }
+    }
+    
+    // Add event listeners for bike rental radio buttons
+    needBikeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleBikeRentalFields);
+    });
+    
+    // Initialize state on load
+    toggleBikeRentalFields();
+    
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Prevent duplicate submissions
+        if (isSubmitting) {
+            return;
+        }
+        
+        // Validate form
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        // Set submitting state
+        isSubmitting = true;
+        
+        // Disable all form inputs to prevent changes
+        const inputs = form.querySelectorAll('input, select, textarea, button');
+        inputs.forEach(input => {
+            input.disabled = true;
+            input.setAttribute('aria-disabled', 'true');
+        });
+        
+        // Collect form data (for logging/API submission in production)
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        console.log('Registration Data:', data);
+        
+        // Hide the form header (title and subtitle)
+        const formHeader = document.getElementById('formHeader');
+        if (formHeader) {
+            formHeader.style.display = 'none';
+            formHeader.setAttribute('aria-hidden', 'true');
+        }
+        
+        // Hide the form completely
+        form.style.display = 'none';
+        form.setAttribute('aria-hidden', 'true');
+        
+        // Show thank you message
+        if (thankYouMessage) {
+            thankYouMessage.classList.remove('hidden');
+            thankYouMessage.setAttribute('aria-live', 'polite');
+            thankYouMessage.removeAttribute('aria-hidden');
+            
+            // Move focus to thank you message for accessibility
+            setTimeout(() => {
+                thankYouMessage.focus();
+                thankYouMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+            
+            // Re-initialize icons for checkmark
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        // Note: In production, you would send data to server here
+        // Example:
+        // fetch('/api/register', {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     headers: { 'Content-Type': 'application/json' }
+        // })
+        // .then(response => response.json())
+        // .then(result => {
+        //     // Handle success
+        // })
+        // .catch(error => {
+        //     // Handle error, re-enable form
+        // });
     });
 }
