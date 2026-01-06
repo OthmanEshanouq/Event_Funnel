@@ -21,6 +21,7 @@
         initIcons();
         initHeaderScrollEffect();
         initLazyLoading();
+        initFAQAccordion();
     }
 })();
 
@@ -139,11 +140,46 @@ function getTranslations() {
             'prep.helmet': 'Helmet (Safety)',
             'prep.tube': 'Spare Tube',
             'prep.clothes': 'Comfortable Clothes',
-            'cta.title': 'No bike? No problem!',
-            'cta.text': 'You can request a bike rental while filling the registration form.',
-            'cta.button': 'Register & Request a Bike',
             'footer.copy': '© 2026 Cycling Every Where. All rights reserved.',
             'note.privacy': 'Your details are private and will not be shared. They are collected only for this event.',
+
+            // Index secondary CTA
+            'cta2.title': 'Ready to join the ride?',
+            'cta2.text': 'Head to the information hub to confirm details and register.',
+            'cta2.btn': 'Proceed to information page',
+
+            // Hub bike CTA
+            'hub.bike.title': 'No bike? No problem!',
+            'hub.bike.text': 'You can request a bike rental while filling the registration form.',
+            'hub.bike.btn': 'Registration & Rent A Bike',
+            'hub.hero.title': 'Sunrise Ride in Umm Qais',
+            'hub.hero.desc': 'Join our guided sunrise ride in Umm Qais over the next two Fridays. Roll out at 06:30 AM and enjoy ~4 hours of scenic cycling.',
+            'hub.facts.city': 'Irbid, Jordan',
+            'hub.facts.time': '06:30 AM',
+            'hub.facts.duration': '~4 Hours',
+            'hub.who.title': 'Who It’s For',
+            'hub.who.text': 'All levels welcome. We’ll have lead cyclists for beginners and faster groups for pros—so you ride at the pace that feels great for you.',
+            'hub.highlights.title': 'Experience Highlights',
+            'hub.highlights.item1': 'Breathtaking views of the Sea of Galilee',
+            'hub.highlights.item2': 'Historic Roman Ruins',
+            'hub.highlights.item3': 'Fresh Breakfast in Nature',
+            'hub.highlights.item4': 'Great Community Vibes',
+            'hub.bring.title': 'What to Bring',
+            'hub.bring.water': 'Water — 1.5L',
+            'hub.bring.helmet': 'Helmet — Mandatory',
+            'hub.bring.id': 'ID Card — Carry it',
+            'hub.bring.sun': 'Sunscreen — SPF advised',
+            'hub.safety.title': 'Safety',
+            'hub.safety.item1': 'Certified guides',
+            'hub.safety.item2': 'First-aid on site',
+            'hub.safety.item3': 'Support vehicle follows the group',
+            'hub.faq.title': 'FAQ',
+            'hub.faq.q1': 'Is transportation provided?',
+            'hub.faq.a1': 'Please arrange your own transport to Umm Qais. We’ll share the exact meet point after registration.',
+            'hub.faq.q2': 'What if it rains?',
+            'hub.faq.a2': 'We ride if conditions are safe. Otherwise, we’ll notify you with an updated plan.',
+            'hub.faq.q3': 'Is it hilly?',
+            'hub.faq.a3': 'Yes, but we have support! Pace leaders, rest stops, and a follow vehicle have you covered.',
 
             // Registration page
             'reg.title': 'Join Our Cycling Adventure',
@@ -170,6 +206,8 @@ function getTranslations() {
             'reg.level.beginner': 'Beginner',
             'reg.level.intermediate': 'Intermediate',
             'reg.level.advanced': 'Advanced',
+            'reg.emergency': 'Emergency Contact Name & Phone',
+            'reg.notes': 'Special Requests or Notes',
             'reg.submit': 'Complete Registration',
             'reg.help': 'Need help? Contact us at',
 
@@ -207,11 +245,46 @@ function getTranslations() {
             'prep.helmet': 'خوذة (سلامة)',
             'prep.tube': 'أنبوب احتياطي',
             'prep.clothes': 'ملابس مريحة',
-            'cta.title': 'ما عندك دراجة؟ ولا يهمك!',
-            'cta.text': 'يمكنك طلب استئجار دراجة أثناء تعبئة نموذج التسجيل.',
-            'cta.button': 'سجّل واطلب دراجة',
             'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
             'note.privacy': 'بياناتك خاصة ولن تتم مشاركتها. يتم جمعها لهذا الحدث فقط.',
+
+            // Index secondary CTA
+            'cta2.title': 'جاهز للانضمام للرحلة؟',
+            'cta2.text': 'انتقل إلى صفحة المعلومات لتأكيد التفاصيل وإكمال التسجيل.',
+            'cta2.btn': 'انتقل إلى صفحة المعلومات',
+
+            // Hub bike CTA
+            'hub.bike.title': 'ما عندك دراجة؟ ولا يهمك!',
+            'hub.bike.text': 'يمكنك طلب استئجار دراجة أثناء تعبئة نموذج التسجيل.',
+            'hub.bike.btn': 'التسجيل واستئجار دراجة',
+            'hub.hero.title': 'جولة شروق الشمس في أم قيس',
+            'hub.hero.desc': 'انضم إلى جولة شروق الشمس في أم قيس خلال الجمعة القادمة. الانطلاق 06:30 صباحاً لمدة تقارب 4 ساعات من الدراجات الخلابة.',
+            'hub.facts.city': 'إربد، الأردن',
+            'hub.facts.time': '06:30 صباحاً',
+            'hub.facts.duration': 'حوالي 4 ساعات',
+            'hub.who.title': 'لمن هذه الجولة؟',
+            'hub.who.text': 'جميع المستويات مرحب بها. لدينا قادة للمبتدئين ومجموعات أسرع للمحترفين لتقود بالوتيرة المناسبة لك.',
+            'hub.highlights.title': 'أهم التجارب',
+            'hub.highlights.item1': 'مناظر خلابة لبحيرة طبريا',
+            'hub.highlights.item2': 'آثار رومانية تاريخية',
+            'hub.highlights.item3': 'فطور طازج في الطبيعة',
+            'hub.highlights.item4': 'أجواء مجتمعية رائعة',
+            'hub.bring.title': 'ماذا تحضر معك',
+            'hub.bring.water': 'ماء — 1.5 لتر',
+            'hub.bring.helmet': 'خوذة — إلزامية',
+            'hub.bring.id': 'بطاقة هوية — احتفظ بها',
+            'hub.bring.sun': 'واقي شمس — يفضّل SPF',
+            'hub.safety.title': 'السلامة',
+            'hub.safety.item1': 'مرشدون معتمدون',
+            'hub.safety.item2': 'إسعافات أولية في الموقع',
+            'hub.safety.item3': 'مركبة دعم ترافق المجموعة',
+            'hub.faq.title': 'الأسئلة الشائعة',
+            'hub.faq.q1': 'هل يتم توفير المواصلات؟',
+            'hub.faq.a1': 'يرجى ترتيب مواصلاتك إلى أم قيس. سنشارك نقطة اللقاء بعد التسجيل.',
+            'hub.faq.q2': 'ماذا لو كان هناك مطر؟',
+            'hub.faq.a2': 'نقود إذا كانت الظروف آمنة، وإلا سنخبرك بخطة محدثة.',
+            'hub.faq.q3': 'هل الطريق مرتفع؟',
+            'hub.faq.a3': 'نعم، لكن لدينا دعم! قادة سرعة، محطات راحة، ومركبة متابعة تغطيك.',
 
             // Registration page
             'reg.title': 'انضم إلى مغامرة ركوب الدراجات',
@@ -238,6 +311,8 @@ function getTranslations() {
             'reg.level.beginner': 'مبتدئ',
             'reg.level.intermediate': 'متوسط',
             'reg.level.advanced': 'متقدم',
+            'reg.emergency': 'اسم ورقم التواصل للطوارئ',
+            'reg.notes': 'ملاحظات أو طلبات خاصة',
             'reg.submit': 'إتمام التسجيل',
             'reg.help': 'تحتاج مساعدة؟ اتصل بنا على',
 
@@ -454,4 +529,73 @@ function initLazyLoading() {
             imageObserver.observe(img);
         });
     }
+}
+
+// ============================================
+// FAQ Accordion (single open, accessible)
+// ============================================
+function initFAQAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (!faqItems.length) return;
+
+    let openItem = null;
+
+    faqItems.forEach((item, idx) => {
+        const button = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (!button || !answer) return;
+
+        const answerId = answer.id || `faq-answer-${idx}`;
+        answer.id = answerId;
+        button.setAttribute('aria-controls', answerId);
+        button.setAttribute('aria-expanded', 'false');
+        answer.setAttribute('hidden', 'true');
+        answer.style.maxHeight = '0px';
+        answer.style.transition = 'max-height 0.3s ease';
+
+        function close(itemToClose) {
+            const btn = itemToClose.querySelector('.faq-question');
+            const ans = itemToClose.querySelector('.faq-answer');
+            if (!btn || !ans) return;
+            btn.setAttribute('aria-expanded', 'false');
+            ans.setAttribute('hidden', 'true');
+            ans.style.maxHeight = '0px';
+            itemToClose.classList.remove('open');
+            const indicator = btn.querySelector('.faq-indicator');
+            if (indicator) indicator.textContent = '+';
+        }
+
+        function open(itemToOpen) {
+            const btn = itemToOpen.querySelector('.faq-question');
+            const ans = itemToOpen.querySelector('.faq-answer');
+            if (!btn || !ans) return;
+            btn.setAttribute('aria-expanded', 'true');
+            ans.removeAttribute('hidden');
+            ans.style.maxHeight = ans.scrollHeight + 'px';
+            itemToOpen.classList.add('open');
+            const indicator = btn.querySelector('.faq-indicator');
+            if (indicator) indicator.textContent = '–';
+        }
+
+        function toggle() {
+            if (openItem && openItem !== item) {
+                close(openItem);
+            }
+            if (item.classList.contains('open')) {
+                close(item);
+                openItem = null;
+            } else {
+                open(item);
+                openItem = item;
+            }
+        }
+
+        button.addEventListener('click', toggle);
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+            }
+        });
+    });
 }

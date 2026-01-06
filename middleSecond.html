@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Confirmed - Cycling Every Where</title>
-    <meta name="description" content="Your registration for Cycling Every Where has been confirmed.">
+    <title>Register - Cycling Every Where</title>
+    <meta name="description" content="Register for Cycling Every Where rides.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,64 +54,144 @@
         </nav>
     </header>
 
-    <!-- Confirmation Section -->
-    <section class="pt-32 pb-20 min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 flex items-center">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 sm:p-12 text-center">
-                <!-- Success Icon -->
-                <div class="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="check-circle" class="w-12 h-12 text-emerald-600 dark:text-emerald-400"></i>
+    <!-- Registration Form (always visible) -->
+    <main class="pt-28 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+            <section class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 space-y-6">
+                <div class="text-center space-y-2">
+                    <p class="text-sm uppercase tracking-wide text-emerald-500 font-semibold" data-i18n="reg.tag">Cycling Every Where</p>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white" data-i18n="reg.title">Join Our Cycling Adventure</h1>
+                    <p class="text-slate-600 dark:text-slate-300" data-i18n="reg.subtitle">Fill out the form below to register for our next cycling trip</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400" data-i18n="note.privacy">Your details are private and will not be shared. They are collected only for this event.</p>
                 </div>
 
-                <!-- Success Message -->
-                <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2" data-i18n="confirm.title">
-                    Registration Confirmed!
-                </h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6" data-i18n="note.privacy">All your info is secret.</p>
-                
-                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8" data-i18n="confirm.subtitle">
-                    Thank you for registering with Cycling Every Where. We're excited to have you join our next cycling adventure!
-                </p>
+                <form id="registrationForm" class="space-y-8" novalidate>
+                    <!-- Personal Information -->
+                    <fieldset class="space-y-4">
+                        <legend class="text-xl font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2" data-i18n="reg.personal">Personal Information</legend>
+                        <div class="space-y-1">
+                            <label for="fullName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.fullname">Full Name</span> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="fullName" name="fullName" required
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                                placeholder="Enter your full name">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.email">Email Address</span> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                                placeholder="your.email@example.com">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.phone">Phone Number</span> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" id="phone" name="phone" required
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                                placeholder="00962781234567">
+                        </div>
+                    </fieldset>
 
-                <!-- Next Steps -->
-                <div class="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-6 mb-8 text-left">
-                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-4" data-i18n="confirm.next">What's Next?</h2>
-                    <ul class="space-y-3 text-slate-600 dark:text-slate-400">
-                        <li class="flex items-start space-x-3">
-                            <i data-lucide="mail" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                            <span data-i18n="confirm.step1">You'll receive a confirmation email with all the details within 24 hours.</span>
-                        </li>
-                        <li class="flex items-start space-x-3">
-                            <i data-lucide="calendar" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                            <span data-i18n="confirm.step2">We'll contact you to confirm the trip date and meeting location.</span>
-                        </li>
-                        <li class="flex items-start space-x-3">
-                            <i data-lucide="bike" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                            <span data-i18n="confirm.step3">If you requested a bike rental, we'll confirm availability and sizing.</span>
-                        </li>
-                    </ul>
-                </div>
+                    <!-- Bike Rental -->
+                    <fieldset class="space-y-4">
+                        <legend class="text-xl font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2" data-i18n="reg.rental">Bike Rental</legend>
+                        <div class="space-y-2">
+                            <p class="text-sm font-medium text-slate-700 dark:text-slate-300" data-i18n="reg.needBike">Do you need to rent a bike? <span class="text-red-500">*</span></p>
+                            <div class="flex gap-4">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="needBike" value="yes" required class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                    <span class="text-slate-700 dark:text-slate-300" data-i18n="reg.yes">Yes</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="needBike" value="no" required class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                    <span class="text-slate-700 dark:text-slate-300" data-i18n="reg.no">No</span>
+                                </label>
+                            </div>
+                        </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a 
-                        href="index.html" 
-                        class="inline-flex items-center justify-center space-x-2 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
-                    >
-                        <i data-lucide="home" class="w-5 h-5"></i>
-                        <span data-i18n="confirm.backHome">Back to Home</span>
-                    </a>
-                    <a 
-                        href="tel:00962787426310" 
-                        class="inline-flex items-center justify-center space-x-2 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
-                    >
-                        <i data-lucide="phone" class="w-5 h-5"></i>
-                        <span data-i18n="confirm.contact">Contact Us</span>
-                    </a>
-                </div>
-            </div>
+                        <div class="space-y-4 bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                            <div class="space-y-1">
+                                <label for="bikeType" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                    <span data-i18n="reg.bikeType">Preferred Bike Type</span> <span class="text-red-500">*</span>
+                                </label>
+                                <select id="bikeType" name="bikeType" required
+                                    class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <option value="" data-i18n="reg.selectBikeType">Select bike type</option>
+                                    <option value="mountain" data-i18n="reg.bikeType.mountain">Mountain Bike</option>
+                                    <option value="road" data-i18n="reg.bikeType.road">Road Bike</option>
+                                    <option value="hybrid" data-i18n="reg.bikeType.hybrid">Hybrid Bike</option>
+                                    <option value="electric" data-i18n="reg.bikeType.electric">Electric Bike</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <label for="riderHeight" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                    <span data-i18n="reg.riderHeight">Rider Height (for sizing)</span> <span class="text-red-500">*</span>
+                                </label>
+                                <select id="riderHeight" name="riderHeight" required
+                                    class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <option value="" data-i18n="reg.selectHeight">Select height</option>
+                                    <option value="140-150">140-150 cm</option>
+                                    <option value="150-160">150-160 cm</option>
+                                    <option value="160-170">160-170 cm</option>
+                                    <option value="170-180">170-180 cm</option>
+                                    <option value="180-190">180-190 cm</option>
+                                    <option value="190+">190+ cm</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Additional Information -->
+                    <fieldset class="space-y-4">
+                        <legend class="text-xl font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2" data-i18n="reg.additional">Additional Information</legend>
+                        <div class="space-y-1">
+                            <label for="overallExperience" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.experienceLevel">Experience Level</span>
+                            </label>
+                            <select id="overallExperience" name="overallExperience"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                <option value="" data-i18n="reg.selectExperience">Select experience level</option>
+                                <option value="beginner" data-i18n="reg.level.beginner">Beginner</option>
+                                <option value="intermediate" data-i18n="reg.level.intermediate">Intermediate</option>
+                                <option value="advanced" data-i18n="reg.level.advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label for="emergencyContact" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.emergency">Emergency Contact Name & Phone</span>
+                            </label>
+                            <input type="text" id="emergencyContact" name="emergencyContact"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                                placeholder="Name and phone number">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="notes" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                                <span data-i18n="reg.notes">Special Requests or Notes</span>
+                            </label>
+                            <textarea id="notes" name="notes" rows="4"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors resize-none"
+                                placeholder="Any special requirements or questions..."></textarea>
+                        </div>
+                    </fieldset>
+
+                    <!-- Submit -->
+                    <div class="pt-2">
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-emerald-600 hover:to-teal-700 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500">
+                            <span data-i18n="reg.submit">Complete Registration</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <p class="text-center text-slate-500 dark:text-slate-400 mt-3 text-sm">
+                            <span data-i18n="reg.help">Need help? Contact us at</span> <a href="tel:00962787426310" class="text-emerald-600 dark:text-emerald-400 hover:underline">00962787426310</a>
+                        </p>
+                    </div>
+                </form>
+            </section>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-slate-900 dark:bg-slate-950 text-white py-8 transition-colors duration-300">
