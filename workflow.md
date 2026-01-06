@@ -37,30 +37,32 @@
 
 ## 1️⃣ Project Idea
 
-**Event name:**  reservation for hiking / hiking webpage
-**Event type (choose one):** Community event  
+**Event name:**  
+**Event type (choose one):**  
+- Online workshop / Training course / Webinar / Community event  
 
-**Event date :**  fridays
+**Event date :**  
 
 **One sentence description of the event:**  
-A full day for hiking and visit three historical sites
+
 ---
 
 ## 2️⃣ Funnel Goal
 
-**What is the ONE main action the user should complete?**
-see our last events then take action
+**What is the ONE main action the user should complete?**  
+(e.g. register, sign up, reserve a seat)
 
-**Main CTA (Call To Action) text:**
-to see our next event then reserve a spot
+**Main CTA (Call To Action) text:**  
+(e.g. Register Now, Save My Spot)
+
 ---
 
 ## 3️⃣ Funnel Pages Overview
 
-| Page Name            |    Purpose of the Page        | What the User Does  | Where the User Goes Next |
-|----------------------|-------------------            |-------------------- |--------------------------|
-| index.html | to see our last events & a little trust |to see our next event|to the registration page  |
-| middleFirst.html     |                      | | |
+| Page Name | Purpose of the Page | What the User Does | Where the User Goes Next |
+|----------|--------------------|--------------------|--------------------------|
+| index.html | | | |
+| middleFirst.html | | | |
 | middleSecond.html | | | |
 | bottom.html | | | |
 | confirmation.html | | | |
@@ -221,30 +223,3 @@ For each page, follow this order:
 
 
 ### YOUR Prompts Here
-## a prompt to chatGPT for the main page
-
- Valley's Adventure
-give me a prompt to cursor that to act like a senior web developer with strong UI/UX skills.
-Clean, professional, construction/interior-design style
-Fully responsive (desktop, tablet, mobile)
-Use semantic HTML5
-Organized, readable code with comments .
-Create a modern, responsive website about a web page the first page will have at the header a logo in the left side so I can click on the logo instead of the Home button next to about us and our next trips . At the right of the header put a toggle that have a moon in the right & sun in the left to switch between night/day mood (put the sun and the moon inside the button), and a little icon (calendar icon).
-- I have the logo's image
-- I want the name of the website be valley's adventure
-then in the content section 
-I want to put the logo in the background 
-
-in the hero section I want to put a short video in the background *without sound
-(
-*Join organized hiking trips
-*explore nature safely
-*Meet Like-minded People
-*All Levels Welcome
-* Local Guides & Community
-(in the hero))
-Call To Action: 
-View Upcoming Hikes  &  (Join Next Event I'll put a picture in the card) & I need to put a button that to view the details
-like card (I'll link them later to another page)
-
-in the footer copyrights(2024), instagram icon (I'll link it with our instagram account) whatsapp icon (the same thing) phone number (00962787426310)
