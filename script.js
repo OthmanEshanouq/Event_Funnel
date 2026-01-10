@@ -1,9 +1,51 @@
 /**
  * Cycling Every Where - Main JavaScript
- * Handles theme toggle, language switcher, and hero image slider
+ * Production-ready theme toggle and language switcher
+ * 
+ * ARCHITECTURE:
+ * - Single shared JS file used by all pages
+ * - Theme and language applied early via inline script in <head>
+ * - Event delegation for reliability across page navigations
+ * - localStorage for persistence
  */
 
-// Wait for DOM to be fully loaded before executing
+// ============================================
+// EARLY THEME APPLICATION (runs in <head>)
+// This prevents flash of wrong theme
+// ============================================
+(function applyThemeEarly() {
+    if (typeof window === 'undefined') return;
+    
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const html = document.documentElement;
+    
+    if (html) {
+        // Remove both classes first
+        html.classList.remove('dark', 'light');
+        // Apply saved theme
+        html.classList.add(savedTheme);
+    }
+})();
+
+// ============================================
+// EARLY LANGUAGE APPLICATION (runs in <head>)
+// This prevents flash of wrong language
+// ============================================
+(function applyLanguageEarly() {
+    if (typeof window === 'undefined') return;
+    
+    const savedLang = localStorage.getItem('language') || 'en';
+    const html = document.documentElement;
+    
+    if (html) {
+        html.setAttribute('lang', savedLang);
+        html.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+    }
+})();
+
+// ============================================
+// INITIALIZATION
+// ============================================
 (function init() {
     // Check if DOM is already loaded
     if (document.readyState === 'loading') {
@@ -27,96 +69,193 @@
 })();
 
 // ============================================
-// Theme Toggle Functionality
+// THEME TOGGLE FUNCTIONALITY
 // ============================================
+/**
+ * WHY IT WAS BREAKING:
+ * 1. Button cloning was removing event listeners
+ * 2. Multiple event listeners were being attached on each page load
+ * 3. Theme wasn't applied early enough, causing flash
+ * 4. Icon re-initialization was interfering with button state
+ * 
+ * HOW IT'S FIXED:
+ * 1. Single event delegation on document (works across all pages)
+ * 2. Theme applied early in <head> to prevent flash
+ * 3. Button state protected on every click
+ * 4. No cloning - direct event handling
+ */
+
+let themeToggleInitialized = false;
+
 function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
-    
     if (!html) return;
     
-    // Check for saved theme preference or default to dark mode
+    // Apply saved theme (in case inline script didn't run)
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    html.classList.toggle('dark', savedTheme === 'dark');
+    html.classList.remove('dark', 'light');
+    html.classList.add(savedTheme);
     
-    // Theme toggle click handler
+    // Set up event delegation ONCE (works across all pages)
+    if (!themeToggleInitialized) {
+        document.addEventListener('click', function(e) {
+            // Check if click is on theme toggle button or its children
+            const themeToggle = e.target.closest('#themeToggle');
+            if (themeToggle) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Get current theme state
+                const isDark = html.classList.contains('dark');
+                
+                // Toggle theme
+                html.classList.remove('dark', 'light');
+                const newTheme = isDark ? 'light' : 'dark';
+                html.classList.add(newTheme);
+                
+                // Save to localStorage
+                localStorage.setItem('theme', newTheme);
+                
+                // Update button accessibility
+                themeToggle.setAttribute('aria-pressed', newTheme === 'dark' ? 'true' : 'false');
+                themeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'dark' : 'light'} mode`);
+                
+                // Ensure button is always enabled and clickable
+                themeToggle.disabled = false;
+                themeToggle.removeAttribute('disabled');
+                themeToggle.style.pointerEvents = 'auto';
+                themeToggle.style.cursor = 'pointer';
+                themeToggle.setAttribute('aria-disabled', 'false');
+                
+                // Re-initialize icons after theme change
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+        }, true); // Use capture phase for reliability
+        
+        themeToggleInitialized = true;
+    }
+    
+    // Ensure button is properly initialized on each page load
+    const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            const isDark = html.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            
-            // Re-initialize icons after theme change
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+        themeToggle.disabled = false;
+        themeToggle.removeAttribute('disabled');
+        themeToggle.style.pointerEvents = 'auto';
+        themeToggle.style.cursor = 'pointer';
+        themeToggle.setAttribute('type', 'button');
+        themeToggle.setAttribute('aria-disabled', 'false');
+        
+        // Set initial aria-pressed state
+        const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+        themeToggle.setAttribute('aria-pressed', currentTheme === 'dark' ? 'true' : 'false');
+        
+        // Keyboard support
+        themeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                themeToggle.click();
             }
         });
     }
 }
 
 // ============================================
-// Language Switcher Functionality
+// LANGUAGE SWITCHER FUNCTIONALITY
 // ============================================
+/**
+ * WHY IT WAS BREAKING:
+ * 1. Language wasn't applied early enough on page load
+ * 2. Translations weren't applied to all pages consistently
+ * 3. Event listeners were re-attached on each page load
+ * 4. Language state wasn't persisted properly
+ * 
+ * HOW IT'S FIXED:
+ * 1. Language applied early in <head> to prevent flash
+ * 2. Single event delegation for language selection
+ * 3. Translations applied on every page load
+ * 4. Proper RTL/LTR handling
+ */
+
+let languageSwitcherInitialized = false;
+
 function initLanguageSwitcher() {
     const langDropdown = document.getElementById('langDropdown');
     const langButton = document.getElementById('langButton');
     const langText = document.getElementById('langText');
-    const langItems = document.querySelectorAll('.lang-dropdown-item');
     const html = document.documentElement;
     
-    if (!langDropdown || !langButton || !langText) return;
+    if (!html) return;
     
-    // Get saved language preference or default to English
+    // Get saved language or default to English
     const savedLang = localStorage.getItem('language') || 'en';
+    
+    // Apply language immediately
+    html.setAttribute('lang', savedLang);
+    html.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+    
+    // Update UI and apply translations
     updateLanguageUI(savedLang);
     applyTranslations(savedLang);
     
-    // Toggle dropdown on button click
-    langButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langDropdown.classList.toggle('open');
-        const isOpen = langDropdown.classList.contains('open');
-        langButton.setAttribute('aria-expanded', isOpen);
-    });
-    
-    // Handle language selection
-    langItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const selectedLang = item.getAttribute('data-lang');
-            if (selectedLang) {
-                updateLanguageUI(selectedLang);
-                localStorage.setItem('language', selectedLang);
-                applyTranslations(selectedLang);
+    // Set up language switcher (only once)
+    if (!languageSwitcherInitialized && langDropdown && langButton && langText) {
+        // Toggle dropdown on button click
+        langButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = langDropdown.classList.toggle('open');
+            langButton.setAttribute('aria-expanded', isOpen);
+        });
+        
+        // Handle language selection via event delegation
+        document.addEventListener('click', function(e) {
+            const langItem = e.target.closest('.lang-dropdown-item');
+            if (langItem && langDropdown.contains(langItem)) {
+                const selectedLang = langItem.getAttribute('data-lang');
+                if (selectedLang && (selectedLang === 'en' || selectedLang === 'ar')) {
+                    // Save language
+                    localStorage.setItem('language', selectedLang);
+                    
+                    // Apply language
+                    html.setAttribute('lang', selectedLang);
+                    html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+                    
+                    // Update UI and translations
+                    updateLanguageUI(selectedLang);
+                    applyTranslations(selectedLang);
+                    
+                    // Close dropdown
+                    langDropdown.classList.remove('open');
+                    langButton.setAttribute('aria-expanded', 'false');
+                }
+            }
+            
+            // Close dropdown when clicking outside
+            if (langDropdown && !langDropdown.contains(e.target) && langDropdown.classList.contains('open')) {
                 langDropdown.classList.remove('open');
                 langButton.setAttribute('aria-expanded', 'false');
             }
         });
-    });
+        
+        languageSwitcherInitialized = true;
+    }
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (langDropdown && !langDropdown.contains(e.target)) {
-            langDropdown.classList.remove('open');
-            langButton.setAttribute('aria-expanded', 'false');
-        }
-    });
-    
-    // Update language UI
+    // Update language UI helper
     function updateLanguageUI(lang) {
         if (langText) {
             langText.textContent = lang === 'ar' ? 'العربية' : 'English';
-        }
-        if (html) {
-            // Switch page direction based on language
-            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            html.setAttribute('lang', lang === 'ar' ? 'ar' : 'en');
         }
     }
 }
 
 // ============================================
-// Translations (EN/AR) and Application
+// TRANSLATIONS (EN/AR) AND APPLICATION
 // ============================================
+/**
+ * Single source of truth for all translations
+ * Used across all pages
+ */
 function getTranslations() {
     return {
         en: {
@@ -143,23 +282,20 @@ function getTranslations() {
             'prep.clothes': 'Comfortable Clothes',
             'footer.copy': '© 2026 Cycling Every Where. All rights reserved.',
             'note.privacy': 'Your information is kept confidential and will only be used for organizing and managing this event.',
-
+            
             // Index secondary CTA
-            'cta2.title': 'Ready to join the ride?',
-            'cta2.text': 'Head to the information hub to confirm details and register.',
-            'cta2.btn': 'Proceed to information page',
-
-            // Hub bike CTA
-            'hub.bike.title': 'No bike? No problem!',
-            'hub.bike.text': 'You can request a bike rental while filling the registration form.',
-            'hub.bike.btn': 'Registration & Rent A Bike',
+            'cta.indexTitle': 'Ready for an adventure?',
+            'cta.indexButton': 'Proceed to information page',
+            
+            // Information Hub (middleFirst.html)
+            'hub.hero.tag': 'Umm Qais · Irbid',
             'hub.hero.title': 'Sunrise Ride in Umm Qais',
             'hub.hero.desc': 'Join our guided sunrise ride in Umm Qais over the next two Fridays. Roll out at 06:30 AM and enjoy ~4 hours of scenic cycling.',
             'hub.facts.city': 'Irbid, Jordan',
             'hub.facts.time': '06:30 AM',
             'hub.facts.duration': '~4 Hours',
-            'hub.who.title': 'Who It’s For',
-            'hub.who.text': 'All levels welcome. We’ll have lead cyclists for beginners and faster groups for pros—so you ride at the pace that feels great for you.',
+            'hub.who.title': 'Who It\'s For',
+            'hub.who.text': 'All levels welcome. We\'ll have lead cyclists for beginners and faster groups for pros—so you ride at the pace that feels great for you.',
             'hub.highlights.title': 'Experience Highlights',
             'hub.highlights.item1': 'Breathtaking views of the Sea of Galilee',
             'hub.highlights.item2': 'Historic Roman Ruins',
@@ -176,13 +312,18 @@ function getTranslations() {
             'hub.safety.item3': 'Support vehicle follows the group',
             'hub.faq.title': 'FAQ',
             'hub.faq.q1': 'Is transportation provided?',
-            'hub.faq.a1': 'Please arrange your own transport to Umm Qais. We’ll share the exact meet point after registration.',
+            'hub.faq.a1': 'Please arrange your own transport to Umm Qais. We\'ll share the exact meet point after registration.',
             'hub.faq.q2': 'What if it rains?',
-            'hub.faq.a2': 'We ride if conditions are safe. Otherwise, we’ll notify you with an updated plan.',
+            'hub.faq.a2': 'We ride if conditions are safe. Otherwise, we\'ll notify you with an updated plan.',
             'hub.faq.q3': 'Is it hilly?',
             'hub.faq.a3': 'Yes, but we have support! Pace leaders, rest stops, and a follow vehicle have you covered.',
-
+            'hub.bike.title': 'No bike? No problem!',
+            'hub.bike.text': 'You can request a bike rental while filling the registration form.',
+            'hub.bike.btn': 'Registration & Rent A Bike',
+            'hub.cta.button': 'Registration & Rent A Bike',
+            
             // Registration page
+            'reg.tag': 'Cycling Every Where',
             'reg.title': 'Join Our Cycling Adventure',
             'reg.subtitle': 'Fill out the form below to register for our next cycling trip',
             'reg.personal': 'Personal Information',
@@ -213,7 +354,8 @@ function getTranslations() {
             'reg.help': 'Need help? Contact us at',
             'reg.thankYouTitle': 'Thank you for registering! We\'re excited to have you join our cycling adventure.',
             'reg.thankYouFollowUp': 'Our team will contact you shortly to confirm your spot.',
-
+            'note.privacyReg': 'Your information is kept confidential and will only be used for organizing and managing this event.',
+            
             // Confirmation page
             'confirm.title': 'Registration Confirmed!',
             'confirm.subtitle': 'Thank you for registering with Cycling Every Where. We\'re excited to have you join our next cycling adventure!',
@@ -250,37 +392,34 @@ function getTranslations() {
             'prep.clothes': 'ملابس مريحة',
             'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
             'note.privacy': 'معلوماتك محفوظة بسرية ولن تُستخدم إلا لتنظيم وإدارة هذا الحدث.',
-
+            
             // Index secondary CTA
-            'cta2.title': 'جاهز للانضمام للرحلة؟',
-            'cta2.text': 'انتقل إلى صفحة المعلومات لتأكيد التفاصيل وإكمال التسجيل.',
-            'cta2.btn': 'انتقل إلى صفحة المعلومات',
-
-            // Hub bike CTA
-            'hub.bike.title': 'ما عندك دراجة؟ ولا يهمك!',
-            'hub.bike.text': 'يمكنك طلب استئجار دراجة أثناء تعبئة نموذج التسجيل.',
-            'hub.bike.btn': 'التسجيل واستئجار دراجة',
-            'hub.hero.title': 'جولة شروق الشمس في أم قيس',
-            'hub.hero.desc': 'انضم إلى جولة شروق الشمس في أم قيس خلال الجمعة القادمة. الانطلاق 06:30 صباحاً لمدة تقارب 4 ساعات من الدراجات الخلابة.',
+            'cta.indexTitle': 'جاهز للانضمام للرحلة؟',
+            'cta.indexButton': 'الانتقال إلى صفحة المعلومات',
+            
+            // Information Hub (middleFirst.html)
+            'hub.hero.tag': 'أم قيس · إربد',
+            'hub.hero.title': 'رحلة شروق الشمس في أم قيس',
+            'hub.hero.desc': 'انضم إلى رحلة شروق الشمس الموجهة في أم قيس خلال الجمعة القادمتين. انطلق في الساعة 06:30 صباحاً واستمتع بـ ~4 ساعات من ركوب الدراجات الخلابة.',
             'hub.facts.city': 'إربد، الأردن',
             'hub.facts.time': '06:30 صباحاً',
-            'hub.facts.duration': 'حوالي 4 ساعات',
-            'hub.who.title': 'لمن هذه الجولة؟',
-            'hub.who.text': 'جميع المستويات مرحب بها. لدينا قادة للمبتدئين ومجموعات أسرع للمحترفين لتقود بالوتيرة المناسبة لك.',
-            'hub.highlights.title': 'أهم التجارب',
-            'hub.highlights.item1': 'مناظر خلابة لبحيرة طبريا',
+            'hub.facts.duration': '~4 ساعات',
+            'hub.who.title': 'لمن هذه الرحلة',
+            'hub.who.text': 'جميع المستويات مرحب بها. سيكون لدينا قادة دراجات للمبتدئين ومجموعات أسرع للمحترفين—حتى تركب بالسرعة التي تناسبك.',
+            'hub.highlights.title': 'أبرز التجربة',
+            'hub.highlights.item1': 'مناظر خلابة لبحر الجليل',
             'hub.highlights.item2': 'آثار رومانية تاريخية',
-            'hub.highlights.item3': 'فطور طازج في الطبيعة',
+            'hub.highlights.item3': 'إفطار طازج في الطبيعة',
             'hub.highlights.item4': 'أجواء مجتمعية رائعة',
             'hub.bring.title': 'ماذا تحضر معك',
             'hub.bring.water': 'ماء — 1.5 لتر',
             'hub.bring.helmet': 'خوذة — إلزامية',
-            'hub.bring.id': 'بطاقة هوية — احتفظ بها',
-            'hub.bring.sun': 'واقي شمس — يفضّل SPF',
+            'hub.bring.id': 'بطاقة هوية — احملها',
+            'hub.bring.sun': 'واقي شمس — يُنصح بـ SPF',
             'hub.safety.title': 'السلامة',
             'hub.safety.item1': 'مرشدون معتمدون',
             'hub.safety.item2': 'إسعافات أولية في الموقع',
-            'hub.safety.item3': 'مركبة دعم ترافق المجموعة',
+            'hub.safety.item3': 'مركبة دعم تتبع المجموعة',
             'hub.faq.title': 'الأسئلة الشائعة',
             'hub.faq.q1': 'هل يتم توفير المواصلات؟',
             'hub.faq.a1': 'يرجى ترتيب مواصلاتك إلى أم قيس. سنشارك نقطة اللقاء بعد التسجيل.',
@@ -288,8 +427,13 @@ function getTranslations() {
             'hub.faq.a2': 'نقود إذا كانت الظروف آمنة، وإلا سنخبرك بخطة محدثة.',
             'hub.faq.q3': 'هل الطريق مرتفع؟',
             'hub.faq.a3': 'نعم، لكن لدينا دعم! قادة سرعة، محطات راحة، ومركبة متابعة تغطيك.',
-
+            'hub.bike.title': 'لا تملك دراجة؟ لا مشكلة!',
+            'hub.bike.text': 'يمكنك طلب استئجار دراجة أثناء ملء نموذج التسجيل.',
+            'hub.bike.btn': 'التسجيل واستئجار دراجة',
+            'hub.cta.button': 'التسجيل واستئجار دراجة',
+            
             // Registration page
+            'reg.tag': 'Cycling Every Where',
             'reg.title': 'انضم إلى مغامرة ركوب الدراجات',
             'reg.subtitle': 'املأ النموذج أدناه للتسجيل في رحلتنا القادمة',
             'reg.personal': 'المعلومات الشخصية',
@@ -320,7 +464,8 @@ function getTranslations() {
             'reg.help': 'تحتاج مساعدة؟ اتصل بنا على',
             'reg.thankYouTitle': 'شكراً لتسجيلك! يسعدنا انضمامك إلى مغامرة ركوب الدراجات.',
             'reg.thankYouFollowUp': 'سيتواصل معك فريقنا قريباً لتأكيد مكانك.',
-
+            'note.privacyReg': 'معلوماتك محفوظة بسرية ولن تُستخدم إلا لتنظيم وإدارة هذا الحدث.',
+            
             // Confirmation page
             'confirm.title': 'تم تأكيد التسجيل!',
             'confirm.subtitle': 'شكراً لتسجيلك مع Cycling Every Where. يسعدنا انضمامك إلى مغامرتنا القادمة!',
@@ -336,13 +481,30 @@ function getTranslations() {
     };
 }
 
+/**
+ * Apply translations to all elements with data-i18n attribute
+ * Runs on every page load to ensure all content is translated
+ */
 function applyTranslations(lang) {
     const translations = getTranslations();
     const dict = translations[lang] || translations.en;
+    
+    // Apply to all elements with data-i18n attribute
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
-            el.textContent = dict[key];
+            // Preserve HTML if needed, otherwise use textContent
+            if (el.children.length > 0) {
+                // Has children, update text content only
+                const textNodes = Array.from(el.childNodes).filter(node => node.nodeType === 3);
+                textNodes.forEach(node => {
+                    if (node.textContent.trim()) {
+                        node.textContent = dict[key];
+                    }
+                });
+            } else {
+                el.textContent = dict[key];
+            }
         }
     });
 }
@@ -359,37 +521,23 @@ function initHeroSlider() {
     const slideInterval = 5000; // 5 seconds between slides
     let sliderInterval = null;
     
-    /**
-     * Cross-fade transition between slides
-     * Uses opacity transition for smooth fade effect
-     */
     function showSlide(index) {
         if (index < 0 || index >= slides.length) return;
         
-        // Remove active class from all slides
         slides.forEach(slide => slide.classList.remove('active'));
-        
-        // Add active class to current slide
         if (slides[index]) {
             slides[index].classList.add('active');
         }
     }
     
-    /**
-     * Auto-advance to next slide
-     */
     function nextSlide() {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }
     
-    // Initialize first slide
     showSlide(0);
-    
-    // Start auto-sliding
     sliderInterval = setInterval(nextSlide, slideInterval);
     
-    // Pause on hover (optional enhancement)
     const heroSlider = document.querySelector('.hero-slider');
     if (heroSlider) {
         heroSlider.addEventListener('mouseenter', () => {
@@ -400,7 +548,6 @@ function initHeroSlider() {
         });
         
         heroSlider.addEventListener('mouseleave', () => {
-            // Restart interval only if it was cleared
             if (!sliderInterval) {
                 sliderInterval = setInterval(nextSlide, slideInterval);
             }
@@ -412,14 +559,12 @@ function initHeroSlider() {
 // Smooth Scrolling for Anchor Links
 // ============================================
 function initSmoothScrolling() {
-    // Handle all anchor links with smooth scrolling
     const anchors = document.querySelectorAll('a[href^="#"]');
     
     anchors.forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             
-            // Skip if it's just "#" or empty
             if (!href || href === '#' || href === '#!') {
                 return;
             }
@@ -429,13 +574,11 @@ function initSmoothScrolling() {
             if (target) {
                 e.preventDefault();
                 
-                // Calculate offset for sticky header
                 const header = document.querySelector('header');
                 const headerHeight = header ? header.offsetHeight : 0;
-                const targetPosition = target.offsetTop - headerHeight;
                 
                 window.scrollTo({
-                    top: targetPosition,
+                    top: target.offsetTop - headerHeight,
                     behavior: 'smooth'
                 });
             }
@@ -444,162 +587,136 @@ function initSmoothScrolling() {
 }
 
 // ============================================
-// Initialize Lucide Icons
+// Lucide Icons Initialization
 // ============================================
 function initIcons() {
-    // Wait for Lucide to be available
     function createIconsWhenReady() {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         } else {
-            // Retry after a short delay if Lucide isn't loaded yet
             setTimeout(createIconsWhenReady, 100);
         }
     }
     
-    // Initial icon creation
     createIconsWhenReady();
     
-    // Re-initialize icons after dynamic content changes (with debouncing to prevent loops)
+    // Re-initialize icons after dynamic content changes (with debouncing)
     let iconUpdateTimeout = null;
     const observer = new MutationObserver(() => {
-        // Debounce icon updates to prevent infinite loops
         if (iconUpdateTimeout) {
             clearTimeout(iconUpdateTimeout);
         }
         
         iconUpdateTimeout = setTimeout(() => {
             if (typeof lucide !== 'undefined') {
-                // Only update if Lucide is available and DOM is stable
                 lucide.createIcons();
             }
         }, 100);
     });
     
-    // Only observe if body exists
     const body = document.body;
     if (body) {
         observer.observe(body, {
             childList: true,
             subtree: true,
-            // Only observe additions, not attribute changes to reduce triggers
             attributes: false
         });
     }
 }
 
 // ============================================
-// Header Scroll Effect (Optional Enhancement)
+// Header Scroll Effect
 // ============================================
 function initHeaderScrollEffect() {
     const header = document.querySelector('header');
-    
     if (!header) return;
     
+    let lastScroll = 0;
+    
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset || window.scrollY;
+        const currentScroll = window.pageYOffset;
         
-        // Add shadow on scroll
-        if (currentScroll > 10) {
-            header.classList.add('shadow-lg');
+        if (currentScroll > 100) {
+            header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
         } else {
-            header.classList.remove('shadow-lg');
+            header.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1)';
         }
+        
+        lastScroll = currentScroll;
     }, { passive: true });
 }
 
 // ============================================
-// Performance: Lazy Load Images (Optional)
+// Lazy Loading for Images
 // ============================================
 function initLazyLoading() {
-    // For future enhancement: lazy load images if needed
+    const images = document.querySelectorAll('img[data-src]');
+    
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    if (img && img.dataset && img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        observer.unobserve(img);
-                    }
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
                 }
             });
-        }, {
-            rootMargin: '50px'
         });
         
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        lazyImages.forEach(img => {
-            imageObserver.observe(img);
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        images.forEach(img => {
+            img.src = img.getAttribute('data-src');
+            img.removeAttribute('data-src');
         });
     }
 }
 
 // ============================================
-// FAQ Accordion (single open, accessible)
+// FAQ Accordion
 // ============================================
 function initFAQAccordion() {
     const faqItems = document.querySelectorAll('.faq-item');
-    if (!faqItems.length) return;
-
-    let openItem = null;
-
-    faqItems.forEach((item, idx) => {
-        const button = item.querySelector('.faq-question');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-        if (!button || !answer) return;
-
-        const answerId = answer.id || `faq-answer-${idx}`;
-        answer.id = answerId;
-        button.setAttribute('aria-controls', answerId);
-        button.setAttribute('aria-expanded', 'false');
-        answer.setAttribute('hidden', 'true');
-        answer.style.maxHeight = '0px';
-        answer.style.transition = 'max-height 0.3s ease';
-
-        function close(itemToClose) {
-            const btn = itemToClose.querySelector('.faq-question');
-            const ans = itemToClose.querySelector('.faq-answer');
-            if (!btn || !ans) return;
-            btn.setAttribute('aria-expanded', 'false');
-            ans.setAttribute('hidden', 'true');
-            ans.style.maxHeight = '0px';
-            itemToClose.classList.remove('open');
-            const indicator = btn.querySelector('.faq-indicator');
-            if (indicator) indicator.textContent = '+';
-        }
-
-        function open(itemToOpen) {
-            const btn = itemToOpen.querySelector('.faq-question');
-            const ans = itemToOpen.querySelector('.faq-answer');
-            if (!btn || !ans) return;
-            btn.setAttribute('aria-expanded', 'true');
-            ans.removeAttribute('hidden');
-            ans.style.maxHeight = ans.scrollHeight + 'px';
-            itemToOpen.classList.add('open');
-            const indicator = btn.querySelector('.faq-indicator');
-            if (indicator) indicator.textContent = '–';
-        }
-
-        function toggle() {
-            if (openItem && openItem !== item) {
-                close(openItem);
-            }
-            if (item.classList.contains('open')) {
-                close(item);
-                openItem = null;
+        
+        if (!question || !answer) return;
+        
+        question.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            
+            // Close all other items (single-open behavior)
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('open');
+                    const otherQuestion = otherItem.querySelector('.faq-question');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherQuestion) otherQuestion.setAttribute('aria-expanded', 'false');
+                    if (otherAnswer) otherAnswer.style.maxHeight = null;
+                }
+            });
+            
+            // Toggle current item
+            item.classList.toggle('open');
+            const newIsOpen = item.classList.contains('open');
+            question.setAttribute('aria-expanded', newIsOpen);
+            
+            if (newIsOpen) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
             } else {
-                open(item);
-                openItem = item;
+                answer.style.maxHeight = null;
             }
-        }
-
-        button.addEventListener('click', toggle);
-        button.addEventListener('keydown', (e) => {
+        });
+        
+        // Keyboard support
+        question.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                toggle();
+                question.click();
             }
         });
     });
@@ -618,7 +735,7 @@ function initRegistrationForm() {
     
     // Handle bike rental conditional fields
     const needBikeRadios = form.querySelectorAll('input[name="needBike"]');
-    const bikeRentalFields = form.querySelector('.space-y-4.bg-slate-50');
+    const bikeRentalFields = form.querySelector('#bikeRentalFields');
     const bikeTypeSelect = document.getElementById('bikeType');
     const riderHeightSelect = document.getElementById('riderHeight');
     
@@ -642,45 +759,38 @@ function initRegistrationForm() {
         }
     }
     
-    // Add event listeners for bike rental radio buttons
     needBikeRadios.forEach(radio => {
         radio.addEventListener('change', toggleBikeRentalFields);
     });
     
-    // Initialize state on load
     toggleBikeRentalFields();
     
-    // Handle form submission
+    // Form submission handler
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Prevent duplicate submissions
         if (isSubmitting) {
             return;
         }
         
-        // Validate form
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
         
-        // Set submitting state
         isSubmitting = true;
         
-        // Disable all form inputs to prevent changes
         const inputs = form.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => {
             input.disabled = true;
             input.setAttribute('aria-disabled', 'true');
         });
         
-        // Collect form data (for logging/API submission in production)
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         console.log('Registration Data:', data);
         
-        // Hide the form header (title and subtitle)
+        // Hide the form header
         const formHeader = document.getElementById('formHeader');
         if (formHeader) {
             formHeader.style.display = 'none';
@@ -697,31 +807,14 @@ function initRegistrationForm() {
             thankYouMessage.setAttribute('aria-live', 'polite');
             thankYouMessage.removeAttribute('aria-hidden');
             
-            // Move focus to thank you message for accessibility
             setTimeout(() => {
                 thankYouMessage.focus();
                 thankYouMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
             
-            // Re-initialize icons for checkmark
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
         }
-        
-        // Note: In production, you would send data to server here
-        // Example:
-        // fetch('/api/register', {
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers: { 'Content-Type': 'application/json' }
-        // })
-        // .then(response => response.json())
-        // .then(result => {
-        //     // Handle success
-        // })
-        // .catch(error => {
-        //     // Handle error, re-enable form
-        // });
     });
 }

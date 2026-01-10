@@ -31,6 +31,23 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Early Theme & Language Application (prevents flash) -->
+    <script>
+        // Apply theme BEFORE page renders to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.classList.remove('dark', 'light');
+            document.documentElement.classList.add(savedTheme);
+        })();
+        
+        // Apply language BEFORE page renders to prevent flash
+        (function() {
+            const savedLang = localStorage.getItem('language') || 'en';
+            document.documentElement.setAttribute('lang', savedLang);
+            document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+        })();
+    </script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors">
     <!-- Header (Sticky) -->
