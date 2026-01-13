@@ -32,15 +32,8 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Early Theme & Language Application (prevents flash) -->
+    <!-- Early Language Application (prevents flash) -->
     <script>
-        // Apply theme BEFORE page renders to prevent flash
-        (function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.classList.remove('dark', 'light');
-            document.documentElement.classList.add(savedTheme);
-        })();
-        
         // Apply language BEFORE page renders to prevent flash
         (function() {
             const savedLang = localStorage.getItem('language') || 'en';

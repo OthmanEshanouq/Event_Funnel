@@ -18,9 +18,10 @@ html {
 }
 
 /* ============================================
-   Dark Mode CSS Variables
+   Light/Dark Mode CSS Variables
    ============================================ */
 :root {
+    /* Light Mode (Default) */
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
     --text-primary: #1a1a1a;
@@ -29,6 +30,7 @@ html {
     --accent-hover: #059669;
 }
 
+/* Dark Mode Overrides */
 .dark {
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
@@ -42,6 +44,70 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   Theme Toggle Button
+   ============================================ */
+.theme-toggle-btn {
+    position: relative;
+    width: 60px;
+    height: 32px;
+    background: #e5e7eb;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+}
+
+.theme-toggle-btn:hover {
+    background: #d1d5db;
+}
+
+.dark .theme-toggle-btn {
+    background: #374151;
+}
+
+.dark .theme-toggle-btn:hover {
+    background: #4b5563;
+}
+
+.theme-toggle-icon {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    font-size: 16px;
+}
+
+.theme-toggle-icon.sun {
+    left: 2px;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.theme-toggle-icon.moon {
+    right: 2px;
+    opacity: 0;
+    transform: scale(0);
+}
+
+.dark .theme-toggle-icon.sun {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.dark .theme-toggle-icon.moon {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* ============================================
@@ -91,52 +157,6 @@ body {
 }
 
 /* ============================================
-   Theme Toggle Button
-   ============================================ */
-.theme-toggle {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    background: #374151;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.dark .theme-toggle {
-    background: #fbbf24;
-}
-
-.theme-toggle-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: all 0.3s ease;
-    width: 24px;
-    height: 24px;
-}
-
-.theme-toggle-icon.sun {
-    left: 4px;
-    opacity: 1;
-}
-
-.dark .theme-toggle-icon.sun {
-    opacity: 0;
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.theme-toggle-icon.moon {
-    right: 4px;
-    opacity: 0;
-}
-
-.dark .theme-toggle-icon.moon {
-    opacity: 1;
-    transform: translateY(-50%) rotate(0deg);
-}
-
-/* ============================================
    Language Dropdown
    ============================================ */
 .lang-dropdown {
@@ -173,6 +193,29 @@ body {
 
 .lang-dropdown-item:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   FAQ Accordion Styles
+   ============================================ */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.faq-item.open .faq-answer {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+.faq-indicator {
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.faq-item.open .faq-indicator {
+    transform: rotate(45deg);
 }
 
 /* ============================================
@@ -226,4 +269,3 @@ body {
 #gallery .group:hover img {
     transform: scale(1.1);
 }
-

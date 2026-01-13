@@ -10,24 +10,6 @@
  */
 
 // ============================================
-// EARLY THEME APPLICATION (runs in <head>)
-// This prevents flash of wrong theme
-// ============================================
-(function applyThemeEarly() {
-    if (typeof window === 'undefined') return;
-    
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    const html = document.documentElement;
-    
-    if (html) {
-        // Remove both classes first
-        html.classList.remove('dark', 'light');
-        // Apply saved theme
-        html.classList.add(savedTheme);
-    }
-})();
-
-// ============================================
 // EARLY LANGUAGE APPLICATION (runs in <head>)
 // This prevents flash of wrong language
 // ============================================
@@ -42,6 +24,102 @@
         html.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
     }
 })();
+
+// ============================================
+// THEME TOGGLE FUNCTIONALITY
+// ============================================
+/**
+ * Light/Dark Mode Toggle
+ * 
+ * Features:
+ * - Toggles between light and dark modes
+ * - Persists preference in localStorage
+ * - Uses .dark-mode class on document.documentElement
+ * - Works on all pages with event delegation
+ * - Fully accessible with aria attributes
+ * 
+ * Usage:
+ * - Call initThemeToggle() on page load
+ * - Toggle button with id="themeToggle" will work automatically
+ */
+
+// Store initialization state to prevent duplicate listeners
+let themeToggleInitialized = false;
+
+/**
+ * Toggle theme between light and dark mode
+ */
+function toggleTheme() {
+    const html = document.documentElement;
+    const isDarkMode = html.classList.contains('dark');
+    
+    if (isDarkMode) {
+        // Switch to light mode
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    } else {
+        // Switch to dark mode
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    }
+    
+    // Update button aria-pressed attribute
+    updateThemeToggleButton();
+}
+
+/**
+ * Update theme toggle button accessibility attributes
+ */
+function updateThemeToggleButton() {
+    const button = document.getElementById('themeToggle');
+    if (button) {
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        button.setAttribute('aria-pressed', isDarkMode ? 'true' : 'false');
+        button.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+}
+
+/**
+ * Initialize theme toggle functionality
+ * Sets up event listener on toggle button
+ */
+function initThemeToggle() {
+    // Apply saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const html = document.documentElement;
+    
+    if (savedTheme === 'dark') {
+        html.classList.add('dark');
+    } else {
+        html.classList.remove('dark');
+    }
+    
+    // Set up event listener only once (prevents duplicates)
+    if (!themeToggleInitialized) {
+        // Use event delegation on document for reliability
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('#themeToggle');
+            if (button) {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+        
+        // Keyboard support (Enter/Space keys)
+        document.addEventListener('keydown', function(e) {
+            const button = e.target.closest('#themeToggle');
+            if (button && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+        
+        themeToggleInitialized = true;
+    }
+    
+    // Update button state
+    updateThemeToggleButton();
+}
 
 // ============================================
 // INITIALIZATION
@@ -67,99 +145,6 @@
         initRegistrationForm();
     }
 })();
-
-// ============================================
-// THEME TOGGLE FUNCTIONALITY
-// ============================================
-/**
- * WHY IT WAS BREAKING:
- * 1. Button cloning was removing event listeners
- * 2. Multiple event listeners were being attached on each page load
- * 3. Theme wasn't applied early enough, causing flash
- * 4. Icon re-initialization was interfering with button state
- * 
- * HOW IT'S FIXED:
- * 1. Single event delegation on document (works across all pages)
- * 2. Theme applied early in <head> to prevent flash
- * 3. Button state protected on every click
- * 4. No cloning - direct event handling
- */
-
-let themeToggleInitialized = false;
-
-function initThemeToggle() {
-    const html = document.documentElement;
-    if (!html) return;
-    
-    // Apply saved theme (in case inline script didn't run)
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    html.classList.remove('dark', 'light');
-    html.classList.add(savedTheme);
-    
-    // Set up event delegation ONCE (works across all pages)
-    if (!themeToggleInitialized) {
-        document.addEventListener('click', function(e) {
-            // Check if click is on theme toggle button or its children
-            const themeToggle = e.target.closest('#themeToggle');
-            if (themeToggle) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Get current theme state
-                const isDark = html.classList.contains('dark');
-                
-                // Toggle theme
-                html.classList.remove('dark', 'light');
-                const newTheme = isDark ? 'light' : 'dark';
-                html.classList.add(newTheme);
-                
-                // Save to localStorage
-                localStorage.setItem('theme', newTheme);
-                
-                // Update button accessibility
-                themeToggle.setAttribute('aria-pressed', newTheme === 'dark' ? 'true' : 'false');
-                themeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'dark' : 'light'} mode`);
-                
-                // Ensure button is always enabled and clickable
-                themeToggle.disabled = false;
-                themeToggle.removeAttribute('disabled');
-                themeToggle.style.pointerEvents = 'auto';
-                themeToggle.style.cursor = 'pointer';
-                themeToggle.setAttribute('aria-disabled', 'false');
-                
-                // Re-initialize icons after theme change
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-        }, true); // Use capture phase for reliability
-        
-        themeToggleInitialized = true;
-    }
-    
-    // Ensure button is properly initialized on each page load
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.disabled = false;
-        themeToggle.removeAttribute('disabled');
-        themeToggle.style.pointerEvents = 'auto';
-        themeToggle.style.cursor = 'pointer';
-        themeToggle.setAttribute('type', 'button');
-        themeToggle.setAttribute('aria-disabled', 'false');
-        
-        // Set initial aria-pressed state
-        const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
-        themeToggle.setAttribute('aria-pressed', currentTheme === 'dark' ? 'true' : 'false');
-        
-        // Keyboard support
-        themeToggle.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                themeToggle.click();
-            }
-        });
-    }
-}
 
 // ============================================
 // LANGUAGE SWITCHER FUNCTIONALITY
@@ -388,7 +373,7 @@ function getTranslations() {
             'prep.title': 'ماذا تحضر معك',
             'prep.water': 'ماء',
             'prep.helmet': 'خوذة (سلامة)',
-            'prep.tube': 'أنبوب احتياطي',
+            'prep.tube': 'أنبوب داخلي احتياطي',
             'prep.clothes': 'ملابس مريحة',
             'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
             'note.privacy': 'معلوماتك محفوظة بسرية ولن تُستخدم إلا لتنظيم وإدارة هذا الحدث.',
@@ -686,6 +671,11 @@ function initFAQAccordion() {
         
         if (!question || !answer) return;
         
+        // Ensure answers are hidden by default
+        answer.style.maxHeight = '0';
+        item.classList.remove('open');
+        question.setAttribute('aria-expanded', 'false');
+        
         question.addEventListener('click', () => {
             const isOpen = item.classList.contains('open');
             
@@ -696,19 +686,19 @@ function initFAQAccordion() {
                     const otherQuestion = otherItem.querySelector('.faq-question');
                     const otherAnswer = otherItem.querySelector('.faq-answer');
                     if (otherQuestion) otherQuestion.setAttribute('aria-expanded', 'false');
-                    if (otherAnswer) otherAnswer.style.maxHeight = null;
+                    if (otherAnswer) otherAnswer.style.maxHeight = '0';
                 }
             });
             
             // Toggle current item
-            item.classList.toggle('open');
-            const newIsOpen = item.classList.contains('open');
-            question.setAttribute('aria-expanded', newIsOpen);
-            
-            if (newIsOpen) {
-                answer.style.maxHeight = answer.scrollHeight + 'px';
+            if (isOpen) {
+                item.classList.remove('open');
+                question.setAttribute('aria-expanded', 'false');
+                answer.style.maxHeight = '0';
             } else {
-                answer.style.maxHeight = null;
+                item.classList.add('open');
+                question.setAttribute('aria-expanded', 'true');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
             }
         });
         
