@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cycling Every Where - Join Organized Cycling Trips</title>
-    <meta name="description" content="Join organized cycling trips, explore nature, city & everywhere safely. Meet like-minded people and enjoy cycling adventures.">
+    <title>دراجات في كل مكان - انضم لرحلات الدراجات المنظمة</title>
+    <meta name="description" content="انضم لرحلات دراجات منظمة، استكشف الطبيعة والمدينة وكل مكان بأمان. تعرّف على أشخاص يشاركونك الشغف واستمتع بمغامرات الدراجات.">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Inter for Latin, Tajawal for Arabic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'Tajawal', 'sans-serif'],
                     },
                 },
             },
@@ -46,7 +46,7 @@
         
         // Apply language BEFORE page renders to prevent flash
         (function() {
-            const savedLang = localStorage.getItem('language') || 'en';
+            const savedLang = localStorage.getItem('language') || 'ar';
             document.documentElement.setAttribute('lang', savedLang);
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
         })();
@@ -58,16 +58,16 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
                 <!-- Left: Logo and About Us Link -->
-                <div class="flex items-center space-x-6">
-                    <a href="#home" class="flex items-center space-x-2 group" aria-label="Home">
-                        <img src="assets/logo(cycling everywhere).png" alt="Cycling Every Where Logo" class="h-10 w-auto object-contain">
-                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cycling Every Where</span>
+                <div class="flex items-center space-x-6 rtl:space-x-reverse">
+                    <a href="#home" class="flex items-center space-x-2 group rtl:space-x-reverse" aria-label="Home">
+                        <img src="assets/logo(cycling everywhere).png" alt="دراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">دراجات في كل مكان</span>
                     </a>
-                    <a href="#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" aria-label="About Us" data-i18n="nav.about">About Us</a>
+                    <a href="#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" aria-label="من نحن" data-i18n="nav.about">من نحن</a>
                 </div>
                 
                 <!-- Right: Theme Toggle & Language Dropdown -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <!-- Theme Toggle Button -->
                     <button 
                         id="themeToggle"
@@ -84,13 +84,13 @@
                     <!-- Language Dropdown -->
                     <div class="lang-dropdown" id="langDropdown">
                         <button 
-                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                            aria-label="Language Selector"
+                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse"
+                            aria-label="محدد اللغة"
                             aria-expanded="false"
                             id="langButton"
                         >
                             <i data-lucide="languages" class="w-5 h-5"></i>
-                            <span id="langText">English</span>
+                            <span id="langText">العربية</span>
                             <i data-lucide="chevron-down" class="w-4 h-4"></i>
                         </button>
                         <div class="lang-dropdown-menu">
@@ -116,8 +116,8 @@
         <!-- Hero Content -->
         <div class="hero-content flex items-center justify-center h-full">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 fade-in">
-                    Cycling Every Where
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 fade-in" data-i18n="nav.brand">
+                    دراجات في كل مكان
                 </h1>
                 <div class="space-y-4 text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
                     <p class="fade-in" style="animation-delay: 0.1s;" data-i18n="hero.b1">✓ Join organized cycling trips</p>
@@ -133,18 +133,18 @@
     <!-- Trust Bar -->
     <section class="bg-emerald-600 dark:bg-emerald-700 py-4 border-b-4 border-emerald-700 dark:border-emerald-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white">
-                <div class="flex items-center space-x-2">
+                <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-white">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
                     <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
-                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.verified">Verified Guides</span>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.verified">مرشدون معتمدون</span>
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
                     <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
-                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.vehicle">Support Vehicle</span>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.vehicle">مركبة دعم مرافقة</span>
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
                     <i data-lucide="check-circle" class="w-5 h-5 text-emerald-200"></i>
-                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.rentals">Rental Bikes Available</span>
+                    <span class="text-sm sm:text-base font-medium" data-i18n="trust.rentals">دراجات للإيجار متاحة</span>
                 </div>
             </div>
         </div>
@@ -153,11 +153,11 @@
     <!-- About Us Section -->
     <section id="about" class="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="about.title">About Us</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="about.title">من نحن</h2>
             
             <!-- Main Text -->
             <p class="text-xl text-center text-slate-700 dark:text-slate-300 max-w-4xl mx-auto mb-16 leading-relaxed" data-i18n="about.text">
-                We are a cycling organization that our goals is to meet new people, enjoying moments, explore the world, sport, and health.
+                نحن منظمة ركوب دراجات هدفنا التعارف والاستمتاع واكتشاف العالم والرياضة والصحة.
             </p>
             
             <!-- Goal Cards -->
@@ -167,9 +167,9 @@
                     <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-6 mx-auto">
                         <i data-lucide="users" class="w-8 h-8 text-emerald-600 dark:text-emerald-400"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white">Social Connection</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed">
-                        Build meaningful relationships with fellow cycling enthusiasts and create lasting friendships on the road.
+                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white" data-i18n="about.card1.title">التواصل الاجتماعي</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed" data-i18n="about.card1.text">
+                        ابنِ علاقات ذات معنى مع عشاق الدراجات واصنع صداقات دائمة على الطريق.
                     </p>
                 </div>
                 
@@ -178,9 +178,9 @@
                     <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-6 mx-auto">
                         <i data-lucide="globe" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white">Global Exploration</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed">
-                        Discover new destinations, from urban landscapes to natural wonders, all while cycling safely with expert guides.
+                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white" data-i18n="about.card2.title">استكشاف العالم</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed" data-i18n="about.card2.text">
+                        اكتشف وجهات جديدة، من المناظر الحضرية إلى عجائب الطبيعة، بركوب آمن مع مرشدين خبراء.
                     </p>
                 </div>
                 
@@ -189,9 +189,9 @@
                     <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mb-6 mx-auto">
                         <i data-lucide="heart" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white">Health & Wellness</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed">
-                        Improve your physical fitness and mental well-being through regular cycling adventures in beautiful settings.
+                    <h3 class="text-2xl font-bold text-center mb-4 text-slate-900 dark:text-white" data-i18n="about.card3.title">الصحة والعافية</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-center leading-relaxed" data-i18n="about.card3.text">
+                        حسّن لياقتك البدنية وصحتك النفسية من خلال مغامرات الدراجات المنتظمة في أجواء جميلة.
                     </p>
                 </div>
             </div>
@@ -201,55 +201,55 @@
     <!-- The Experience Gallery -->
     <section id="gallery" class="py-20 bg-white dark:bg-slate-800 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="gallery.title">The Experience</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="gallery.title">التجربة</h2>
             
             <!-- Photo Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto gallery-grid">
                 <!-- 1. Group Laughing -->
-                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer" data-src="assets/friendship&fun.png" data-caption="gallery.friendship">
                     <img 
                         src="assets/friendship&fun.png" 
-                        alt="Group of cyclists laughing and having fun"
+                        alt="مجموعة راكبي دراجات يضحكون ويستمتعون"
                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p class="text-white p-4 font-semibold" data-i18n="gallery.friendship">Friendship & Fun</p>
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.friendship">المرح والصداقة</p>
                     </div>
                 </div>
                 
                 <!-- 2. Jordanian Sunset -->
-                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer" data-src="assets/Stunning Views.png" data-caption="gallery.views">
                     <img 
                         src="assets/Stunning Views.png" 
-                        alt="Beautiful Jordanian sunset during cycling trip"
+                        alt="غروب أردني خلاب خلال رحلة الدراجات"
                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p class="text-white p-4 font-semibold" data-i18n="gallery.views">Stunning Views</p>
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.views">مناظر خلابة</p>
                     </div>
                 </div>
                 
                 <!-- 3. Close-up of Bike -->
-                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer" data-src="assets/qualityBike.jpg" data-caption="gallery.quality">
                     <img 
                         src="assets/qualityBike.jpg" 
-                        alt="Close-up of a bicycle"
+                        alt="صورة مقربة لدراجة"
                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p class="text-white p-4 font-semibold" data-i18n="gallery.quality">Quality Bikes</p>
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.quality">دراجات عالية الجودة</p>
                     </div>
                 </div>
                 
                 <!-- 4. Healthy Snack Break -->
-                <div class="relative overflow-hidden rounded-lg shadow-lg group cursor-pointer">
+                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer" data-src="assets/refresh&recharge.png" data-caption="gallery.refresh">
                     <img 
                         src="assets/refresh&recharge.png" 
-                        alt="Healthy snack break during cycling trip"
+                        alt="استراحة وجبة خفيفة صحية خلال رحلة الدراجات"
                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                     >
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <p class="text-white p-4 font-semibold" data-i18n="gallery.refresh">Refresh & Recharge</p>
+                        <p class="text-white p-4 font-semibold" data-i18n="gallery.refresh">استراحة وانتعاش</p>
                     </div>
                 </div>
             </div>
@@ -259,7 +259,7 @@
     <!-- Preparation Section (The Funnel) -->
     <section id="preparation" class="py-20 bg-white dark:bg-slate-800 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16 text-slate-900 dark:text-white" data-i18n="prep.title">What to Bring</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16 text-slate-900 dark:text-white" data-i18n="prep.title">ماذا تحضر معك</h2>
             
             <!-- Icons Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-4xl mx-auto mb-12">
@@ -268,7 +268,7 @@
                     <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
                         <img src="assets/bottle.png" alt="Water bottle" class="w-10 h-10 object-contain">
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.water">Water</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.water">ماء</h3>
                 </div>
                 
                 <!-- Helmet -->
@@ -276,7 +276,7 @@
                     <div class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
                         <img src="assets/bike-helmet.png" alt="Bicycle helmet" class="w-10 h-10 object-contain">
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.helmet">Helmet (Safety)</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.helmet">خوذة (سلامة)</h3>
                 </div>
                 
                 <!-- Spare Tube -->
@@ -284,7 +284,7 @@
                     <div class="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-4">
                         <img src="assets/tire.png" alt="Spare tube" class="w-10 h-10 object-contain">
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.tube">Spare Tube</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.tube">أنبوب داخلي احتياطي</h3>
                 </div>
                 
                 <!-- Comfortable Clothes -->
@@ -292,7 +292,7 @@
                     <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
                         <i data-lucide="shirt" class="w-10 h-10 text-green-600 dark:text-green-400"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.clothes">Comfortable Clothes</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.clothes">ملابس مريحة</h3>
                 </div>
             </div>
             
@@ -302,14 +302,14 @@
     <!-- Secondary CTA (reinforces action near end of page) -->
     <section class="py-12 bg-slate-50 dark:bg-slate-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="cta2.title">Ready to join the ride?</h2>
-            <p class="text-slate-600 dark:text-slate-300 mb-6" data-i18n="cta2.text">Head to the information hub to confirm details and register.</p>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="cta2.title">جاهز للانضمام للرحلة؟</h2>
+            <p class="text-slate-600 dark:text-slate-300 mb-6" data-i18n="cta2.text">انتقل إلى مركز المعلومات لتأكيد التفاصيل والتسجيل.</p>
             <a
                 href="middleFirst.html"
                 class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-4 rounded-xl transition-colors shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500"
             >
-                <i data-lucide="arrow-right" class="w-5 h-5 mr-2"></i>
-                <span data-i18n="cta2.btn">Proceed to information page</span>
+                <i data-lucide="arrow-right" class="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2 rtl:rotate-180"></i>
+                <span data-i18n="cta2.btn">الانتقال إلى صفحة المعلومات</span>
             </a>
         </div>
     </section>
@@ -320,11 +320,11 @@
             <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
                 <!-- Copyright -->
                 <div class="text-center md:text-left">
-                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 Cycling Every Where. All rights reserved.</p>
+                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.</p>
                 </div>
                 
                 <!-- Phone Number -->
-                <div class="flex items-center space-x-2 text-lg">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse text-lg">
                     <i data-lucide="phone" class="w-5 h-5 text-emerald-400"></i>
                     <a href="tel:00962787426310" class="text-white hover:text-emerald-400 transition-colors" aria-label="Call us">
                         00962787426310
@@ -332,28 +332,38 @@
                 </div>
                 
                 <!-- Social Icons -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <!-- Instagram Icon (Visual Only - Non-clickable) -->
                     <div 
                         class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center opacity-75"
-                        aria-label="Instagram"
-                        title="Instagram"
+                        aria-label="انستغرام"
+                        title="انستغرام"
                     >
                         <i data-lucide="instagram" class="w-5 h-5"></i>
                     </div>
                     <a 
-                        href="https://wa.me/962787426310" 
+                        href="https://api.whatsapp.com/send/?phone=962787426310&text&type=phone_number&app_absent=0" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors"
-                        aria-label="Contact us on WhatsApp"
+                        class="whatsapp-link w-10 h-10 rounded-full flex items-center justify-center transition-colors overflow-hidden"
+                        aria-label="تواصل معنا على واتساب"
                     >
-                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" class="w-6 h-6 object-contain" width="24" height="24">
                     </a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Image Lightbox Modal -->
+    <div id="imageLightbox" class="lightbox-overlay" aria-hidden="true">
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-content">
+            <button type="button" class="lightbox-close" aria-label="إغلاق" data-i18n-aria-label="lightbox.close">&times;</button>
+            <img src="" alt="" class="lightbox-image">
+            <p class="lightbox-caption"></p>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>

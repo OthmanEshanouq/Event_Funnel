@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Cycling Every Where</title>
-    <meta name="description" content="Register for Cycling Every Where rides.">
+    <title>التسجيل - دراجات في كل مكان</title>
+    <meta name="description" content="سجّل في رحلات دراجات في كل مكان.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'Tajawal', 'sans-serif'],
                     },
                 },
             },
@@ -32,11 +32,20 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Early Language Application (prevents flash) -->
+    <!-- Early Theme & Language Application (prevents flash) -->
     <script>
+        // Apply theme BEFORE page renders
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
         // Apply language BEFORE page renders to prevent flash
         (function() {
-            const savedLang = localStorage.getItem('language') || 'en';
+            const savedLang = localStorage.getItem('language') || 'ar';
             document.documentElement.setAttribute('lang', savedLang);
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
         })();
@@ -48,15 +57,15 @@
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
                 <!-- Left: Logo -->
-                <div class="flex items-center space-x-2">
-                    <a href="index.html" class="flex items-center space-x-2 group" aria-label="Home">
-                        <img src="assets/logo(cycling everywhere).png" alt="Cycling Every Where Logo" class="h-10 w-auto object-contain">
-                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cycling Every Where</span>
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                    <a href="index.html" class="flex items-center space-x-2 group rtl:space-x-reverse" aria-label="الرئيسية">
+                        <img src="assets/logo(cycling everywhere).png" alt="دراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">دراجات في كل مكان</span>
                     </a>
                 </div>
                 
                 <!-- Right: Back to Home -->
-                <a href="index.html" class="text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors flex items-center space-x-2" aria-label="Back to Home">
+                <a href="index.html" class="text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors flex items-center space-x-2 rtl:space-x-reverse" aria-label="العودة للرئيسية">
                     <i data-lucide="home" class="w-5 h-5"></i>
                     <span class="hidden sm:inline" data-i18n="confirm.home">Home</span>
                 </a>
@@ -102,9 +111,11 @@
                             <label for="fullName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
                                 <span data-i18n="reg.fullname">Full Name</span> <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="fullName" name="fullName" required
+                            <input type="text" id="fullName" name="fullName" required minlength="3"
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
-                                placeholder="Enter your full name">
+                                placeholder="أدخل اسمك الكامل (كلمتين على الأقل)" data-i18n-placeholder="reg.placeholder.name"
+                                pattern="[^\s]+\s+[^\s]+.*"
+                                title="الاسم الكامل يجب أن يحتوي على كلمتين على الأقل">
                         </div>
                         <div class="space-y-1">
                             <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -112,7 +123,8 @@
                             </label>
                             <input type="email" id="email" name="email" required
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
-                                placeholder="your.email@example.com">
+                                placeholder="بريدك@example.com" data-i18n-placeholder="reg.placeholder.email"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
                         </div>
                         <div class="space-y-1">
                             <label for="phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -120,7 +132,9 @@
                             </label>
                             <input type="tel" id="phone" name="phone" required
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
-                                placeholder="00962781234567">
+                                placeholder="00962781234567" data-i18n-placeholder="reg.placeholder.phone"
+                                pattern="00962[78][0-9]{8}"
+                                title="رقم أردني يبدأ بـ 00962">
                         </div>
                     </fieldset>
 
@@ -161,13 +175,13 @@
                                 </label>
                                 <select id="riderHeight" name="riderHeight" required
                                     class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
-                                    <option value="" data-i18n="reg.selectHeight">Select height</option>
-                                    <option value="140-150">140-150 cm</option>
-                                    <option value="150-160">150-160 cm</option>
-                                    <option value="160-170">160-170 cm</option>
-                                    <option value="170-180">170-180 cm</option>
-                                    <option value="180-190">180-190 cm</option>
-                                    <option value="190+">190+ cm</option>
+                                    <option value="" data-i18n="reg.selectHeight">اختر الطول</option>
+                                    <option value="140-150" data-i18n="reg.height.140">140-150 سم</option>
+                                    <option value="150-160" data-i18n="reg.height.150">150-160 سم</option>
+                                    <option value="160-170" data-i18n="reg.height.160">160-170 سم</option>
+                                    <option value="170-180" data-i18n="reg.height.170">170-180 سم</option>
+                                    <option value="180-190" data-i18n="reg.height.180">180-190 سم</option>
+                                    <option value="190+" data-i18n="reg.height.190">190+ سم</option>
                                 </select>
                             </div>
                         </div>
@@ -194,7 +208,7 @@
                             </label>
                             <input type="text" id="emergencyContact" name="emergencyContact"
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
-                                placeholder="Name and phone number">
+                                placeholder="الاسم ورقم الهاتف" data-i18n-placeholder="reg.placeholder.emergency">
                         </div>
                         <div class="space-y-1">
                             <label for="notes" class="block text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -202,7 +216,7 @@
                             </label>
                             <textarea id="notes" name="notes" rows="4"
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors resize-none"
-                                placeholder="Any special requirements or questions..."></textarea>
+                                placeholder="أي متطلبات خاصة أو أسئلة..." data-i18n-placeholder="reg.placeholder.notes"></textarea>
                         </div>
                     </fieldset>
 

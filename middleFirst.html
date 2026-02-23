@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information Hub - Umm Qais Sunrise Ride</title>
-    <meta name="description" content="Event details for the Sunrise Ride in Umm Qais with Cycling Every Where.">
+    <title>مركز المعلومات - رحلة شروق الشمس في أم قيس</title>
+    <meta name="description" content="تفاصيل رحلة شروق الشمس في أم قيس مع دراجات في كل مكان.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'Tajawal', 'sans-serif'],
                     },
                 },
             },
@@ -46,7 +46,7 @@
         
         // Apply language BEFORE page renders to prevent flash
         (function() {
-            const savedLang = localStorage.getItem('language') || 'en';
+            const savedLang = localStorage.getItem('language') || 'ar';
             document.documentElement.setAttribute('lang', savedLang);
             document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
         })();
@@ -58,26 +58,43 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm transition-colors duration-300">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-6">
-                    <a href="index.html#home" class="flex items-center space-x-2 group" aria-label="Home">
-                        <img src="assets/logo(cycling everywhere).png" alt="Cycling Every Where Logo" class="h-10 w-auto object-contain">
-                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Cycling Every Where</span>
+                <div class="flex items-center space-x-6 rtl:space-x-reverse">
+                    <a href="index.html#home" class="flex items-center space-x-2 group rtl:space-x-reverse" aria-label="الرئيسية">
+                        <img src="assets/logo(cycling everywhere).png" alt="دراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">دراجات في كل مكان</span>
                     </a>
-                    <a href="index.html#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors">About Us</a>
+                    <a href="index.html#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" data-i18n="nav.about">من نحن</a>
                 </div>
                 
-                <!-- Theme Toggle Button -->
-                <button 
-                    id="themeToggle"
-                    class="theme-toggle-btn"
-                    type="button"
-                    aria-label="Switch to dark mode"
-                    aria-pressed="false"
-                    title="Toggle dark mode"
-                >
-                    <span class="theme-toggle-icon sun">🌞</span>
-                    <span class="theme-toggle-icon moon">🌙</span>
-                </button>
+                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                    <button 
+                        id="themeToggle"
+                        class="theme-toggle-btn"
+                        type="button"
+                        aria-label="تبديل الوضع الداكن"
+                        aria-pressed="false"
+                        title="تبديل الوضع الداكن"
+                    >
+                        <span class="theme-toggle-icon sun">🌞</span>
+                        <span class="theme-toggle-icon moon">🌙</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button 
+                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse"
+                            aria-label="محدد اللغة"
+                            aria-expanded="false"
+                            id="langButton"
+                        >
+                            <i data-lucide="languages" class="w-5 h-5"></i>
+                            <span id="langText">العربية</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div class="lang-dropdown-menu">
+                            <div class="lang-dropdown-item" data-lang="en">English</div>
+                            <div class="lang-dropdown-item" data-lang="ar">العربية</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -247,8 +264,8 @@
             href="middleSecond.html"
             class="inline-flex items-center justify-center w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-4 rounded-xl transition-colors shadow-xl"
         >
-            <i data-lucide="arrow-right" class="w-5 h-5 mr-2"></i>
-            Proceed to Registration
+            <i data-lucide="arrow-right" class="w-5 h-5 mr-2 rtl:mr-0 rtl:ml-2 rtl:rotate-180"></i>
+            <span data-i18n="cta.proceedReg">المتابعة للتسجيل</span>
         </a>
     </aside>
 

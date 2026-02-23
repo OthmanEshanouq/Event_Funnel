@@ -16,7 +16,7 @@
 (function applyLanguageEarly() {
     if (typeof window === 'undefined') return;
     
-    const savedLang = localStorage.getItem('language') || 'en';
+    const savedLang = localStorage.getItem('language') || 'ar';
     const html = document.documentElement;
     
     if (html) {
@@ -143,6 +143,7 @@ function initThemeToggle() {
         initLazyLoading();
         initFAQAccordion();
         initRegistrationForm();
+        initGalleryLightbox();
     }
 })();
 
@@ -173,8 +174,8 @@ function initLanguageSwitcher() {
     
     if (!html) return;
     
-    // Get saved language or default to English
-    const savedLang = localStorage.getItem('language') || 'en';
+    // Get saved language or default to Arabic
+    const savedLang = localStorage.getItem('language') || 'ar';
     
     // Apply language immediately
     html.setAttribute('lang', savedLang);
@@ -244,6 +245,7 @@ function initLanguageSwitcher() {
 function getTranslations() {
     return {
         en: {
+            'nav.brand': 'Cycling Every Where',
             'nav.about': 'About Us',
             'hero.b1': '✓ Join organized cycling trips',
             'hero.b2': '✓ ride in nature, city, mountains & every where safely',
@@ -255,6 +257,12 @@ function getTranslations() {
             'trust.rentals': 'Rental Bikes Available',
             'about.title': 'About Us',
             'about.text': 'We are a cycling organization that our goals is to meet new people, enjoying moments, explore the world, sport, and health.',
+            'about.card1.title': 'Social Connection',
+            'about.card1.text': 'Build meaningful relationships with fellow cycling enthusiasts and create lasting friendships on the road.',
+            'about.card2.title': 'Global Exploration',
+            'about.card2.text': 'Discover new destinations, from urban landscapes to natural wonders, all while cycling safely with expert guides.',
+            'about.card3.title': 'Health & Wellness',
+            'about.card3.text': 'Improve your physical fitness and mental well-being through regular cycling adventures in beautiful settings.',
             'gallery.title': 'The Experience',
             'gallery.friendship': 'Friendship & Fun',
             'gallery.views': 'Stunning Views',
@@ -351,9 +359,23 @@ function getTranslations() {
             'confirm.backHome': 'Back to Home',
             'confirm.contact': 'Contact Us',
             'confirm.home': 'Home',
-            'confirm.viewPage': 'View confirmation page'
+            'confirm.viewPage': 'View confirmation page',
+            'cta.proceedReg': 'Proceed to Registration',
+            'reg.placeholder.name': 'Enter your full name (at least 2 words)',
+            'reg.placeholder.email': 'your.email@example.com',
+            'reg.placeholder.phone': '00962781234567',
+            'reg.placeholder.emergency': 'Name and phone number',
+            'reg.placeholder.notes': 'Any special requirements or questions...',
+            'reg.height.140': '140-150 cm',
+            'reg.height.150': '150-160 cm',
+            'reg.height.160': '160-170 cm',
+            'reg.height.170': '170-180 cm',
+            'reg.height.180': '180-190 cm',
+            'reg.height.190': '190+ cm',
+            'lightbox.close': 'Close'
         },
         ar: {
+            'nav.brand': 'دراجات في كل مكان',
             'nav.about': 'من نحن',
             'hero.b1': '✓ انضم إلى رحلات دراجات منظمة',
             'hero.b2': '✓ قد في الطبيعة والمدينة والجبال وفي كل مكان بأمان',
@@ -365,6 +387,12 @@ function getTranslations() {
             'trust.rentals': 'دراجات للإيجار متاحة',
             'about.title': 'من نحن',
             'about.text': 'نحن منظمة ركوب دراجات هدفنا التعارف والاستمتاع واكتشاف العالم والرياضة والصحة.',
+            'about.card1.title': 'التواصل الاجتماعي',
+            'about.card1.text': 'ابنِ علاقات ذات معنى مع عشاق الدراجات واصنع صداقات دائمة على الطريق.',
+            'about.card2.title': 'استكشاف العالم',
+            'about.card2.text': 'اكتشف وجهات جديدة، من المناظر الحضرية إلى عجائب الطبيعة، بركوب آمن مع مرشدين خبراء.',
+            'about.card3.title': 'الصحة والعافية',
+            'about.card3.text': 'حسّن لياقتك البدنية وصحتك النفسية من خلال مغامرات الدراجات المنتظمة في أجواء جميلة.',
             'gallery.title': 'التجربة',
             'gallery.friendship': 'المرح والصداقة',
             'gallery.views': 'مناظر خلابة',
@@ -414,8 +442,8 @@ function getTranslations() {
             'hub.faq.a3': 'نعم، لكن لدينا دعم! قادة سرعة، محطات راحة، ومركبة متابعة تغطيك.',
             'hub.bike.title': 'لا تملك دراجة؟ لا مشكلة!',
             'hub.bike.text': 'يمكنك طلب استئجار دراجة أثناء ملء نموذج التسجيل.',
-            'hub.bike.btn': 'التسجيل واستئجار دراجة',
-            'hub.cta.button': 'التسجيل واستئجار دراجة',
+            'hub.bike.btn': 'التسجيل و/أو استئجار دراجة',
+            'hub.cta.button': 'التسجيل و/أو استئجار دراجة',
             
             // Registration page
             'reg.tag': 'Cycling Every Where',
@@ -461,7 +489,20 @@ function getTranslations() {
             'confirm.backHome': 'العودة إلى الرئيسية',
             'confirm.contact': 'تواصل معنا',
             'confirm.home': 'الرئيسية',
-            'confirm.viewPage': 'عرض صفحة التأكيد'
+            'confirm.viewPage': 'عرض صفحة التأكيد',
+            'cta.proceedReg': 'المتابعة للتسجيل',
+            'reg.placeholder.name': 'أدخل اسمك الكامل (كلمتين على الأقل)',
+            'reg.placeholder.email': 'بريدك@example.com',
+            'reg.placeholder.phone': '00962781234567',
+            'reg.placeholder.emergency': 'الاسم ورقم الهاتف',
+            'reg.placeholder.notes': 'أي متطلبات خاصة أو أسئلة...',
+            'reg.height.140': '140-150 سم',
+            'reg.height.150': '150-160 سم',
+            'reg.height.160': '160-170 سم',
+            'reg.height.170': '170-180 سم',
+            'reg.height.180': '180-190 سم',
+            'reg.height.190': '190+ سم',
+            'lightbox.close': 'إغلاق'
         }
     };
 }
@@ -472,15 +513,15 @@ function getTranslations() {
  */
 function applyTranslations(lang) {
     const translations = getTranslations();
-    const dict = translations[lang] || translations.en;
+    const dict = translations[lang] || translations.ar;
     
     // Apply to all elements with data-i18n attribute
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
-            // Preserve HTML if needed, otherwise use textContent
-            if (el.children.length > 0) {
-                // Has children, update text content only
+            if (el.tagName === 'OPTION') {
+                el.textContent = dict[key];
+            } else if (el.children.length > 0 && !el.querySelector('[data-i18n]')) {
                 const textNodes = Array.from(el.childNodes).filter(node => node.nodeType === 3);
                 textNodes.forEach(node => {
                     if (node.textContent.trim()) {
@@ -490,6 +531,22 @@ function applyTranslations(lang) {
             } else {
                 el.textContent = dict[key];
             }
+        }
+    });
+    
+    // Apply placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) {
+            el.setAttribute('placeholder', dict[key]);
+        }
+    });
+    
+    // Apply aria-labels
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria-label');
+        if (dict[key]) {
+            el.setAttribute('aria-label', dict[key]);
         }
     });
 }
@@ -568,6 +625,57 @@ function initSmoothScrolling() {
                 });
             }
         });
+    });
+}
+
+// ============================================
+// Gallery Lightbox
+// ============================================
+function initGalleryLightbox() {
+    const lightbox = document.getElementById('imageLightbox');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    if (!lightbox || galleryItems.length === 0) return;
+    
+    const backdrop = lightbox.querySelector('.lightbox-backdrop');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const img = lightbox.querySelector('.lightbox-image');
+    const caption = lightbox.querySelector('.lightbox-caption');
+    
+    const translations = getTranslations();
+    
+    function openLightbox(src, captionKey) {
+        img.src = src;
+        img.alt = captionKey;
+        const lang = localStorage.getItem('language') || 'ar';
+        const dict = translations[lang] || translations.ar;
+        caption.textContent = dict[captionKey] || '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+    
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const src = item.getAttribute('data-src') || item.querySelector('img')?.src;
+            const captionKey = item.getAttribute('data-caption');
+            if (src) openLightbox(src, captionKey);
+        });
+    });
+    
+    if (backdrop) backdrop.addEventListener('click', closeLightbox);
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
     });
 }
 
@@ -755,6 +863,40 @@ function initRegistrationForm() {
     
     toggleBikeRentalFields();
     
+    // Custom validation: full name (min 2 words), email, phone (Jordanian 00962), bike rental required
+    const fullNameInput = form.querySelector('#fullName');
+    const emailInput = form.querySelector('#email');
+    const phoneInput = form.querySelector('#phone');
+    
+    function validateFullName() {
+        const val = (fullNameInput?.value || '').trim();
+        const words = val.split(/\s+/).filter(w => w.length > 0);
+        if (words.length < 2) {
+            fullNameInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'الاسم يجب أن يحتوي على كلمتين على الأقل' : 'Full name must contain at least 2 words');
+        } else {
+            fullNameInput?.setCustomValidity('');
+        }
+    }
+    
+    function validatePhone() {
+        const val = (phoneInput?.value || '').replace(/\s/g, '');
+        const jordanianRegex = /^00962[78][0-9]{8}$/;
+        if (!jordanianRegex.test(val)) {
+            phoneInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'رقم الهاتف يجب أن يكون أردنياً ويبدأ بـ 00962' : 'Phone must be Jordanian and start with 00962');
+        } else {
+            phoneInput?.setCustomValidity('');
+        }
+    }
+    
+    if (fullNameInput) {
+        fullNameInput.addEventListener('input', validateFullName);
+        fullNameInput.addEventListener('blur', validateFullName);
+    }
+    if (phoneInput) {
+        phoneInput.addEventListener('input', validatePhone);
+        phoneInput.addEventListener('blur', validatePhone);
+    }
+    
     // Form submission handler
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -762,6 +904,9 @@ function initRegistrationForm() {
         if (isSubmitting) {
             return;
         }
+        
+        validateFullName();
+        validatePhone();
         
         if (!form.checkValidity()) {
             form.reportValidity();

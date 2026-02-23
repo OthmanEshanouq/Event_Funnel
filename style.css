@@ -14,7 +14,11 @@
 
 html {
     scroll-behavior: smooth;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Tajawal', sans-serif;
+}
+
+[lang="ar"] {
+    font-family: 'Tajawal', 'Inter', sans-serif;
 }
 
 /* ============================================
@@ -260,12 +264,145 @@ body {
 }
 
 /* ============================================
-   Gallery Styles
+   Logo - Circular
+   ============================================ */
+.logo-circle {
+    border-radius: 50%;
+    object-fit: cover;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   WhatsApp Icon
+   ============================================ */
+.whatsapp-link {
+    background-color: #25D366;
+}
+
+.whatsapp-link:hover {
+    background-color: #128C7E;
+}
+
+.whatsapp-link img {
+    filter: brightness(0) invert(1);
+}
+
+/* ============================================
+   RTL Layout Support
+   ============================================ */
+[dir="rtl"] .space-x-6 > * + *,
+[dir="rtl"] .space-x-4 > * + *,
+[dir="rtl"] .space-x-3 > * + *,
+[dir="rtl"] .space-x-2 > * + * {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .lang-dropdown-menu {
+    right: auto;
+    left: 0;
+}
+
+/* ============================================
+   Gallery & Lightbox Styles
    ============================================ */
 #gallery img {
     transition: transform 0.3s ease;
 }
 
-#gallery .group:hover img {
+#gallery .group:hover img,
+.gallery-item:hover img {
     transform: scale(1.1);
+}
+
+/* Lightbox Modal */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    left: auto;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    z-index: 10;
+}
+
+[dir="rtl"] .lightbox-close {
+    right: auto;
+    left: 0;
+}
+
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+}
+
+.lightbox-caption {
+    margin-top: 1rem;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
 }
