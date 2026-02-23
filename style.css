@@ -25,29 +25,185 @@ html {
    Light/Dark Mode CSS Variables
    ============================================ */
 :root {
-    /* Light Mode (Default) */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --text-primary: #1a1a1a;
-    --text-secondary: #4a5568;
-    --accent: #10b981;
-    --accent-hover: #059669;
+    /* Light Mode - Professional, modern, WCAG-compliant */
+    --background-primary: #fafbfc;
+    --background-secondary: #f1f5f9;
+    --surface: #ffffff;
+    --surface-elevated: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --accent: #0d9488;
+    --accent-hover: #0f766e;
+    --accent-muted: #ccfbf1;
+    --border-color: #e2e8f0;
+    --border-subtle: #f1f5f9;
+    --success: #059669;
+    --error: #dc2626;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    --header-bg: rgba(255, 255, 255, 0.92);
+    /* Legacy aliases */
+    --bg-primary: var(--background-primary);
+    --bg-secondary: var(--background-secondary);
 }
 
-/* Dark Mode Overrides */
+/* Dark Mode Overrides - UNTOUCHED */
 .dark {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
+    --background-primary: #0f172a;
+    --background-secondary: #1e293b;
+    --surface: #1e293b;
+    --surface-elevated: #334155;
     --text-primary: #f1f5f9;
     --text-secondary: #cbd5e1;
-    --accent: #10b981;
-    --accent-hover: #059669;
+    --text-muted: #94a3b8;
+    --accent: #2dd4bf;
+    --accent-hover: #5eead4;
+    --accent-muted: rgba(45, 212, 191, 0.2);
+    --border-color: #334155;
+    --border-subtle: #1e293b;
+    --success: #34d399;
+    --error: #f87171;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    --bg-primary: var(--background-primary);
+    --bg-secondary: var(--background-secondary);
 }
 
 body {
-    background-color: var(--bg-primary);
+    background-color: var(--background-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   Light Mode - Override Tailwind colors with semantic variables
+   Only applies when NOT in dark mode
+   ============================================ */
+html:not(.dark) .bg-slate-50,
+html:not(.dark) body.bg-slate-50 {
+    background-color: var(--background-secondary) !important;
+}
+html:not(.dark) .bg-white {
+    background-color: var(--surface) !important;
+}
+html:not(.dark) .bg-slate-100 {
+    background-color: var(--border-subtle) !important;
+}
+html:not(.dark) .text-slate-900 {
+    color: var(--text-primary) !important;
+}
+html:not(.dark) .text-slate-700 {
+    color: var(--text-secondary) !important;
+}
+html:not(.dark) .text-slate-600 {
+    color: var(--text-secondary) !important;
+}
+html:not(.dark) .text-slate-500 {
+    color: var(--text-muted) !important;
+}
+html:not(.dark) .text-slate-400 {
+    color: var(--text-muted) !important;
+}
+html:not(.dark) .border-slate-200,
+html:not(.dark) .border-slate-300 {
+    border-color: var(--border-color) !important;
+}
+html:not(.dark) .border-slate-600 {
+    border-color: var(--border-color) !important;
+}
+html:not(.dark) .bg-emerald-50 {
+    background-color: var(--accent-muted) !important;
+}
+html:not(.dark) .border-emerald-200 {
+    border-color: var(--accent-muted) !important;
+}
+html:not(.dark) .bg-emerald-100 {
+    background-color: var(--accent-muted) !important;
+}
+html:not(.dark) .hover\:bg-emerald-50:hover {
+    background-color: var(--accent-muted) !important;
+}
+html:not(.dark) .text-emerald-500,
+html:not(.dark) .text-emerald-600 {
+    color: var(--accent) !important;
+}
+html:not(.dark) .group-hover\:text-emerald-600:hover,
+html:not(.dark) .hover\:text-emerald-600:hover,
+html:not(.dark) .hover\:text-emerald-400:hover {
+    color: var(--accent-hover) !important;
+}
+html:not(.dark) .bg-emerald-600 {
+    background-color: var(--accent) !important;
+}
+html:not(.dark) .hover\:bg-emerald-700:hover,
+html:not(.dark) .hover\:from-emerald-600:hover,
+html:not(.dark) .hover\:to-teal-700:hover {
+    background-color: var(--accent-hover) !important;
+}
+/* Accent gradient buttons - light mode */
+html:not(.dark) .from-emerald-500 {
+    --tw-gradient-from: var(--accent);
+    --tw-gradient-to: var(--accent-hover);
+}
+html:not(.dark) .to-teal-600 {
+    --tw-gradient-to: var(--accent-hover);
+}
+html:not(.dark) .focus-within\:ring-emerald-500:focus-within,
+html:not(.dark) .focus\:ring-emerald-500:focus,
+html:not(.dark) .focus-visible\:ring-emerald-500:focus-visible {
+    --tw-ring-color: var(--accent);
+}
+html:not(.dark) .focus\:ring-emerald-500:focus,
+html:not(.dark) .focus-visible\:ring-emerald-500:focus-visible {
+    --tw-ring-color: var(--accent);
+}
+/* Header - light mode */
+html:not(.dark) header.bg-white\/90,
+html:not(.dark) header {
+    background-color: var(--header-bg) !important;
+}
+/* Cards - elevated surface with soft shadow */
+html:not(.dark) .goal-card,
+html:not(.dark) .shadow-lg {
+    background-color: var(--surface) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+/* Form inputs - light mode */
+html:not(.dark) input.bg-white,
+html:not(.dark) select.bg-white,
+html:not(.dark) textarea.bg-white {
+    background-color: var(--surface) !important;
+}
+/* Trust bar - light mode accent */
+html:not(.dark) .bg-emerald-600 {
+    background-color: var(--accent) !important;
+}
+html:not(.dark) .border-emerald-700,
+html:not(.dark) .border-b-4.border-emerald-700 {
+    border-color: var(--accent-hover) !important;
+}
+
+/* Phone prefix - light mode */
+html:not(.dark) .phone-prefix {
+    background-color: var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* Required asterisk - use semantic error color in light mode */
+html:not(.dark) .text-red-500 {
+    color: var(--error) !important;
+}
+
+/* Button transitions - 200ms ease for clear hover feedback */
+a[class*="bg-emerald"],
+a[class*="from-emerald"],
+button[class*="bg-emerald"],
+.bg-emerald-600,
+.from-emerald-500 {
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* ============================================
@@ -57,18 +213,18 @@ body {
     position: relative;
     width: 60px;
     height: 32px;
-    background: #e5e7eb;
+    background: var(--border-color);
     border: none;
     border-radius: 9999px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.2s ease;
     display: flex;
     align-items: center;
     padding: 2px;
 }
 
 .theme-toggle-btn:hover {
-    background: #d1d5db;
+    background: var(--text-muted);
 }
 
 .dark .theme-toggle-btn {
@@ -84,7 +240,7 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -172,15 +328,25 @@ body {
     top: 100%;
     right: 0;
     margin-top: 0.5rem;
-    background: var(--bg-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--surface);
+    border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     min-width: 120px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 50;
+    box-shadow: var(--shadow-md);
+}
+
+html:not(.dark) .lang-dropdown-menu {
+    background: var(--surface);
+    border-color: var(--border-color);
+}
+
+.dark .lang-dropdown-menu {
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .lang-dropdown.open .lang-dropdown-menu {
@@ -196,6 +362,10 @@ body {
 }
 
 .lang-dropdown-item:hover {
+    background: var(--border-subtle);
+}
+
+.dark .lang-dropdown-item:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -244,16 +414,7 @@ body {
    Card Hover Effects
    ============================================ */
 .goal-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.goal-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.dark .goal-card:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease;
 }
 
 /* ============================================
@@ -284,8 +445,140 @@ body {
     background-color: #128C7E;
 }
 
-.whatsapp-link img {
-    filter: brightness(0) invert(1);
+/* Footer WhatsApp uses assets/WA icon.png - no filter needed */
+
+/* ============================================
+   Floating WhatsApp Button
+   ============================================ */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #25D366;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float:focus {
+    outline: 2px solid #25D366;
+    outline-offset: 2px;
+}
+
+[dir="rtl"] .whatsapp-float {
+    right: auto;
+    left: 20px;
+}
+
+/* Above mobile sticky CTA on middleFirst */
+.whatsapp-float--above-cta {
+    bottom: 88px;
+}
+
+@media (min-width: 640px) {
+    .whatsapp-float--above-cta {
+        bottom: 20px;
+    }
+}
+
+/* Tablet: 56px */
+@media (min-width: 640px) {
+    .whatsapp-float {
+        width: 56px;
+        height: 56px;
+        bottom: 20px;
+        right: 20px;
+    }
+    [dir="rtl"] .whatsapp-float {
+        left: 20px;
+    }
+}
+
+/* Desktop: 64px */
+@media (min-width: 1024px) {
+    .whatsapp-float {
+        width: 64px;
+        height: 64px;
+        bottom: 24px;
+        right: 24px;
+    }
+    [dir="rtl"] .whatsapp-float {
+        left: 24px;
+    }
+}
+
+.whatsapp-float-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: transparent;
+}
+
+
+/* ============================================
+   Mobile Slide-out Menu
+   ============================================ */
+.mobile-menu {
+    top: 0;
+    left: 0;
+    right: auto;
+}
+
+[dir="rtl"] .mobile-menu {
+    left: auto;
+    right: 0;
+}
+
+/* LTR: menu on left, slides in from left */
+[dir="ltr"] .mobile-menu {
+    transform: translateX(-100%);
+}
+[dir="ltr"] .mobile-menu.mobile-menu-open {
+    transform: translateX(0);
+}
+
+/* RTL: menu on right, slides in from right */
+[dir="rtl"] .mobile-menu {
+    transform: translateX(100%);
+}
+[dir="rtl"] .mobile-menu.mobile-menu-open {
+    transform: translateX(0);
+}
+
+.mobile-menu-backdrop.mobile-menu-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.mobile-menu-link:hover {
+    color: var(--accent);
+}
+
+.lang-dropdown-item-mobile.active {
+    background-color: var(--accent-muted, rgba(16, 185, 129, 0.2));
+    color: var(--accent);
 }
 
 /* ============================================
@@ -302,6 +595,11 @@ body {
 [dir="rtl"] .lang-dropdown-menu {
     right: auto;
     left: 0;
+}
+
+/* Phone prefix: in RTL (Arabic), put 00962 on the left so user continues typing after it */
+[dir="rtl"] .phone-prefix-group {
+    flex-direction: row-reverse;
 }
 
 /* ============================================

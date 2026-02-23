@@ -21,6 +21,14 @@
                     fontFamily: {
                         sans: ['Inter', 'Tajawal', 'sans-serif'],
                     },
+                    colors: {
+                        'surface': 'var(--surface)',
+                        'accent': 'var(--accent)',
+                        'accent-hover': 'var(--accent-hover)',
+                    },
+                    transitionDuration: {
+                        '200': '200ms',
+                    },
                 },
             },
         }
@@ -61,30 +69,18 @@
                 <div class="flex items-center space-x-6 rtl:space-x-reverse">
                     <a href="index.html#home" class="flex items-center space-x-2 group rtl:space-x-reverse" aria-label="الرئيسية">
                         <img src="assets/logo(cycling everywhere).png" alt="دراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
-                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">دراجات في كل مكان</span>
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">ركوب الدراجات في كل مكان</span>
                     </a>
                     <a href="index.html#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" data-i18n="nav.about">من نحن</a>
                 </div>
                 
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <button 
-                        id="themeToggle"
-                        class="theme-toggle-btn"
-                        type="button"
-                        aria-label="تبديل الوضع الداكن"
-                        aria-pressed="false"
-                        title="تبديل الوضع الداكن"
-                    >
+                <div class="hidden sm:flex items-center space-x-4 rtl:space-x-reverse">
+                    <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="تبديل الوضع الداكن" aria-pressed="false" title="تبديل الوضع الداكن">
                         <span class="theme-toggle-icon sun">🌞</span>
                         <span class="theme-toggle-icon moon">🌙</span>
                     </button>
                     <div class="lang-dropdown" id="langDropdown">
-                        <button 
-                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse"
-                            aria-label="محدد اللغة"
-                            aria-expanded="false"
-                            id="langButton"
-                        >
+                        <button class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse" aria-label="محدد اللغة" aria-expanded="false" id="langButton">
                             <i data-lucide="languages" class="w-5 h-5"></i>
                             <span id="langText">العربية</span>
                             <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -95,8 +91,35 @@
                         </div>
                     </div>
                 </div>
+                
+                <button id="hamburgerBtn" class="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="القائمة" aria-expanded="false">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
             </div>
         </nav>
+        
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 w-72 max-w-[85vw] bg-white dark:bg-slate-900 shadow-xl z-[60] transform transition-transform duration-300 ease-out sm:hidden" aria-hidden="true">
+            <div class="flex flex-col h-full pt-20 pb-6 px-4">
+                <a href="index.html#home" class="mobile-menu-link py-3 border-b border-slate-200 dark:border-slate-700" data-i18n="nav.home">الرئيسية</a>
+                <a href="index.html#about" class="mobile-menu-link py-3 border-b border-slate-200 dark:border-slate-700" data-i18n="nav.about">من نحن</a>
+                <a href="middleSecond.html" class="mobile-menu-link py-3 border-b border-slate-200 dark:border-slate-700" data-i18n="cta.proceedReg">المتابعة للتسجيل</a>
+                <div class="py-4 border-b border-slate-200 dark:border-slate-700">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2" data-i18n="nav.language">Language</p>
+                    <div class="lang-dropdown-mobile flex flex-col gap-1">
+                        <div class="lang-dropdown-item-mobile px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800" data-lang="en">English</div>
+                        <div class="lang-dropdown-item-mobile px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800" data-lang="ar">العربية</div>
+                    </div>
+                </div>
+                <div class="py-4">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2" data-i18n="nav.theme">Theme</p>
+                    <button id="themeToggleMobile" class="theme-toggle-btn w-full justify-center" type="button" aria-label="Toggle theme">
+                        <span class="theme-toggle-icon sun">🌞</span>
+                        <span class="theme-toggle-icon moon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenuBackdrop" class="mobile-menu-backdrop fixed inset-0 bg-black/50 z-[55] opacity-0 invisible transition-all duration-300 sm:hidden" aria-hidden="true"></div>
     </header>
 
     <main class="pt-28 pb-20 container mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -204,11 +227,11 @@
             </div>
 
             <div class="faq-accordion space-y-3">
-                <h2 class="text-2xl sm:text-3xl font-bold" data-i18n="hub.faq.title">FAQ</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold" data-i18n="hub.faq.title">الأسئلة الشائعة</h2>
                 <div class="faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm">
                     <button class="faq-question w-full flex items-center justify-between px-4 py-3 text-left font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg"
                         aria-expanded="false">
-                        <span data-i18n="hub.faq.q1">Is transportation provided?</span>
+                        <span data-i18n="hub.faq.q1">هل يتم توفير المواصلات؟</span>
                         <span class="faq-indicator text-lg">+</span>
                     </button>
                     <div class="faq-answer px-4 pb-4 text-slate-600 dark:text-slate-300">
@@ -218,7 +241,7 @@
                 <div class="faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm">
                     <button class="faq-question w-full flex items-center justify-between px-4 py-3 text-left font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg"
                         aria-expanded="false">
-                        <span data-i18n="hub.faq.q2">What if it rains?</span>
+                        <span data-i18n="hub.faq.q2">ماذا لو كان هناك مطر؟</span>
                         <span class="faq-indicator text-lg">+</span>
                     </button>
                     <div class="faq-answer px-4 pb-4 text-slate-600 dark:text-slate-300">
@@ -228,7 +251,7 @@
                 <div class="faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm">
                     <button class="faq-question w-full flex items-center justify-between px-4 py-3 text-left font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg"
                         aria-expanded="false">
-                        <span data-i18n="hub.faq.q3">Is it hilly?</span>
+                        <span data-i18n="hub.faq.q3">هل الطريق مرتفع؟</span>
                         <span class="faq-indicator text-lg">+</span>
                     </button>
                     <div class="faq-answer px-4 pb-4 text-slate-600 dark:text-slate-300">
@@ -258,6 +281,17 @@
         </section>
     </main>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/962787426310" target="_blank" rel="noopener noreferrer"
+        class="whatsapp-float whatsapp-float--above-cta"
+        aria-label="Chat on WhatsApp"
+        data-i18n-title="whatsapp.tooltip"
+        data-i18n-aria-label="whatsapp.aria"
+        title="Chat with us">
+        <img src="assets/WA icon.png" alt="WhatsApp" class="whatsapp-float-icon" width="64" height="64" loading="lazy"
+            onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg';this.style.filter='brightness(0) invert(1)'">
+    </a>
+
     <!-- Sticky Bottom CTA for mobile -->
     <aside class="fixed bottom-4 left-0 right-0 px-4 sm:hidden">
         <a
@@ -270,6 +304,8 @@
     </aside>
 
     <!-- JavaScript -->
+    <script src="lang-ar.js"></script>
+    <script src="site-info.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -71,12 +71,14 @@ function toggleTheme() {
  * Update theme toggle button accessibility attributes
  */
 function updateThemeToggleButton() {
-    const button = document.getElementById('themeToggle');
-    if (button) {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        button.setAttribute('aria-pressed', isDarkMode ? 'true' : 'false');
-        button.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
-    }
+    const buttons = document.querySelectorAll('#themeToggle, #themeToggleMobile');
+    buttons.forEach(button => {
+        if (button) {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            button.setAttribute('aria-pressed', isDarkMode ? 'true' : 'false');
+            button.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+    });
 }
 
 /**
@@ -98,7 +100,7 @@ function initThemeToggle() {
     if (!themeToggleInitialized) {
         // Use event delegation on document for reliability
         document.addEventListener('click', function(e) {
-            const button = e.target.closest('#themeToggle');
+            const button = e.target.closest('#themeToggle, #themeToggleMobile');
             if (button) {
                 e.preventDefault();
                 toggleTheme();
@@ -107,7 +109,7 @@ function initThemeToggle() {
         
         // Keyboard support (Enter/Space keys)
         document.addEventListener('keydown', function(e) {
-            const button = e.target.closest('#themeToggle');
+            const button = e.target.closest('#themeToggle, #themeToggleMobile');
             if (button && (e.key === 'Enter' || e.key === ' ')) {
                 e.preventDefault();
                 toggleTheme();
@@ -136,6 +138,7 @@ function initThemeToggle() {
     function initializeAll() {
         initThemeToggle();
         initLanguageSwitcher();
+        initMobileMenu();
         initHeroSlider();
         initSmoothScrolling();
         initIcons();
@@ -146,6 +149,59 @@ function initThemeToggle() {
         initGalleryLightbox();
     }
 })();
+
+// ============================================
+// MOBILE MENU
+// ============================================
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (mobileMenu) mobileMenu.classList.remove('mobile-menu-open');
+    if (backdrop) backdrop.classList.remove('mobile-menu-open');
+    if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', 'false');
+    if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
+    if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function initMobileMenu() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    
+    if (!hamburgerBtn || !mobileMenu || !backdrop) return;
+    
+    function openMobileMenu() {
+        mobileMenu.classList.add('mobile-menu-open');
+        backdrop.classList.add('mobile-menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    hamburgerBtn.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('mobile-menu-open')) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    });
+    
+    window.closeMobileMenu = closeMobileMenu;
+    
+    backdrop.addEventListener('click', closeMobileMenu);
+    
+    mobileMenu.querySelectorAll('.mobile-menu-link').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+    
+    const savedLang = localStorage.getItem('language') || 'ar';
+    document.querySelectorAll('.lang-dropdown-item-mobile').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-lang') === savedLang);
+    });
+}
 
 // ============================================
 // LANGUAGE SWITCHER FUNCTIONALITY
@@ -194,26 +250,28 @@ function initLanguageSwitcher() {
             langButton.setAttribute('aria-expanded', isOpen);
         });
         
-        // Handle language selection via event delegation
+        // Handle language selection via event delegation (desktop + mobile)
         document.addEventListener('click', function(e) {
-            const langItem = e.target.closest('.lang-dropdown-item');
-            if (langItem && langDropdown.contains(langItem)) {
+            const langItem = e.target.closest('.lang-dropdown-item, .lang-dropdown-item-mobile');
+            const isDesktopItem = langItem && langDropdown && langDropdown.contains(langItem);
+            const isMobileItem = langItem && langItem.classList.contains('lang-dropdown-item-mobile');
+            if ((isDesktopItem || isMobileItem) && langItem) {
                 const selectedLang = langItem.getAttribute('data-lang');
                 if (selectedLang && (selectedLang === 'en' || selectedLang === 'ar')) {
-                    // Save language
                     localStorage.setItem('language', selectedLang);
-                    
-                    // Apply language
                     html.setAttribute('lang', selectedLang);
                     html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
-                    
-                    // Update UI and translations
                     updateLanguageUI(selectedLang);
                     applyTranslations(selectedLang);
-                    
-                    // Close dropdown
-                    langDropdown.classList.remove('open');
-                    langButton.setAttribute('aria-expanded', 'false');
+                    if (langDropdown) {
+                        langDropdown.classList.remove('open');
+                        if (langButton) langButton.setAttribute('aria-expanded', 'false');
+                    }
+                    closeMobileMenu();
+                    // Update mobile active state
+                    document.querySelectorAll('.lang-dropdown-item-mobile').forEach(el => {
+                        el.classList.toggle('active', el.getAttribute('data-lang') === selectedLang);
+                    });
                 }
             }
             
@@ -243,10 +301,14 @@ function initLanguageSwitcher() {
  * Used across all pages
  */
 function getTranslations() {
+    const arFromFile = typeof window !== 'undefined' && window.TRANSLATIONS_AR;
     return {
         en: {
             'nav.brand': 'Cycling Every Where',
+            'nav.home': 'Home',
             'nav.about': 'About Us',
+            'nav.language': 'Language',
+            'nav.theme': 'Theme',
             'hero.b1': '✓ Join organized cycling trips',
             'hero.b2': '✓ ride in nature, city, mountains & every where safely',
             'hero.b3': '✓ Meet Like-minded People',
@@ -273,19 +335,25 @@ function getTranslations() {
             'prep.helmet': 'Helmet (Safety)',
             'prep.tube': 'Spare Tube',
             'prep.clothes': 'Comfortable Clothes',
+            'prep.alt.water': 'Water bottle',
+            'prep.alt.helmet': 'Bicycle helmet',
+            'prep.alt.tube': 'Spare tube',
             'footer.copy': '© 2026 Cycling Every Where. All rights reserved.',
             'note.privacy': 'Your information is kept confidential and will only be used for organizing and managing this event.',
             
             // Index secondary CTA
             'cta.indexTitle': 'Ready for an adventure?',
             'cta.indexButton': 'Proceed to information page',
+            'cta2.title': 'Ready for an adventure?',
+            'cta2.text': 'Go to the information page to confirm details and register.',
+            'cta2.btn': 'Proceed to information page',
             
             // Information Hub (middleFirst.html)
             'hub.hero.tag': 'Umm Qais · Irbid',
             'hub.hero.title': 'Sunrise Ride in Umm Qais',
-            'hub.hero.desc': 'Join our guided sunrise ride in Umm Qais over the next two Fridays. Roll out at 06:30 AM and enjoy ~4 hours of scenic cycling.',
+            'hub.hero.desc': 'Join our guided sunrise ride in Umm Qais over the next two Fridays. Roll out at 8:00 AM and enjoy ~4 hours of scenic cycling.',
             'hub.facts.city': 'Irbid, Jordan',
-            'hub.facts.time': '06:30 AM',
+            'hub.facts.time': '8:00 AM',
             'hub.facts.duration': '~4 Hours',
             'hub.who.title': 'Who It\'s For',
             'hub.who.text': 'All levels welcome. We\'ll have lead cyclists for beginners and faster groups for pros—so you ride at the pace that feels great for you.',
@@ -312,8 +380,8 @@ function getTranslations() {
             'hub.faq.a3': 'Yes, but we have support! Pace leaders, rest stops, and a follow vehicle have you covered.',
             'hub.bike.title': 'No bike? No problem!',
             'hub.bike.text': 'You can request a bike rental while filling the registration form.',
-            'hub.bike.btn': 'Registration & Rent A Bike',
-            'hub.cta.button': 'Registration & Rent A Bike',
+            'hub.bike.btn': 'Registration and/or rent a bike',
+            'hub.cta.button': 'Registration and/or rent a bike',
             
             // Registration page
             'reg.tag': 'Cycling Every Where',
@@ -364,6 +432,7 @@ function getTranslations() {
             'reg.placeholder.name': 'Enter your full name (at least 2 words)',
             'reg.placeholder.email': 'your.email@example.com',
             'reg.placeholder.phone': '00962781234567',
+            'reg.placeholder.phoneSuffix': '781234567',
             'reg.placeholder.emergency': 'Name and phone number',
             'reg.placeholder.notes': 'Any special requirements or questions...',
             'reg.height.140': '140-150 cm',
@@ -372,11 +441,21 @@ function getTranslations() {
             'reg.height.170': '170-180 cm',
             'reg.height.180': '180-190 cm',
             'reg.height.190': '190+ cm',
-            'lightbox.close': 'Close'
+            'lightbox.close': 'Close',
+            'whatsapp.tooltip': 'Chat with us',
+            'whatsapp.aria': 'Chat on WhatsApp'
         },
-        ar: {
-            'nav.brand': 'دراجات في كل مكان',
+        ar: arFromFile ? Object.assign({}, getTranslationsFallbackAr(), arFromFile) : getTranslationsFallbackAr()
+    };
+}
+
+function getTranslationsFallbackAr() {
+    return {
+            'nav.brand': 'ركوب الدراجات في كل مكان',
+            'nav.home': 'الرئيسية',
             'nav.about': 'من نحن',
+            'nav.language': 'اللغة',
+            'nav.theme': 'المظهر',
             'hero.b1': '✓ انضم إلى رحلات دراجات منظمة',
             'hero.b2': '✓ قد في الطبيعة والمدينة والجبال وفي كل مكان بأمان',
             'hero.b3': '✓ تعرّف على أشخاص يشاركونك الشغف',
@@ -403,19 +482,25 @@ function getTranslations() {
             'prep.helmet': 'خوذة (سلامة)',
             'prep.tube': 'أنبوب داخلي احتياطي',
             'prep.clothes': 'ملابس مريحة',
-            'footer.copy': '© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.',
+            'prep.alt.water': 'زجاجة ماء',
+            'prep.alt.helmet': 'خوذة دراجة',
+            'prep.alt.tube': 'أنبوب داخلي احتياطي',
+            'footer.copy': '© 2026 ركوب الدراجات في كل مكان. جميع الحقوق محفوظة.',
             'note.privacy': 'معلوماتك محفوظة بسرية ولن تُستخدم إلا لتنظيم وإدارة هذا الحدث.',
             
             // Index secondary CTA
             'cta.indexTitle': 'جاهز للانضمام للرحلة؟',
             'cta.indexButton': 'الانتقال إلى صفحة المعلومات',
+            'cta2.title': 'جاهز للانضمام للرحلة؟',
+            'cta2.text': 'انتقل إلى مركز المعلومات لتأكيد التفاصيل والتسجيل.',
+            'cta2.btn': 'الانتقال إلى صفحة المعلومات',
             
             // Information Hub (middleFirst.html)
             'hub.hero.tag': 'أم قيس · إربد',
             'hub.hero.title': 'رحلة شروق الشمس في أم قيس',
-            'hub.hero.desc': 'انضم إلى رحلة شروق الشمس الموجهة في أم قيس خلال الجمعة القادمتين. انطلق في الساعة 06:30 صباحاً واستمتع بـ ~4 ساعات من ركوب الدراجات الخلابة.',
+            'hub.hero.desc': 'انضم إلى رحلة شروق الشمس الموجهة في أم قيس خلال الجمعة القادمتين. انطلق في الساعة 8:00 صباحاً واستمتع بـ ~4 ساعات من ركوب الدراجات الخلابة.',
             'hub.facts.city': 'إربد، الأردن',
-            'hub.facts.time': '06:30 صباحاً',
+            'hub.facts.time': '8:00 صباحاً',
             'hub.facts.duration': '~4 ساعات',
             'hub.who.title': 'لمن هذه الرحلة',
             'hub.who.text': 'جميع المستويات مرحب بها. سيكون لدينا قادة دراجات للمبتدئين ومجموعات أسرع للمحترفين—حتى تركب بالسرعة التي تناسبك.',
@@ -494,6 +579,7 @@ function getTranslations() {
             'reg.placeholder.name': 'أدخل اسمك الكامل (كلمتين على الأقل)',
             'reg.placeholder.email': 'بريدك@example.com',
             'reg.placeholder.phone': '00962781234567',
+            'reg.placeholder.phoneSuffix': '781234567',
             'reg.placeholder.emergency': 'الاسم ورقم الهاتف',
             'reg.placeholder.notes': 'أي متطلبات خاصة أو أسئلة...',
             'reg.height.140': '140-150 سم',
@@ -502,9 +588,10 @@ function getTranslations() {
             'reg.height.170': '170-180 سم',
             'reg.height.180': '180-190 سم',
             'reg.height.190': '190+ سم',
-            'lightbox.close': 'إغلاق'
-        }
-    };
+            'lightbox.close': 'إغلاق',
+            'whatsapp.tooltip': 'تواصل معنا',
+            'whatsapp.aria': 'الدردشة على واتساب'
+        };
 }
 
 /**
@@ -547,6 +634,19 @@ function applyTranslations(lang) {
         const key = el.getAttribute('data-i18n-aria-label');
         if (dict[key]) {
             el.setAttribute('aria-label', dict[key]);
+        }
+    });
+    // Apply alt attributes
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+        const key = el.getAttribute('data-i18n-alt');
+        if (dict[key]) {
+            el.setAttribute('alt', dict[key]);
+        }
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (dict[key]) {
+            el.setAttribute('title', dict[key]);
         }
     });
 }
@@ -880,9 +980,10 @@ function initRegistrationForm() {
     
     function validatePhone() {
         const val = (phoneInput?.value || '').replace(/\s/g, '');
-        const jordanianRegex = /^00962[78][0-9]{8}$/;
+        // User types 7 + (7|8|9) + 7 digits; 00962 is prefixed automatically
+        const jordanianRegex = /^7[789][0-9]{7}$/;
         if (!jordanianRegex.test(val)) {
-            phoneInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'رقم الهاتف يجب أن يكون أردنياً ويبدأ بـ 00962' : 'Phone must be Jordanian and start with 00962');
+            phoneInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'رقم الهاتف: 7 ثم 7 أو 8 أو 9 ثم 7 أرقام' : 'Phone: 7 then 7/8/9 then 7 digits');
         } else {
             phoneInput?.setCustomValidity('');
         }
@@ -911,6 +1012,11 @@ function initRegistrationForm() {
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
+        }
+        
+        // Prepend 00962 to phone before submit
+        if (phoneInput && phoneInput.value) {
+            phoneInput.value = '00962' + phoneInput.value.trim();
         }
         
         isSubmitting = true;

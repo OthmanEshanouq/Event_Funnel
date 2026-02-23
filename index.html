@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دراجات في كل مكان - انضم لرحلات الدراجات المنظمة</title>
+    <title>ركوب الدراجات في كل مكان - انضم لرحلات الدراجات المنظمة</title>
     <meta name="description" content="انضم لرحلات دراجات منظمة، استكشف الطبيعة والمدينة وكل مكان بأمان. تعرّف على أشخاص يشاركونك الشغف واستمتع بمغامرات الدراجات.">
     
     <!-- Google Fonts - Inter for Latin, Tajawal for Arabic -->
@@ -20,6 +20,14 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        'surface': 'var(--surface)',
+                        'accent': 'var(--accent)',
+                        'accent-hover': 'var(--accent-hover)',
+                    },
+                    transitionDuration: {
+                        '200': '200ms',
                     },
                 },
             },
@@ -60,35 +68,20 @@
                 <!-- Left: Logo and About Us Link -->
                 <div class="flex items-center space-x-6 rtl:space-x-reverse">
                     <a href="#home" class="flex items-center space-x-2 group rtl:space-x-reverse" aria-label="Home">
-                        <img src="assets/logo(cycling everywhere).png" alt="دراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
-                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">دراجات في كل مكان</span>
+                        <img src="assets/logo(cycling everywhere).png" alt="ركوب الدراجات في كل مكان" class="logo-circle h-10 w-10 object-cover">
+                        <span class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="nav.brand">ركوب الدراجات في كل مكان</span>
                     </a>
                     <a href="#about" class="hidden sm:block text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors" aria-label="من نحن" data-i18n="nav.about">من نحن</a>
                 </div>
                 
-                <!-- Right: Theme Toggle & Language Dropdown -->
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                    <!-- Theme Toggle Button -->
-                    <button 
-                        id="themeToggle"
-                        class="theme-toggle-btn"
-                        type="button"
-                        aria-label="Switch to dark mode"
-                        aria-pressed="false"
-                        title="Toggle dark mode"
-                    >
+                <!-- Desktop: Theme Toggle & Language Dropdown -->
+                <div class="hidden sm:flex items-center space-x-4 rtl:space-x-reverse">
+                    <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle dark mode">
                         <span class="theme-toggle-icon sun">🌞</span>
                         <span class="theme-toggle-icon moon">🌙</span>
                     </button>
-                    
-                    <!-- Language Dropdown -->
                     <div class="lang-dropdown" id="langDropdown">
-                        <button 
-                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse"
-                            aria-label="محدد اللغة"
-                            aria-expanded="false"
-                            id="langButton"
-                        >
+                        <button class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors rtl:space-x-reverse" aria-label="محدد اللغة" aria-expanded="false" id="langButton">
                             <i data-lucide="languages" class="w-5 h-5"></i>
                             <span id="langText">العربية</span>
                             <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -99,9 +92,37 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Mobile: Hamburger Button -->
+                <button id="hamburgerBtn" class="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="القائمة" aria-expanded="false">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
             </div>
-        </header>
-    </nav>
+        </nav>
+        
+        <!-- Mobile Slide-out Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 w-72 max-w-[85vw] bg-white dark:bg-slate-900 shadow-xl z-[60] transform transition-transform duration-300 ease-out sm:hidden" aria-hidden="true">
+            <div class="flex flex-col h-full pt-20 pb-6 px-4">
+                <a href="#home" class="mobile-menu-link py-3 border-b border-slate-200 dark:border-slate-700" data-i18n="nav.home">الرئيسية</a>
+                <a href="#about" class="mobile-menu-link py-3 border-b border-slate-200 dark:border-slate-700" data-i18n="nav.about">من نحن</a>
+                <div class="py-4 border-b border-slate-200 dark:border-slate-700">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2" data-i18n="nav.language">Language</p>
+                    <div class="lang-dropdown lang-dropdown-mobile flex flex-col gap-1">
+                        <div class="lang-dropdown-item-mobile px-3 py-2 rounded-lg cursor-pointer" data-lang="en">English</div>
+                        <div class="lang-dropdown-item-mobile px-3 py-2 rounded-lg cursor-pointer" data-lang="ar">العربية</div>
+                    </div>
+                </div>
+                <div class="py-4">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-2" data-i18n="nav.theme">Theme</p>
+                    <button id="themeToggleMobile" class="theme-toggle-btn w-full justify-center" type="button" aria-label="Toggle theme">
+                        <span class="theme-toggle-icon sun">🌞</span>
+                        <span class="theme-toggle-icon moon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenuBackdrop" class="mobile-menu-backdrop fixed inset-0 bg-black/50 z-[55] opacity-0 invisible transition-all duration-300 sm:hidden" aria-hidden="true"></div>
+    </header>
 
     <!-- Hero Section with Image Slider -->
     <section id="home" class="hero-slider">
@@ -117,14 +138,14 @@
         <div class="hero-content flex items-center justify-center h-full">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 fade-in" data-i18n="nav.brand">
-                    دراجات في كل مكان
+                    ركوب الدراجات في كل مكان
                 </h1>
                 <div class="space-y-4 text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-                    <p class="fade-in" style="animation-delay: 0.1s;" data-i18n="hero.b1">✓ Join organized cycling trips</p>
-                    <p class="fade-in" style="animation-delay: 0.2s;" data-i18n="hero.b2">✓ ride in nature, city, mountains & every where safely</p>
-                    <p class="fade-in" style="animation-delay: 0.3s;" data-i18n="hero.b3">✓ Meet Like-minded People</p>
-                    <p class="fade-in" style="animation-delay: 0.4s;" data-i18n="hero.b4">✓ All Levels Welcome</p>
-                    <p class="fade-in" style="animation-delay: 0.5s;" data-i18n="hero.b5">✓ Local Guides & Community</p>
+                    <p class="fade-in" style="animation-delay: 0.1s;" data-i18n="hero.b1">✓ انضم إلى رحلات دراجات منظمة</p>
+                    <p class="fade-in" style="animation-delay: 0.2s;" data-i18n="hero.b2">✓ قد في الطبيعة والمدينة والجبال وفي كل مكان بأمان</p>
+                    <p class="fade-in" style="animation-delay: 0.3s;" data-i18n="hero.b3">✓ تعرّف على أشخاص يشاركونك الشغف</p>
+                    <p class="fade-in" style="animation-delay: 0.4s;" data-i18n="hero.b4">✓ جميع المستويات مرحب بها</p>
+                    <p class="fade-in" style="animation-delay: 0.5s;" data-i18n="hero.b5">✓ مرشدون محليون ومجتمع داعم</p>
                 </div>
             </div>
         </div>
@@ -266,7 +287,7 @@
                 <!-- Water -->
                 <div class="flex flex-col items-center text-center">
                     <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-4">
-                        <img src="assets/bottle.png" alt="Water bottle" class="w-10 h-10 object-contain">
+                        <img src="assets/bottle.png" alt="زجاجة ماء" data-i18n-alt="prep.alt.water" class="w-10 h-10 object-contain">
                     </div>
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.water">ماء</h3>
                 </div>
@@ -274,7 +295,7 @@
                 <!-- Helmet -->
                 <div class="flex flex-col items-center text-center">
                     <div class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
-                        <img src="assets/bike-helmet.png" alt="Bicycle helmet" class="w-10 h-10 object-contain">
+                        <img src="assets/bike-helmet.png" alt="خوذة دراجة" data-i18n-alt="prep.alt.helmet" class="w-10 h-10 object-contain">
                     </div>
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.helmet">خوذة (سلامة)</h3>
                 </div>
@@ -282,7 +303,7 @@
                 <!-- Spare Tube -->
                 <div class="flex flex-col items-center text-center">
                     <div class="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-4">
-                        <img src="assets/tire.png" alt="Spare tube" class="w-10 h-10 object-contain">
+                        <img src="assets/tire.png" alt="أنبوب داخلي احتياطي" data-i18n-alt="prep.alt.tube" class="w-10 h-10 object-contain">
                     </div>
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-white" data-i18n="prep.tube">أنبوب داخلي احتياطي</h3>
                 </div>
@@ -315,12 +336,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 dark:bg-slate-950 text-white py-12 transition-colors duration-300">
+    <footer class="bg-slate-900 dark:bg-slate-950 text-white py-12 pb-24 sm:pb-12 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
                 <!-- Copyright -->
                 <div class="text-center md:text-left">
-                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 دراجات في كل مكان. جميع الحقوق محفوظة.</p>
+                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 ركوب الدراجات في كل مكان. جميع الحقوق محفوظة.</p>
                 </div>
                 
                 <!-- Phone Number -->
@@ -348,7 +369,7 @@
                         class="whatsapp-link w-10 h-10 rounded-full flex items-center justify-center transition-colors overflow-hidden"
                         aria-label="تواصل معنا على واتساب"
                     >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" class="w-6 h-6 object-contain" width="24" height="24">
+                        <img src="assets/WA icon.png" alt="واتساب" class="w-10 h-10 object-cover rounded-full" width="40" height="40">
                     </a>
                 </div>
             </div>
@@ -365,7 +386,20 @@
         </div>
     </div>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/962787426310" target="_blank" rel="noopener noreferrer"
+        class="whatsapp-float"
+        aria-label="Chat on WhatsApp"
+        data-i18n-title="whatsapp.tooltip"
+        data-i18n-aria-label="whatsapp.aria"
+        title="Chat with us">
+        <img src="assets/WA icon.png" alt="WhatsApp" class="whatsapp-float-icon" width="64" height="64" loading="lazy"
+            onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg';this.style.filter='brightness(0) invert(1)'">
+    </a>
+
     <!-- JavaScript -->
+    <script src="lang-ar.js"></script>
+    <script src="site-info.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
