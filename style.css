@@ -530,6 +530,48 @@ html:not(.dark) .lang-dropdown-menu {
 
 
 /* ============================================
+   Hamburger Button - darker 10% than page, 5% transparent
+   ============================================ */
+.hamburger-btn {
+    background: rgba(203, 213, 225, 0.95);
+    color: #334155;
+}
+
+.hamburger-btn:hover {
+    background: rgba(148, 163, 184, 0.95);
+}
+
+.dark .hamburger-btn {
+    background: rgba(15, 23, 42, 0.95);
+    color: #94a3b8;
+}
+
+.dark .hamburger-btn:hover {
+    background: rgba(30, 41, 59, 0.95);
+}
+
+/* ============================================
+   Hamburger Button - darker 10% than page, 5% transparent
+   ============================================ */
+.hamburger-btn {
+    background: rgba(203, 213, 225, 0.95);
+    color: #334155;
+}
+
+.hamburger-btn:hover {
+    background: rgba(148, 163, 184, 0.95);
+}
+
+.dark .hamburger-btn {
+    background: rgba(30, 41, 59, 0.95);
+    color: #94a3b8;
+}
+
+.dark .hamburger-btn:hover {
+    background: rgba(51, 65, 85, 0.95);
+}
+
+/* ============================================
    Mobile Slide-out Menu
    ============================================ */
 .mobile-menu {

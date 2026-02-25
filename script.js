@@ -139,6 +139,7 @@ function initThemeToggle() {
         initThemeToggle();
         initLanguageSwitcher();
         initMobileMenu();
+        initStickyCtaVisibility();
         initHeroSlider();
         initSmoothScrolling();
         initIcons();
@@ -201,6 +202,34 @@ function initMobileMenu() {
     document.querySelectorAll('.lang-dropdown-item-mobile').forEach(el => {
         el.classList.toggle('active', el.getAttribute('data-lang') === savedLang);
     });
+}
+
+// ============================================
+// STICKY CTA VISIBILITY (middleFirst - mobile only)
+// Hide "Proceed to registration" when "Registration and/or rent a bike" is visible
+// ============================================
+function initStickyCtaVisibility() {
+    const stickyCta = document.getElementById('stickyProceedCta');
+    const bikeCtaSection = document.getElementById('bikeCtaSection');
+    
+    if (!stickyCta || !bikeCtaSection) return;
+    
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    stickyCta.style.opacity = '0';
+                    stickyCta.style.pointerEvents = 'none';
+                } else {
+                    stickyCta.style.opacity = '1';
+                    stickyCta.style.pointerEvents = 'auto';
+                }
+            });
+        },
+        { threshold: 0.1, rootMargin: '0px' }
+    );
+    
+    observer.observe(bikeCtaSection);
 }
 
 // ============================================
