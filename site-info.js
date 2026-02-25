@@ -35,10 +35,10 @@ const SITE_INFO = {
 
     // ========== REGISTRATION ==========
     // Phone prefix shown in form (Jordan)
-    phonePrefix: '00962',
+    phonePrefix: '009627',
 
     // ========== SOCIAL ==========
-    instagram: '',  // Add Instagram URL if needed
+    instagram: 'https://www.instagram.com/',  // Update with your Instagram URL
 };
 
 // Expose for use in other scripts

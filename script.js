@@ -140,6 +140,7 @@ function initThemeToggle() {
         initLanguageSwitcher();
         initMobileMenu();
         initStickyCtaVisibility();
+        initWhatsAppFloatVisibility();
         initHeroSlider();
         initSmoothScrolling();
         initIcons();
@@ -230,6 +231,35 @@ function initStickyCtaVisibility() {
     );
     
     observer.observe(bikeCtaSection);
+}
+
+// ============================================
+// WHATSAPP FLOAT - Hide when footer is in view
+// ============================================
+function initWhatsAppFloatVisibility() {
+    const whatsappFloat = document.querySelector('.whatsapp-float');
+    const footer = document.getElementById('mainFooter');
+    
+    if (!whatsappFloat || !footer) return;
+    
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    whatsappFloat.style.opacity = '0';
+                    whatsappFloat.style.pointerEvents = 'none';
+                    whatsappFloat.style.visibility = 'hidden';
+                } else {
+                    whatsappFloat.style.opacity = '1';
+                    whatsappFloat.style.pointerEvents = 'auto';
+                    whatsappFloat.style.visibility = 'visible';
+                }
+            });
+        },
+        { threshold: 0, rootMargin: '0px' }
+    );
+    
+    observer.observe(footer);
 }
 
 // ============================================
@@ -461,7 +491,7 @@ function getTranslations() {
             'reg.placeholder.name': 'Enter your full name (at least 2 words)',
             'reg.placeholder.email': 'your.email@example.com',
             'reg.placeholder.phone': '00962781234567',
-            'reg.placeholder.phoneSuffix': '781234567',
+            'reg.placeholder.phoneSuffix': '81234567',
             'reg.placeholder.emergency': 'Name and phone number',
             'reg.placeholder.notes': 'Any special requirements or questions...',
             'reg.height.140': '140-150 cm',
@@ -556,8 +586,8 @@ function getTranslationsFallbackAr() {
             'hub.faq.a3': 'نعم، لكن لدينا دعم! قادة سرعة، محطات راحة، ومركبة متابعة تغطيك.',
             'hub.bike.title': 'لا تملك دراجة؟ لا مشكلة!',
             'hub.bike.text': 'يمكنك طلب استئجار دراجة أثناء ملء نموذج التسجيل.',
-            'hub.bike.btn': 'التسجيل و/أو استئجار دراجة',
-            'hub.cta.button': 'التسجيل و/أو استئجار دراجة',
+            'hub.bike.btn': 'المتابعة للتسجيل',
+            'hub.cta.button': 'المتابعة للتسجيل',
             
             // Registration page
             'reg.tag': 'Cycling Every Where',
@@ -608,7 +638,7 @@ function getTranslationsFallbackAr() {
             'reg.placeholder.name': 'أدخل اسمك الكامل (كلمتين على الأقل)',
             'reg.placeholder.email': 'بريدك@example.com',
             'reg.placeholder.phone': '00962781234567',
-            'reg.placeholder.phoneSuffix': '781234567',
+            'reg.placeholder.phoneSuffix': '81234567',
             'reg.placeholder.emergency': 'الاسم ورقم الهاتف',
             'reg.placeholder.notes': 'أي متطلبات خاصة أو أسئلة...',
             'reg.height.140': '140-150 سم',
@@ -1009,10 +1039,10 @@ function initRegistrationForm() {
     
     function validatePhone() {
         const val = (phoneInput?.value || '').replace(/\s/g, '');
-        // User types 7 + (7|8|9) + 7 digits; 00962 is prefixed automatically
-        const jordanianRegex = /^7[789][0-9]{7}$/;
+        // User types 8 digits; 009627 is prefixed automatically (Jordanian format)
+        const jordanianRegex = /^[0-9]{8}$/;
         if (!jordanianRegex.test(val)) {
-            phoneInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'رقم الهاتف: 7 ثم 7 أو 8 أو 9 ثم 7 أرقام' : 'Phone: 7 then 7/8/9 then 7 digits');
+            phoneInput?.setCustomValidity(document.documentElement.lang === 'ar' ? 'رقم الهاتف: 8 أرقام' : 'Phone: 8 digits');
         } else {
             phoneInput?.setCustomValidity('');
         }
@@ -1043,9 +1073,9 @@ function initRegistrationForm() {
             return;
         }
         
-        // Prepend 00962 to phone before submit
+        // Prepend 009627 to phone before submit
         if (phoneInput && phoneInput.value) {
-            phoneInput.value = '00962' + phoneInput.value.trim();
+            phoneInput.value = '009627' + phoneInput.value.trim();
         }
         
         isSubmitting = true;
