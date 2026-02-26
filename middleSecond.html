@@ -51,7 +51,7 @@
                 document.documentElement.classList.remove('dark');
             }
         })();
-        // Apply language BEFORE page renders to prevent flash
+        // Apply language BEFORE page renders - default is always Arabic
         (function() {
             const savedLang = localStorage.getItem('language') || 'ar';
             document.documentElement.setAttribute('lang', savedLang);

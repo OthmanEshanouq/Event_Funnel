@@ -10,6 +10,9 @@
  */
 
 const SITE_INFO = {
+    // ========== LANGUAGE ==========
+    defaultLanguage: 'ar',  // Always Arabic by default
+
     // ========== CONTACT ==========
     phone: '00962787426310',
     phoneDisplay: '00962787426310',

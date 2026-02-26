@@ -16,7 +16,8 @@
 (function applyLanguageEarly() {
     if (typeof window === 'undefined') return;
     
-    const savedLang = localStorage.getItem('language') || 'ar';
+    const defaultLang = (window.SITE_INFO && window.SITE_INFO.defaultLanguage) || 'ar';
+    const savedLang = localStorage.getItem('language') || defaultLang;
     const html = document.documentElement;
     
     if (html) {
@@ -199,7 +200,8 @@ function initMobileMenu() {
         link.addEventListener('click', closeMobileMenu);
     });
     
-    const savedLang = localStorage.getItem('language') || 'ar';
+    const defaultLang = (window.SITE_INFO && window.SITE_INFO.defaultLanguage) || 'ar';
+    const savedLang = localStorage.getItem('language') || defaultLang;
     document.querySelectorAll('.lang-dropdown-item-mobile').forEach(el => {
         el.classList.toggle('active', el.getAttribute('data-lang') === savedLang);
     });
@@ -289,8 +291,9 @@ function initLanguageSwitcher() {
     
     if (!html) return;
     
-    // Get saved language or default to Arabic
-    const savedLang = localStorage.getItem('language') || 'ar';
+    // Get saved language or default to Arabic (from site-info.js)
+    const defaultLang = (window.SITE_INFO && window.SITE_INFO.defaultLanguage) || 'ar';
+    const savedLang = localStorage.getItem('language') || defaultLang;
     
     // Apply language immediately
     html.setAttribute('lang', savedLang);
@@ -806,7 +809,8 @@ function initGalleryLightbox() {
     function openLightbox(src, captionKey) {
         img.src = src;
         img.alt = captionKey;
-        const lang = localStorage.getItem('language') || 'ar';
+        const defaultLang = (window.SITE_INFO && window.SITE_INFO.defaultLanguage) || 'ar';
+        const lang = localStorage.getItem('language') || defaultLang;
         const dict = translations[lang] || translations.ar;
         caption.textContent = dict[captionKey] || '';
         lightbox.classList.add('active');
