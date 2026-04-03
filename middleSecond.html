@@ -247,27 +247,33 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (matches main site: copyright | phone | social) -->
     <footer id="mainFooter" class="bg-slate-900 dark:bg-slate-950 text-white py-8 pb-24 sm:pb-8 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-                <p class="text-slate-400" data-i18n="footer.copy">© 2026 Cycling Every Where. All rights reserved.</p>
-                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-center text-center md:text-start">
+                <div class="order-1 md:order-none md:justify-self-start rtl:md:justify-self-end rtl:md:text-end">
+                    <p class="text-slate-400" data-i18n="footer.copy">© 2026 Cycling Every Where. All rights reserved.</p>
+                </div>
+                <div class="order-2 md:order-none flex items-center justify-center gap-2 text-lg md:justify-self-center">
+                    <i data-lucide="phone" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                    <a href="tel:00962787426310" class="text-white hover:text-emerald-400 transition-colors" aria-label="Call us">00962787426310</a>
+                </div>
+                <div class="order-3 md:order-none flex items-center justify-center gap-3 md:justify-self-end rtl:md:justify-self-start">
                     <a 
                         href="https://www.instagram.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center opacity-75 hover:opacity-100 hover:bg-slate-700 transition-colors"
+                        class="footer-social-icon footer-instagram-btn w-10 h-10 shrink-0 flex items-center justify-center overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
                         aria-label="Instagram"
                         title="Instagram"
                     >
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                        <img src="assets/instagram Icon.png" alt="Instagram" class="w-full h-full object-cover" width="40" height="40" loading="lazy">
                     </a>
                     <a 
                         href="https://api.whatsapp.com/send/?phone=962787426310&text&type=phone_number&app_absent=0" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        class="whatsapp-link w-10 h-10 rounded-full flex items-center justify-center transition-colors overflow-hidden"
+                        class="footer-social-icon whatsapp-link w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-colors overflow-hidden"
                         aria-label="تواصل معنا على واتساب"
                     >
                         <img src="assets/WA icon.png" alt="واتساب" class="w-10 h-10 object-cover rounded-full" width="40" height="40">

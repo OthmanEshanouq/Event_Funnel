@@ -455,6 +455,16 @@ html:not(.dark) .lang-dropdown-menu {
 
 /* Footer WhatsApp uses assets/WA icon.png - no filter needed */
 
+.footer-social-icon {
+    flex-shrink: 0;
+}
+
+/* Instagram footer button: 25% border-radius (rounded square) */
+.footer-instagram-btn,
+.footer-instagram-btn img {
+    border-radius: 25%;
+}
+
 /* ============================================
    Floating WhatsApp Button
    ============================================ */
